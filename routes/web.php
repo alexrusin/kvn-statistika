@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('statistics.teams');
+});
+
+Route::namespace('Statistics')
+    ->prefix('statistics')
+    ->name('statistics.')
+    ->group(function() {
+        Route::get('teams', 'TeamsController@index')->name('teams');
+        Route::get('videos', 'VideosController@index')->name('videos');
 });
