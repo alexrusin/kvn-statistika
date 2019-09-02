@@ -86,6 +86,25 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavHeader.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NavHeader.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      showMenu: false
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StatisticsVideo.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StatisticsVideo.vue?vue&type=script&lang=js& ***!
@@ -186,8 +205,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['team']
+  props: ['team'],
+  computed: {
+    efficiency: function efficiency() {
+      return (this.team.games_average.avg_team_efficiency * 100).toFixed(1).replace('.', ',');
+    },
+    okg: function okg() {
+      return (this.team.games_average.avg_okg * 1).toFixed(1).replace('.', ',');
+    },
+    whiteIndex: function whiteIndex() {
+      return (this.team.games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
+    },
+    points: function points() {
+      return (this.team.games_average.avg_points * 1).toFixed(1).replace('.', ',');
+    }
+  }
 });
 
 /***/ }),
@@ -210,58 +248,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['teams'],
   components: {
     TeamCard: _TeamCard__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      teams: [{
-        id: 1,
-        imageUrl: 'https://i.ytimg.com/vi/nBLIKlCnFNM/maxresdefault.jpg',
-        city: "Сургут",
-        name: "Борцы. Северный десант",
-        okg: 5.5,
-        effectivness: 33,
-        white_index: 7,
-        rating: 5
-      }, {
-        id: 2,
-        imageUrl: 'https://i.ytimg.com/vi/j0e2ljr9iHs/maxresdefault.jpg',
-        city: "Тюмень",
-        name: "Наполеон динамит",
-        okg: 5.5,
-        effectivness: 33,
-        white_index: 7,
-        rating: 4
-      }, {
-        id: 3,
-        imageUrl: 'https://i.ytimg.com/vi/Li7OK9HhbzI/maxresdefault.jpg',
-        city: "Брюховецкая",
-        name: "Нате",
-        okg: 5.5,
-        effectivness: 33,
-        white_index: 7,
-        rating: 4
-      }, {
-        id: 4,
-        imageUrl: 'https://i.ytimg.com/vi/1cPHlpk5tos/maxresdefault.jpg',
-        city: "Красноярск",
-        name: "Так-то",
-        okg: 5.5,
-        effectivness: 33,
-        white_index: 7,
-        rating: 4
-      }, {
-        id: 5,
-        imageUrl: 'https://i.ytimg.com/vi/8fZrbWjGKos/maxresdefault.jpg',
-        city: "Липецк",
-        name: "Громокошки",
-        okg: 5.5,
-        effectivness: 33,
-        white_index: 7,
-        rating: 4
-      }]
-    };
   }
 });
 
@@ -846,7 +835,7 @@ var render = function() {
           _c("div", { staticClass: "pb-2/3" }, [
             _c("img", {
               staticClass: "h-full w-full object-cover",
-              attrs: { src: _vm.team.imageUrl, alt: _vm.team.name }
+              attrs: { src: _vm.team.image_url, alt: _vm.team.name }
             })
           ]),
           _vm._v(" "),
@@ -879,15 +868,18 @@ var render = function() {
             _c("div", { staticClass: "mt-1" }, [
               _vm._v(
                 "\n               ОКГ: " +
-                  _vm._s(_vm.team.okg) +
-                  " \n           "
-              )
+                  _vm._s(this.okg) +
+                  " \n               "
+              ),
+              _c("span", { staticClass: "text-gray-600 text-sm" }, [
+                _vm._v(" / игру ")
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "mt-1" }, [
               _vm._v(
                 "\n               Эффективность: " +
-                  _vm._s(_vm.team.effectivness) +
+                  _vm._s(this.efficiency) +
                   "%\n           "
               )
             ]),
@@ -895,9 +887,20 @@ var render = function() {
             _c("div", { staticClass: "mt-1" }, [
               _vm._v(
                 "\n               Индекс Белого: " +
-                  _vm._s(_vm.team.white_index) +
+                  _vm._s(this.whiteIndex) +
                   " \n           "
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-1" }, [
+              _vm._v(
+                "\n               Судейский балл: " +
+                  _vm._s(this.points) +
+                  " \n               "
+              ),
+              _c("span", { staticClass: "text-gray-600 text-sm" }, [
+                _vm._v(" / игру ")
+              ])
             ]),
             _vm._v(" "),
             _c(
@@ -13115,6 +13118,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('nav-header', __webpack_require__(/*! ./components/NavHeader.vue */ "./resources/js/components/NavHeader.vue")["default"]);
 Vue.component('team-cards', __webpack_require__(/*! ./components/TeamCards.vue */ "./resources/js/components/TeamCards.vue")["default"]);
 Vue.component('statistics-videos', __webpack_require__(/*! ./components/StatisticsVideos */ "./resources/js/components/StatisticsVideos.vue")["default"]);
 /**
@@ -13126,6 +13130,56 @@ Vue.component('statistics-videos', __webpack_require__(/*! ./components/Statisti
 var app = new Vue({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/NavHeader.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/NavHeader.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavHeader.vue?vue&type=script&lang=js& */ "./resources/js/components/NavHeader.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NavHeader.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NavHeader.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/NavHeader.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NavHeader.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavHeader.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

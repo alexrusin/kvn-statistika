@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <team-cards></team-cards>
+    <team-cards :teams="{{ json_encode($teams) }}"></team-cards>
 @endsection

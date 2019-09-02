@@ -17,7 +17,8 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('city')->nullable();
+            $table->text('image_url');
+            $table->string('city');
             $table->unsignedTinyInteger('rating')->default(3);
             $table->timestamps();
         });

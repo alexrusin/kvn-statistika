@@ -19,6 +19,7 @@ window.Vue = require('vue');
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('nav-header', require('./components/NavHeader.vue').default);
 Vue.component('team-cards', require('./components/TeamCards.vue').default);
 Vue.component('statistics-videos', require('./components/StatisticsVideos').default);
 

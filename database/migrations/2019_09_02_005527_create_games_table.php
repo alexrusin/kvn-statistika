@@ -18,11 +18,13 @@ class CreateGamesTable extends Migration
             $table->unsignedInteger('team_id');
             $table->unsignedSmallInteger('season');
             $table->unsignedTinyInteger('division')->default(0);
-            $table->unsignedDecimal('tournament_stage', 2);
-            $table->unsignedDecimal('okg')->nullable();
-            $table->unsignedSmallInteger('white_index')->nullable();
-            $table->unsignedDecimal('efficiency', 2)->nullable();
-            $table->unsignedTinyInteger('points');
+            $table->unsignedDecimal('tournament_stage', 6, 3);
+            $table->unsignedDecimal('okg', 6, 3)->nullable();
+            $table->unsignedDecimal('white_index', 6, 3)->nullable();
+            $table->unsignedDecimal('team_efficiency', 6, 3)->nullable();
+            $table->unsignedDecimal('game_efficiency', 6, 3)->nullable();
+            $table->unsignedDecimal('marfin', 6, 3)->nullable();
+            $table->unsignedDecimal('points', 6, 3);
             $table->timestamps();
 
             $table->unique(['team_id', 'season', 'tournament_stage']);

@@ -2,7 +2,7 @@
  <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
     <div class="bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="pb-2/3">
-            <img class="h-full w-full object-cover" :src="team.imageUrl" :alt="team.name">
+            <img class="h-full w-full object-cover" :src="team.image_url" :alt="team.name">
         </div>
         <div class="p-6">
             <div class="flex items-baseline">
@@ -12,13 +12,18 @@
             </div>
             <h4 class="mt-1 font-semibold text-lg leading-tight truncate">{{ team.name }}</h4>
             <div class="mt-1">
-                ОКГ: {{ team.okg }} 
+                ОКГ: {{ this.okg }} 
+                <span class="text-gray-600 text-sm"> / игру </span>
             </div>
             <div class="mt-1">
-                Эффективность: {{ team.effectivness }}%
+                Эффективность: {{ this.efficiency }}%
             </div>
             <div class="mt-1">
-                Индекс Белого: {{ team.white_index }} 
+                Индекс Белого: {{ this.whiteIndex }} 
+            </div>
+            <div class="mt-1">
+                Судейский балл: {{ this.points }} 
+                <span class="text-gray-600 text-sm"> / игру </span>
             </div>
             <div class="mt-2 flex items-center">
                 Рейтинг: &nbsp;
@@ -33,6 +38,23 @@
 
 <script>
 export default {
-    props: ['team']
+    props: ['team'],
+    computed: {
+        efficiency() {
+            return (this.team.games_average.avg_team_efficiency * 100).toFixed(1).replace('.', ',');
+        }, 
+
+        okg() {
+            return (this.team.games_average.avg_okg * 1).toFixed(1).replace('.', ',');
+        },
+
+        whiteIndex() {
+            return (this.team.games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
+        },
+
+        points() {
+            return (this.team.games_average.avg_points * 1).toFixed(1).replace('.', ',');
+        }
+    }
 }
 </script>
