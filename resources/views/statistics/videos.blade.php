@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<statistics-videos></statistics-videos>
+<statistics-videos :videos="{{json_encode($videos)}}"></statistics-videos>
 @endsection

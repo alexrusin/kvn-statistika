@@ -136,33 +136,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['videos'],
   components: {
     StatisticsVideo: _StatisticsVideo__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      videos: [{
-        id: 1,
-        title: 'КВН статистика (экспресс). Первая 1/2 Премьер-лиги 2019',
-        youtube_id: 'Ic9IzEURPrk'
-      }, {
-        id: 2,
-        title: 'КВН статистика (экспресс). Вторая 1/4 Премьер-лиги 2019',
-        youtube_id: '-y8YCBjxjLk'
-      }, {
-        id: 3,
-        title: 'КВН статистика (экспресс). Первая 1/4 Премьер-лиги 2019',
-        youtube_id: '1XKejPGnW9A'
-      }, {
-        id: 4,
-        title: 'КВН статистика. Итоги этапа 1/8 Премьер-лиги 2019',
-        youtube_id: 'jLENN1IHfuo'
-      }, {
-        id: 5,
-        title: 'КВН статистика. Итоги этапа 1/4 Высшей лиги 2019',
-        youtube_id: 'gTvixJ-fA8A'
-      }]
-    };
   }
 });
 
