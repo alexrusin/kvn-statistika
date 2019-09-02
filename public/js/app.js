@@ -214,16 +214,16 @@ __webpack_require__.r(__webpack_exports__);
   props: ['team'],
   computed: {
     efficiency: function efficiency() {
-      return (this.team.games_average.avg_team_efficiency * 100).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_efficiency * 100).toFixed(1).replace('.', ',');
     },
     okg: function okg() {
-      return (this.team.games_average.avg_okg * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_okg * 1).toFixed(1).replace('.', ',');
     },
     whiteIndex: function whiteIndex() {
-      return (this.team.games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
     },
     points: function points() {
-      return (this.team.games_average.avg_points * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_points * 1).toFixed(1).replace('.', ',');
     }
   }
 });
@@ -845,7 +845,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "text-gray-600 text-xs uppercase font-semibold tracking-wide"
+                    "text-gray-600 text-xs uppercase font-semibold tracking-wide truncate"
                 },
                 [
                   _vm._v(

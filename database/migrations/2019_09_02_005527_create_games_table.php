@@ -15,24 +15,15 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('team_id');
             $table->unsignedSmallInteger('season');
-            $table->unsignedTinyInteger('division')->default(0);
+            $table->unsignedTinyInteger('division')->default(1);
             $table->unsignedDecimal('tournament_stage', 6, 3);
-            $table->unsignedDecimal('okg', 6, 3)->nullable();
-            $table->unsignedDecimal('white_index', 6, 3)->nullable();
-            $table->unsignedDecimal('team_efficiency', 6, 3)->nullable();
-            $table->unsignedDecimal('game_efficiency', 6, 3)->nullable();
+            $table->unsignedTinyInteger('stage_game');
+            $table->unsignedDecimal('efficiency', 6, 3)->nullable();
             $table->unsignedDecimal('marfin', 6, 3)->nullable();
-            $table->unsignedDecimal('points', 6, 3);
             $table->timestamps();
 
-            $table->unique(['team_id', 'season', 'tournament_stage']);
-
-            $table->foreign('team_id')
-                ->references('id')
-                ->on('teams')
-                ->onDelete('cascade');
+            $table->unique(['season', 'division', 'tournament_stage', 'stage_game']);
         });
     }
 

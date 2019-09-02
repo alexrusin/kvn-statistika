@@ -2,10 +2,19 @@
 
 use App\Models\Game;
 use App\Models\Team;
+use App\Models\TeamGame;
 use Illuminate\Database\Seeder;
 
 class TeamsSeeder extends Seeder
 {
+    protected $game = [
+        'division' => 1,
+        'season' => 2019,
+        'tournament_stage' => 0.125,
+        'stage_game' => 1,
+        'efficiency' => 0.357,
+        'marfin' => 4.3,
+    ];
     protected $teams = [
         [
             'name' => 'Борцы. Северный десант',
@@ -14,13 +23,9 @@ class TeamsSeeder extends Seeder
             'rating' => 5,
             'games' => [
                 [
-                'season' => 2019,
-                'tournament_stage' => 0.125,
                 'okg' => 10.3,
                 'white_index' => 9.8,
-                'team_efficiency' => 0.49,
-                'game_efficiency' => 0.37,
-                'marfin' => 4.3,
+                'efficiency' => 0.49,
                 'points' => 11.7
                 ]   
             ]
@@ -33,13 +38,9 @@ class TeamsSeeder extends Seeder
             'rating' => 4,
             'games' => [
                 [
-                'season' => 2019,
-                'tournament_stage' => 0.125,
                 'okg' => 6,
                 'white_index' => 4.6,
-                'team_efficiency' => 0.28,
-                'game_efficiency' => 0.37,
-                'marfin' => 4.3,
+                'efficiency' => 0.28,
                 'points' => 9.7
                 ]   
             ]
@@ -52,14 +53,40 @@ class TeamsSeeder extends Seeder
             'rating' => 4,
             'games' => [
                 [
-                'season' => 2019,
-                'tournament_stage' => 0.125,
                 'okg' => 4,
                 'white_index' => 6.3,
-                'team_efficiency' => 0.25,
-                'game_efficiency' => 0.37,
-                'marfin' => 4.3,
+                'efficiency' => 0.25,
                 'points' => 9.7
+                ]   
+            ]
+        ],
+
+        [
+            'name' => 'Планета Сочи',
+            'city' => 'Сочи',
+            'image_url' => 'https://i.ytimg.com/vi/-VgvjCgKR5Q/maxresdefault.jpg',
+            'rating' => 4,
+            'games' => [
+                [
+                'okg' => 3.1,
+                'white_index' => 3.4,
+                'efficiency' => 0.21,
+                'points' => 10.4
+                ]   
+            ]
+        ],
+
+        [
+            'name' => 'G-Drive',
+            'city' => 'Новосибирск, Тюмень, Минск, Краснодар, Вязьма',
+            'image_url' => 'https://i.ytimg.com/vi/IA4HlEOyLHM/maxresdefault.jpg',
+            'rating' => 4,
+            'games' => [
+                [
+                'okg' => 2.8,
+                'white_index' => 3.7,
+                'efficiency' => 0.41,
+                'points' => 9.4
                 ]   
             ]
         ]
@@ -73,6 +100,16 @@ class TeamsSeeder extends Seeder
      */
     public function run()
     {
+        $seededGame = Game::updateOrCreate([
+            'division' => $this->game['division'],
+            'season' => $this->game['season'],
+            'tournament_stage' => $this->game['tournament_stage'],
+            'stage_game' => $this->game['stage_game']
+        ],
+        [
+            'efficiency' => $this->game['efficiency'],
+            'marfin' => $this->game['marfin']
+        ]);
         foreach ($this->teams as $team) {
             $seededTeam = Team::updateOrCreate(
                 [
@@ -86,18 +123,15 @@ class TeamsSeeder extends Seeder
             );
 
             foreach ($team['games'] as $game) {
-                Game::updateOrCreate(
+                TeamGame::updateOrCreate(
                     [
                         'team_id' => $seededTeam->id,
-                        'season' => $game['season'],
-                        'tournament_stage' => $game['tournament_stage']
+                        'game_id' => $seededGame->id
                     ],
                     [
                         'okg' => $game['okg'],
                         'white_index' => $game['white_index'],
-                        'team_efficiency' => $game['team_efficiency'],
-                        'game_efficiency' => $game['game_efficiency'],
-                        'marfin' => $game['marfin'],
+                        'efficiency' => $game['efficiency'],
                         'points' => $game['points']
                     ]
                 );

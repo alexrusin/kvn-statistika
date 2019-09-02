@@ -6,7 +6,7 @@
         </div>
         <div class="p-6">
             <div class="flex items-baseline">
-                <div class="text-gray-600 text-xs uppercase font-semibold tracking-wide">
+                <div class="text-gray-600 text-xs uppercase font-semibold tracking-wide truncate">
                     г. {{ team.city }}
                 </div>
             </div>
@@ -41,19 +41,19 @@ export default {
     props: ['team'],
     computed: {
         efficiency() {
-            return (this.team.games_average.avg_team_efficiency * 100).toFixed(1).replace('.', ',');
+            return (this.team.team_games_average.avg_efficiency * 100).toFixed(1).replace('.', ',');
         }, 
 
         okg() {
-            return (this.team.games_average.avg_okg * 1).toFixed(1).replace('.', ',');
+            return (this.team.team_games_average.avg_okg * 1).toFixed(1).replace('.', ',');
         },
 
         whiteIndex() {
-            return (this.team.games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
+            return (this.team.team_games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
         },
 
         points() {
-            return (this.team.games_average.avg_points * 1).toFixed(1).replace('.', ',');
+            return (this.team.team_games_average.avg_points * 1).toFixed(1).replace('.', ',');
         }
     }
 }

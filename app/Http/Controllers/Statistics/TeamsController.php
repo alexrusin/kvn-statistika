@@ -8,7 +8,7 @@ class TeamsController
 {
     public function index()
     {
-        $teams = Team::with('gamesAverage')
+        $teams = Team::with('teamGamesAverage')
             ->take(100)
             ->get();
         return view('statistics.teams', compact('teams'));
