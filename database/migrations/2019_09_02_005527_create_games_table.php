@@ -31,7 +31,8 @@ class CreateGamesTable extends Migration
 
             $table->foreign('team_id')
                 ->references('id')
-                ->on('teams');
+                ->on('teams')
+                ->onDelete('cascade');
         });
     }
 

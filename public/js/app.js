@@ -894,7 +894,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "mt-1" }, [
               _vm._v(
-                "\n               Судейский балл: " +
+                "\n               Оценка жюри: " +
                   _vm._s(this.points) +
                   " \n               "
               ),

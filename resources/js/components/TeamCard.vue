@@ -22,7 +22,7 @@
                 Индекс Белого: {{ this.whiteIndex }} 
             </div>
             <div class="mt-1">
-                Судейский балл: {{ this.points }} 
+                Оценка жюри: {{ this.points }} 
                 <span class="text-gray-600 text-sm"> / игру </span>
             </div>
             <div class="mt-2 flex items-center">
