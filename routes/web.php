@@ -22,3 +22,11 @@ Route::namespace('Statistics')
         Route::get('teams', 'TeamsController@index')->name('teams');
         Route::get('videos', 'VideosController@index')->name('videos');
 });
+
+Route::get('/admin/dashboard', function(){
+    return 'Email verified';
+})->middleware('verified');
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
