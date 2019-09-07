@@ -23,10 +23,8 @@ Route::namespace('Statistics')
         Route::get('videos', 'VideosController@index')->name('videos');
 });
 
-Route::get('/admin/dashboard', function(){
-    return 'Email verified';
-})->middleware('verified');
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')
+    ->middleware('verified')
+    ->name('home');

@@ -104,6 +104,12 @@ return [
         return trim($item);
     }, array_filter(explode(',', env('ADMIN_EMAILS', null)), function($email) {
         return $email;
+    })),
+
+    'invitation_emails' => array_map(function($item) {
+        return trim($item);
+    }, array_filter(explode(',', env('INVITATION_EMAILS', null)), function($email) {
+        return $email;
     }))
 
 ];

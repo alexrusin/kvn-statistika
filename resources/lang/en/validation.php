@@ -116,6 +116,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'invited' => 'Sorry, your email is not on the invitation list.',
 
     /*
     |--------------------------------------------------------------------------
