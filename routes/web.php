@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect()->route('statistics.teams');
 });
 
+Auth::routes(['verify' => true]);
+
 Route::namespace('Statistics')
     ->prefix('statistics')
     ->name('statistics.')
@@ -23,8 +25,14 @@ Route::namespace('Statistics')
         Route::get('videos', 'VideosController@index')->name('videos');
 });
 
-Auth::routes(['verify' => true]);
+Route::namespace('Admin')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function() {
+        Route::get('enter-data', 'EnterDataController@index')->name('enter-data');
+});
 
-Route::get('/home', 'HomeController@index')
+Route::get('/dashboard', 'HomeController@index')
     ->middleware('verified')
-    ->name('home');
+    ->name('dashboard');
