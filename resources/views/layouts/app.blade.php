@@ -13,7 +13,7 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
         
     </head>
-    <body class="flex items-center justify-center" style="background: #edf2f7;">
+    <body class="flex items-center justify-center text-gray-800" style="background: #edf2f7;">
         <div id="app" class="font-sans bg-grey-lighter flex flex-col min-h-screen w-full">
             @include('layouts.nav')
             <div class="flex-grow container mx-auto px-4 pt-6 pb-8">

@@ -30,7 +30,12 @@ Route::namespace('Admin')
     ->prefix('admin')
     ->name('admin.')
     ->group(function() {
-        Route::get('enter-data', 'EnterDataController@index')->name('enter-data');
+        Route::prefix('enter-data')
+            ->name('enter-data.')
+            ->group(function(){
+                Route::get('/', 'EnterDataController@index')->name('index');
+            });
+        
 });
 
 Route::get('/dashboard', 'HomeController@index')

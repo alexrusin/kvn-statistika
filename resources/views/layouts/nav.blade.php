@@ -38,7 +38,7 @@
                                 <a href="{{ route('dashboard') }}"
                                     class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Панель управл.</a>
                                 @if(auth()->user()->is_admin)
-                                <a href="{{ route('admin.enter-data') }}"
+                                <a href="{{ route('admin.enter-data.index') }}"
                                     class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Ввод
                                     данных</a>
                                 @endif

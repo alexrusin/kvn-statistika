@@ -22,6 +22,8 @@ window.Vue = require('vue');
 Vue.component('nav-header', require('./components/NavHeader.vue').default);
 Vue.component('team-cards', require('./components/TeamCards.vue').default);
 Vue.component('statistics-videos', require('./components/StatisticsVideos').default);
+Vue.component('games-card', require('./components/GamesCard').default);
+Vue.component('teams-card', require('./components/TeamsCard').default);
 
 
 /**

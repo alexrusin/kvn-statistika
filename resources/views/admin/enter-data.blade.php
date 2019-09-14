@@ -1,13 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Admin Enter Data</div>
-            </div>
-        </div>
-    </div>
+<div class="flex flex-wrap -mx-4">
+    <games-card games="games"></games-card>
+    <teams-card teams="teams"></teams-card>
+    <games-card games="games"></games-card>
+    <games-card games="games"></games-card>
 </div>
 @endsection
