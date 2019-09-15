@@ -10,8 +10,8 @@ class TeamsSeeder extends Seeder
     protected $game = [
         'division' => 1,
         'season' => 2019,
-        'tournament_stage' => 0.125,
-        'stage_game' => 1,
+        'tournament_round' => 0.125,
+        'round_stage' => 1,
         'efficiency' => 0.357,
         'marfin' => 4.3,
     ];
@@ -103,8 +103,8 @@ class TeamsSeeder extends Seeder
         $seededGame = Game::updateOrCreate([
             'division' => $this->game['division'],
             'season' => $this->game['season'],
-            'tournament_stage' => $this->game['tournament_stage'],
-            'stage_game' => $this->game['stage_game']
+            'tournament_round' => $this->game['tournament_round'],
+            'round_stage' => $this->game['round_stage']
         ],
         [
             'efficiency' => $this->game['efficiency'],
@@ -136,8 +136,6 @@ class TeamsSeeder extends Seeder
                     ]
                 );
             }
-
-
         }
     }
 }

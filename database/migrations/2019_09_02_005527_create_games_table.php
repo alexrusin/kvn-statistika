@@ -17,13 +17,13 @@ class CreateGamesTable extends Migration
             $table->increments('id');
             $table->unsignedSmallInteger('season');
             $table->unsignedTinyInteger('division')->default(1);
-            $table->unsignedDecimal('tournament_stage', 6, 3);
-            $table->unsignedTinyInteger('stage_game');
+            $table->unsignedDecimal('tournament_round', 6, 3);
+            $table->unsignedTinyInteger('round_stage');
             $table->unsignedDecimal('efficiency', 6, 3)->nullable();
             $table->unsignedDecimal('marfin', 6, 3)->nullable();
             $table->timestamps();
 
-            $table->unique(['season', 'division', 'tournament_stage', 'stage_game']);
+            $table->unique(['season', 'division', 'tournament_round', 'round_stage']);
         });
     }
 
