@@ -34,6 +34,7 @@ Route::namespace('Admin')
             ->name('enter-data.')
             ->group(function(){
                 Route::get('/', 'EnterDataController@index')->name('index');
+                Route::get('games', 'EnterGameController@index')->name('games');
             });
         
 });

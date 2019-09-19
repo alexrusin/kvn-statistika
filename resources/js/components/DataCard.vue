@@ -20,9 +20,9 @@
                 />
               </svg>
             </div>
-            <p class="text-2xl text-grey-darker font-medium mb-4">Нет Данных</p>
+            <p class="text-2xl text-grey-darker font-medium mb-4">Нет данных</p>
             <div>
-              <button type="button" class="btn btn-blue">Ввести Данные</button>
+              <a :href="formLink" class="btn btn-blue">Ввести данные</a>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <h3 class="py-4 text-xl font-semibold">{{ cardTitle }}</h3>
           <div class="flex">
             <a
-              href="#"
+              :href="formLink"
               class="appearance-none py-4 border-b border-blue-dark mr-3 text-blue-500 text-xl hover:underline"
             >Ввести данные</a>
           </div>
@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  props: ["data", "cardTitle"],
+  props: ["data", "cardTitle", "formLink"],
   computed: {
     noData() {
       return !this.data.length
