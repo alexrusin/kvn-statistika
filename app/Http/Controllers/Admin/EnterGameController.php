@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GameRequest;
 use App\Models\Game;
+use Illuminate\Database\QueryException;
 
 class EnterGameController extends Controller
 {
@@ -26,7 +28,13 @@ class EnterGameController extends Controller
         $selectData['rounds'] = Game::TOURNAMENT_ROUNDS;
         $selectData['stages'] = Game::ROUND_STAGES;
 
-        return view('admin.enter-team', compact('selectData'));
+        $games = Game::take(100)
+            ->orderBy('season', 'desc')
+            ->orderBy('tournament_round', 'desc')
+            ->orderBy('round_stage', 'desc')
+            ->get();
+
+        return view('admin.enter-game', compact('selectData', 'games'));
     }
 
     /**
@@ -34,9 +42,16 @@ class EnterGameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(GameRequest $request)
     {
-        //
+        try {
+            $game = Game::create($request->all());
+        } catch (QueryException $e) {
+            return response(['message' => 'Такая игра уже существует', 'alertType' => 'danger'], 422);
+        }
+       
+
+        return response(['message' => 'Игра сохранена', 'alertType' => 'success', 'game' => $game]);
     }
 
     /**
@@ -90,8 +105,16 @@ class EnterGameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        //
+       $count = $game->teamGames()->count();
+
+       if ($count) {
+         return response(['message' => 'У этой игры есть результаты. Удалите вначале результаты', 'alertType' => 'danger'], 400);
+       }
+
+       $game->delete();
+
+       return response(['message' => 'Игра удалена', 'alertType' => 'success']);
     }
 }

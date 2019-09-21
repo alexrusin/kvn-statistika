@@ -35,6 +35,8 @@ Route::namespace('Admin')
             ->group(function(){
                 Route::get('/', 'EnterDataController@index')->name('index');
                 Route::get('games', 'EnterGameController@index')->name('games');
+                Route::post('games', 'EnterGameController@create')->name('games.create');
+                Route::delete('games/{game}', 'EnterGameController@destroy')->name('games.destroy');
             });
         
 });

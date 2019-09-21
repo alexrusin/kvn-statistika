@@ -1,3 +1,4 @@
+require('./bootstrap');
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5,6 +6,12 @@
  */
 
 window.Vue = require('vue');
+
+window.events = new Vue();
+
+window.flash = function(message, level = 'success') {
+	window.events.$emit('flash', {message, level});
+};
 
 /**
  * The following block of code may be used to automatically register your
@@ -24,6 +31,7 @@ Vue.component('team-cards', require('./components/TeamCards.vue').default);
 Vue.component('statistics-videos', require('./components/StatisticsVideos').default);
 Vue.component('data-card', require('./components/DataCard').default);
 Vue.component('game-form', require('./components/GameForm').default);
+Vue.component('flash', require('./components/Flash').default);
 
 
 /**

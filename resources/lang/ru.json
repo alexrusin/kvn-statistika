@@ -17,5 +17,6 @@
     "Send Password Reset Link": "Отправить ссылку для изменения пароля",
     "Register": "Регистрация",
     "Confirm Password": "Подтвердить пароль",
-    "Register Me": "Зарегистрироваться"
+    "Register Me": "Зарегистрироваться",
+    "The given data was invalid.": "Пожалуйста устраните ошибки."
 }

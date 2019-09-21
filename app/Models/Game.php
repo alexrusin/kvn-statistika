@@ -29,6 +29,11 @@ class Game extends Model
 
     protected $guarded = [];
 
+    public function teamGames()
+    {
+        return $this->hasMany(TeamGame::class);
+    }
+
     public function getDisplayNameAttribute()
     {   
         $name = '';
