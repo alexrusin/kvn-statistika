@@ -31,6 +31,7 @@ Vue.component('team-cards', require('./components/TeamCards.vue').default);
 Vue.component('statistics-videos', require('./components/StatisticsVideos').default);
 Vue.component('data-card', require('./components/DataCard').default);
 Vue.component('game-form', require('./components/GameForm').default);
+Vue.component('team-form', require('./components/TeamForm').default);
 Vue.component('flash', require('./components/Flash').default);
 
 

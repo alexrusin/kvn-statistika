@@ -2076,6 +2076,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2100,6 +2102,10 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this = this;
 
+      if (this.form.efficiency) {
+        this.form.efficiency = this.form.efficiency / 100;
+      }
+
       this.form.submit("post", "/admin/enter-data/games").then(function (data) {
         if (data.game) {
           _this.gamesList.unshift(data.game);
@@ -2108,6 +2114,11 @@ __webpack_require__.r(__webpack_exports__);
         flash(data.message, data.alertType);
       })["catch"](function (errors) {
         return flash(errors.message, "danger");
+      });
+    },
+    deleteGame: function deleteGame(id) {
+      this.gamesList = this.gamesList.filter(function (game) {
+        return game.id != id;
       });
     }
   }
@@ -2188,6 +2199,12 @@ __webpack_require__.r(__webpack_exports__);
           _this.$emit('gameDeleted', id);
 
           flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно удалить игру', 'danger');
         }
       });
     }
@@ -2362,6 +2379,248 @@ __webpack_require__.r(__webpack_exports__);
   props: ['teams'],
   components: {
     TeamCard: _TeamCard__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamForm.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamForm.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/Form */ "./resources/js/utils/Form.js");
+/* harmony import */ var _TeamsListForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamsListForm */ "./resources/js/components/TeamsListForm.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    TeamsListForm: _TeamsListForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ["teams"],
+  data: function data() {
+    return {
+      teamsList: this.teams,
+      form: new _utils_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        name: "",
+        city: "",
+        image_url: "",
+        rating: ""
+      })
+    };
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.form.submit("post", "/admin/enter-data/teams").then(function (data) {
+        if (data.team) {
+          _this.teamsList.unshift(data.team);
+        }
+
+        flash(data.message, data.alertType);
+      })["catch"](function (errors) {
+        return flash(errors.message, "danger");
+      });
+    },
+    deleteTeam: function deleteTeam(id) {
+      this.teamsList = this.teamsList.filter(function (team) {
+        return team.id != id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/Form */ "./resources/js/utils/Form.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["teams"],
+  methods: {
+    deleteTeam: function deleteTeam(id) {
+      var _this = this;
+
+      axios["delete"]("/admin/enter-data/teams/".concat(id)).then(function (_ref) {
+        var data = _ref.data;
+
+        if (data.alertType == 'success') {
+          _this.$emit('teamDeleted', id);
+
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно удалить команду', 'danger');
+        }
+      });
+    }
   }
 });
 
@@ -3700,7 +3959,7 @@ var render = function() {
                             {
                               staticClass:
                                 "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                              attrs: { for: "grid-state" }
+                              attrs: { for: "grid-tournament-round" }
                             },
                             [_vm._v("Турнирный круг")]
                           ),
@@ -3721,7 +3980,7 @@ var render = function() {
                                   "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
                                 attrs: {
                                   name: "tournament_round",
-                                  id: "grid-state"
+                                  id: "grid-tournament-round"
                                 },
                                 on: {
                                   change: function($event) {
@@ -3814,7 +4073,7 @@ var render = function() {
                             {
                               staticClass:
                                 "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                              attrs: { for: "grid-state" }
+                              attrs: { for: "grid-round-stage" }
                             },
                             [_vm._v("Стадия")]
                           ),
@@ -3835,7 +4094,7 @@ var render = function() {
                                   "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
                                 attrs: {
                                   name: "round_stage",
-                                  id: "grid-state"
+                                  id: "grid-round-stage"
                                 },
                                 on: {
                                   change: function($event) {
@@ -3928,7 +4187,7 @@ var render = function() {
                             {
                               staticClass:
                                 "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                              attrs: { for: "grid-state" }
+                              attrs: { for: "grid-division" }
                             },
                             [_vm._v("Лига")]
                           ),
@@ -3947,7 +4206,10 @@ var render = function() {
                                 ],
                                 staticClass:
                                   "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                                attrs: { name: "division", id: "grid-state" },
+                                attrs: {
+                                  name: "division",
+                                  id: "grid-division"
+                                },
                                 on: {
                                   change: function($event) {
                                     var $$selectedVal = Array.prototype.filter
@@ -4041,7 +4303,7 @@ var render = function() {
                             {
                               staticClass:
                                 "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                              attrs: { for: "grid-state" }
+                              attrs: { for: "grid-season" }
                             },
                             [_vm._v("Сезон")]
                           ),
@@ -4060,7 +4322,7 @@ var render = function() {
                                 ],
                                 staticClass:
                                   "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                                attrs: { name: "season", id: "grid-state" },
+                                attrs: { name: "season", id: "grid-season" },
                                 on: {
                                   change: function($event) {
                                     var $$selectedVal = Array.prototype.filter
@@ -4143,9 +4405,101 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm._m(1),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-marfin" }
+                            },
+                            [_vm._v("Статистическая оценка (Марфин)")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.marfin,
+                                expression: "form.marfin"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              id: "grid-marfin",
+                              placeholder: "0"
+                            },
+                            domProps: { value: _vm.form.marfin },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "marfin",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-efficiency" }
+                            },
+                            [_vm._v("Эффективность (%)")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.efficiency,
+                                expression: "form.efficiency"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              id: "grid-efficiency",
+                              placeholder: "0"
+                            },
+                            domProps: { value: _vm.form.efficiency },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "efficiency",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      )
                     ])
                   ]
                 )
@@ -4155,7 +4509,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("games-list-form", { attrs: { games: _vm.gamesList } })
+      _c("games-list-form", {
+        attrs: { games: _vm.gamesList },
+        on: { gameDeleted: _vm.deleteGame }
+      })
     ],
     1
   )
@@ -4183,50 +4540,6 @@ var staticRenderFns = [
           )
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
-      _c(
-        "label",
-        {
-          staticClass:
-            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-          attrs: { for: "grid-city" }
-        },
-        [_vm._v("Статистическая оценка (Марфин)")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass:
-          "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-        attrs: { type: "number", step: ".1", id: "grid-city", placeholder: "0" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
-      _c(
-        "label",
-        {
-          staticClass:
-            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-          attrs: { for: "grid-zip" }
-        },
-        [_vm._v("Эффективность")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass:
-          "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-        attrs: { type: "number", step: ".1", id: "grid-zip", placeholder: "0" }
-      })
     ])
   }
 ]
@@ -4610,6 +4923,452 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST", action: "/admin/enter-data/teams" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
+              },
+              keydown: function($event) {
+                return _vm.form.errors.clear($event.target.name)
+              }
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "bg-white border-t border-b sm:rounded sm:border shadow min-h-full"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "px-8 pt-6 pb-8 mb-4 flex flex-col my-2" },
+                  [
+                    _c("div", { staticClass: "flex flex-wrap mb-6" }, [
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-name" }
+                            },
+                            [_vm._v("Название")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name,
+                                expression: "form.name"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "text",
+                              name: "name",
+                              id: "grid-name"
+                            },
+                            domProps: { value: _vm.form.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "name", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("name")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("name")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-city" }
+                            },
+                            [_vm._v("Город")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.city,
+                                expression: "form.city"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "text",
+                              name: "city",
+                              id: "grid-city"
+                            },
+                            domProps: { value: _vm.form.city },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "city", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("city")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("city")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-wrap mb-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-image-url" }
+                            },
+                            [_vm._v("Фото (1280 x 720)")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.image_url,
+                                expression: "form.image_url"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "text",
+                              name: "image_url",
+                              id: "grid-image-url"
+                            },
+                            domProps: { value: _vm.form.image_url },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "image_url",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("image_url")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("image_url")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-rating" }
+                            },
+                            [_vm._v("Рейтинг")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.rating,
+                                expression: "form.rating"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: "1",
+                              min: "1",
+                              max: "5",
+                              name: "rating",
+                              placeholder: "0",
+                              id: "grid-rating"
+                            },
+                            domProps: { value: _vm.form.rating },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "rating",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("rating")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("rating")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("teams-list-form", {
+        attrs: { teams: _vm.teamsList },
+        on: { teamDeleted: _vm.deleteTeam }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "border-b" }, [
+      _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
+        _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
+          _vm._v("Ввести команду")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-3" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Ввести")]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "w-full px-4 mb-4" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "bg-white border-t border-b sm:rounded sm:border shadow min-h-full"
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-8 pt-6 pb-8 mb-4 flex flex-col my-2" }, [
+          _c(
+            "table",
+            { staticClass: "w-full text-md bg-white shadow-md rounded mb-4" },
+            [
+              _c(
+                "tbody",
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._l(_vm.teams, function(team) {
+                    return _c(
+                      "tr",
+                      {
+                        key: team.id,
+                        staticClass: "border-b hover:bg-orange-100 bg-gray-100"
+                      },
+                      [
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(team.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5 truncate" }, [
+                          _vm._v(_vm._s(team.city))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(team.rating))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteTeam(team.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "border-b" }, [
+      _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
+        _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
+          _vm._v("Комманды")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-3" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticClass: "border-b" }, [
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Название")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Город")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Рейтинг")]),
+      _vm._v(" "),
+      _c("th")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -16772,6 +17531,7 @@ Vue.component('team-cards', __webpack_require__(/*! ./components/TeamCards.vue *
 Vue.component('statistics-videos', __webpack_require__(/*! ./components/StatisticsVideos */ "./resources/js/components/StatisticsVideos.vue")["default"]);
 Vue.component('data-card', __webpack_require__(/*! ./components/DataCard */ "./resources/js/components/DataCard.vue")["default"]);
 Vue.component('game-form', __webpack_require__(/*! ./components/GameForm */ "./resources/js/components/GameForm.vue")["default"]);
+Vue.component('team-form', __webpack_require__(/*! ./components/TeamForm */ "./resources/js/components/TeamForm.vue")["default"]);
 Vue.component('flash', __webpack_require__(/*! ./components/Flash */ "./resources/js/components/Flash.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17445,6 +18205,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCards_vue_vue_type_template_id_21ff5e2b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCards_vue_vue_type_template_id_21ff5e2b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamForm.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/TeamForm.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamForm.vue?vue&type=template&id=25f619ac& */ "./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac&");
+/* harmony import */ var _TeamForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamForm.vue?vue&type=script&lang=js& */ "./resources/js/components/TeamForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TeamForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TeamForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamForm.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/TeamForm.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamForm.vue?vue&type=template&id=25f619ac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamForm.vue?vue&type=template&id=25f619ac&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamForm_vue_vue_type_template_id_25f619ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamsListForm.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/TeamsListForm.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamsListForm.vue?vue&type=template&id=3f3e39fd& */ "./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd&");
+/* harmony import */ var _TeamsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamsListForm.vue?vue&type=script&lang=js& */ "./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TeamsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TeamsListForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamsListForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamsListForm.vue?vue&type=template&id=3f3e39fd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=template&id=3f3e39fd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamsListForm_vue_vue_type_template_id_3f3e39fd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

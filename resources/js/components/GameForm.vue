@@ -25,14 +25,14 @@
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-state"
+                  for="grid-tournament-round"
                 >Турнирный круг</label>
                 <div class="relative">
                   <select
                     v-model="form.tournament_round"
                     name="tournament_round"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state"
+                    id="grid-tournament-round"
                   >
                     <option value>Выберите круг...</option>
                     <option
@@ -64,14 +64,14 @@
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-state"
+                  for="grid-round-stage"
                 >Стадия</label>
                 <div class="relative">
                   <select
                     v-model="form.round_stage"
                     name="round_stage"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state"
+                    id="grid-round-stage"
                   >
                     <option value>Выберите стадию...</option>
                     <option
@@ -103,14 +103,14 @@
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-state"
+                  for="grid-division"
                 >Лига</label>
                 <div class="relative">
                   <select
                     v-model="form.division"
                     name="division"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state"
+                    id="grid-division"
                   >
                     <option value>Выберите лигу...</option>
                     <option
@@ -144,14 +144,14 @@
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-state"
+                  for="grid-season"
                 >Сезон</label>
                 <div class="relative">
                   <select
                     v-model="form.season"
                     name="season"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state"
+                    id="grid-season"
                   >
                     <option value>Выберите год...</option>
                     <option
@@ -183,26 +183,28 @@
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-city"
+                  for="grid-marfin"
                 >Статистическая оценка (Марфин)</label>
                 <input
+                  v-model="form.marfin"
                   type="number"
                   step=".1"
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-city"
+                  id="grid-marfin"
                   placeholder="0"
                 />
               </div>
               <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-zip"
-                >Эффективность</label>
+                  for="grid-efficiency"
+                >Эффективность (%)</label>
                 <input
+                  v-model="form.efficiency"
                   type="number"
                   step=".1"
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-zip"
+                  id="grid-efficiency"
                   placeholder="0"
                 />
               </div>
@@ -211,7 +213,7 @@
         </div>
       </form>
     </div>
-    <games-list-form :games="gamesList"></games-list-form>
+    <games-list-form :games="gamesList" @gameDeleted="deleteGame"></games-list-form>
   </div>
 </template>
 
@@ -238,6 +240,9 @@ export default {
 
   methods: {
     onSubmit() {
+      if (this.form.efficiency) {
+         this.form.efficiency = this.form.efficiency / 100;
+      }
       this.form
         .submit("post", "/admin/enter-data/games")
         .then(data => {
@@ -247,7 +252,11 @@ export default {
           flash(data.message, data.alertType);
         })
         .catch(errors => flash(errors.message, "danger"));
+    },
+    deleteGame(id) {
+      this.gamesList = this.gamesList.filter(game => game.id != id);
     }
   }
+  
 };
 </script>

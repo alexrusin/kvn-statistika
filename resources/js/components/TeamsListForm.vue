@@ -3,7 +3,7 @@
     <div class="bg-white border-t border-b sm:rounded sm:border shadow min-h-full">
       <div class="border-b">
         <div class="flex justify-between px-6 -mb-px">
-          <h3 class="py-4 text-xl font-semibold">Игры</h3>
+          <h3 class="py-4 text-xl font-semibold">Комманды</h3>
           <div class="mt-3"></div>
         </div>
       </div>
@@ -12,22 +12,22 @@
           <tbody>
             <tr class="border-b">
               <th class="text-left p-3 px-5">Название</th>
-              <th class="text-left p-3 px-5">Марфин</th>
-              <th class="text-left p-3 px-5">Эффективность</th>
+              <th class="text-left p-3 px-5">Город</th>
+              <th class="text-left p-3 px-5">Рейтинг</th>
               <th></th>
             </tr>
             <tr
-              v-for="game in games"
-              :key="game.id"
+              v-for="team in teams"
+              :key="team.id"
               class="border-b hover:bg-orange-100 bg-gray-100"
             >
-              <td class="p-3 px-5">{{ game.display_name }}</td>
-              <td class="p-3 px-5">{{ displayAverage(game.marfin) }}</td>
-              <td class="p-3 px-5">{{ displayPercentage(game.efficiency)}}%</td>
+              <td class="p-3 px-5">{{ team.name }}</td>
+              <td class="p-3 px-5 truncate">{{ team.city }}</td>
+              <td class="p-3 px-5">{{ team.rating}}</td>
               <td class="p-3 px-5 flex justify-end">
                 <button
                   type="button"
-                  @click="deleteGame(game.id)"
+                  @click="deleteTeam(team.id)"
                   class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                 >Delete</button>
               </td>
@@ -41,23 +41,15 @@
 
 <script>
 import Form from "../utils/Form";
-import { displayPercentage, displayAverage } from "../utils/functions";
 export default {
-  props: ["games"],
-
-  data() {
-    return {
-        displayPercentage,
-        displayAverage
-    };
-  },
+  props: ["teams"],
 
   methods: {
-      deleteGame(id) {
-          axios.delete(`/admin/enter-data/games/${id}`)
+      deleteTeam(id) {
+          axios.delete(`/admin/enter-data/teams/${id}`)
           .then(({data}) => {
               if (data.alertType == 'success') {
-                  this.$emit('gameDeleted', id);
+                  this.$emit('teamDeleted', id);
                   flash(data.message);
               }
           })
@@ -65,7 +57,7 @@ export default {
               if (error.response.data.message) {
                   flash(error.response.data.message, error.response.data.alertType);
               } else {
-                  flash('Невозможно удалить игру', 'danger');
+                  flash('Невозможно удалить команду', 'danger');
               }
           })
       }

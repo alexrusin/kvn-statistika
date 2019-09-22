@@ -42,7 +42,18 @@ class EnterGameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(GameRequest $request)
+    public function create(Request $request)
+    {
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(GameRequest $request)
     {
         try {
             $game = Game::create($request->all());
@@ -52,17 +63,6 @@ class EnterGameController extends Controller
        
 
         return response(['message' => 'Игра сохранена', 'alertType' => 'success', 'game' => $game]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

@@ -34,9 +34,14 @@ Route::namespace('Admin')
             ->name('enter-data.')
             ->group(function(){
                 Route::get('/', 'EnterDataController@index')->name('index');
+                
                 Route::get('games', 'EnterGameController@index')->name('games');
-                Route::post('games', 'EnterGameController@create')->name('games.create');
+                Route::post('games', 'EnterGameController@store')->name('games.store');
                 Route::delete('games/{game}', 'EnterGameController@destroy')->name('games.destroy');
+
+                Route::get('teams', 'EnterTeamController@index')->name('teams');
+                Route::post('teams', 'EnterTeamController@store')->name('teams.store');
+                Route::delete('teams/{team}', 'EnterTeamController@destroy')->name('teams.destroy');
             });
         
 });
