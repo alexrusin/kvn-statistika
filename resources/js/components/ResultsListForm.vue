@@ -3,7 +3,7 @@
     <div class="bg-white border-t border-b sm:rounded sm:border shadow min-h-full">
       <div class="border-b">
         <div class="flex justify-between px-6 -mb-px">
-          <h3 class="py-4 text-xl font-semibold">Игры</h3>
+          <h3 class="py-4 text-xl font-semibold">Результаты</h3>
           <div class="mt-3"></div>
         </div>
       </div>
@@ -11,23 +11,29 @@
         <table class="w-full text-md bg-white shadow-md rounded mb-4">
           <tbody>
             <tr class="border-b">
-              <th class="text-left p-3 px-5">Название</th>
-              <th class="text-left p-3 px-5">Марфин</th>
-              <th class="text-left p-3 px-5">Эффективность</th>
+              <th class="text-left p-3 px-5">Игра</th>
+              <th class="text-left p-3 px-5">Команда</th>
+              <th class="text-left p-3 px-5">ОКГ</th>
+              <th class="text-left p-3 px-5">И. Б.</th>
+              <th class="text-left p-3 px-5">Эффект. (%)</th>
+              <th class="text-left p-3 px-5">Общий балл</th>
               <th></th>
             </tr>
             <tr
-              v-for="game in games"
-              :key="game.id"
+              v-for="result in results"
+              :key="result.id"
               class="border-b hover:bg-orange-100 bg-gray-100"
             >
-              <td class="p-3 px-5">{{ game.display_name }}</td>
-              <td class="p-3 px-5">{{ displayAverage(game.marfin) }}</td>
-              <td class="p-3 px-5">{{ displayPercentage(game.efficiency)}}%</td>
+              <td class="p-3 px-5">{{ result.game.display_name }}</td>
+              <td class="p-3 px-5">{{ result.team.name }}</td>
+              <td class="p-3 px-5">{{ displayAverage(result.okg) }}</td>
+              <td class="p-3 px-5">{{ displayAverage(result.white_index) }}</td>
+              <td class="p-3 px-5">{{ displayPercentage(result.efficiency)}}%</td>
+              <td class="p-3 px-5">{{ displayAverage(result.points) }}</td>
               <td class="p-3 px-5 flex justify-end">
                 <button
                   type="button"
-                  @click="deleteGame(game.id)"
+                  @click="deleteResult(result.id)"
                   class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                 >Delete</button>
               </td>
@@ -42,7 +48,7 @@
 <script>
 import { displayPercentage, displayAverage } from "../utils/functions";
 export default {
-  props: ["games"],
+  props: ["results"],
 
   data() {
     return {
@@ -52,11 +58,11 @@ export default {
   },
 
   methods: {
-      deleteGame(id) {
-          axios.delete(`/admin/enter-data/games/${id}`)
+      deleteResult(id) {
+          axios.delete(`/admin/enter-data/results/${id}`)
           .then(({data}) => {
               if (data.alertType == 'success') {
-                  this.$emit('gameDeleted', id);
+                  this.$emit('resultDeleted', id);
                   flash(data.message);
               }
           })
@@ -64,7 +70,7 @@ export default {
               if (error.response.data.message) {
                   flash(error.response.data.message, error.response.data.alertType);
               } else {
-                  flash('Невозможно удалить игру', 'danger');
+                  flash('Невозможно удалить результат', 'danger');
               }
           })
       }

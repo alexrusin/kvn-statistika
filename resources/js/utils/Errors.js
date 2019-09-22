@@ -4,6 +4,9 @@ class Errors {
     }
 
     has(field) {
+        if (!this.errors) {
+            return false;
+        }
         return this.errors.hasOwnProperty(field);
     }
 

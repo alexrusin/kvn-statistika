@@ -2135,8 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/Form */ "./resources/js/utils/Form.js");
-/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/functions */ "./resources/js/utils/functions.js");
+/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/functions */ "./resources/js/utils/functions.js");
 //
 //
 //
@@ -2178,14 +2177,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["games"],
   data: function data() {
     return {
-      displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["displayPercentage"],
-      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["displayAverage"]
+      displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayPercentage"],
+      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"]
     };
   },
   methods: {
@@ -2228,6 +2226,352 @@ __webpack_require__.r(__webpack_exports__);
       showMenu: false,
       showSubMenu: false
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/Form */ "./resources/js/utils/Form.js");
+/* harmony import */ var _ResultsListForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultsListForm */ "./resources/js/components/ResultsListForm.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ResultsListForm: _ResultsListForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ["results", "selectData"],
+  data: function data() {
+    return {
+      resultsList: this.results,
+      form: new _utils_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        game_id: "",
+        team_id: "",
+        okg: "",
+        white_index: "",
+        efficiency: "",
+        points: ""
+      })
+    };
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      if (this.form.efficiency) {
+        this.form.efficiency = this.form.efficiency / 100;
+      }
+
+      this.form.submit("post", "/admin/enter-data/results").then(function (data) {
+        if (data.result) {
+          _this.resultsList.unshift(data.result);
+        }
+
+        flash(data.message, data.alertType);
+      })["catch"](function (errors) {
+        return flash(errors.message, "danger");
+      });
+    },
+    deleteResult: function deleteResult(id) {
+      this.resultsList = this.resultsList.filter(function (result) {
+        return result.id != id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/functions */ "./resources/js/utils/functions.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["results"],
+  data: function data() {
+    return {
+      displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayPercentage"],
+      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"]
+    };
+  },
+  methods: {
+    deleteResult: function deleteResult(id) {
+      var _this = this;
+
+      axios["delete"]("/admin/enter-data/results/".concat(id)).then(function (_ref) {
+        var data = _ref.data;
+
+        if (data.alertType == 'success') {
+          _this.$emit('resultDeleted', id);
+
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно удалить результат', 'danger');
+        }
+      });
+    }
   }
 });
 
@@ -2556,7 +2900,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/Form */ "./resources/js/utils/Form.js");
 //
 //
 //
@@ -2598,7 +2941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["teams"],
   methods: {
@@ -4662,6 +5004,709 @@ var staticRenderFns = [
       _c("th", { staticClass: "text-left p-3 px-5" }, [
         _vm._v("Эффективность")
       ]),
+      _vm._v(" "),
+      _c("th")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST", action: "/admin/enter-data/results" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
+              },
+              keydown: function($event) {
+                return _vm.form.errors.clear($event.target.name)
+              },
+              change: function($event) {
+                return _vm.form.errors.clear($event.target.name)
+              }
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "bg-white border-t border-b sm:rounded sm:border shadow min-h-full"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "px-8 pt-6 pb-8 mb-4 flex flex-col my-2" },
+                  [
+                    _c("div", { staticClass: "flex flex-wrap mb-6" }, [
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-game-id" }
+                            },
+                            [_vm._v("Игра")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "relative" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.game_id,
+                                    expression: "form.game_id"
+                                  }
+                                ],
+                                staticClass:
+                                  "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                attrs: { name: "game_id", id: "grid-game-id" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "game_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Выберите игру...")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.selectData.games, function(
+                                  game,
+                                  id
+                                ) {
+                                  return _c(
+                                    "option",
+                                    { key: id, domProps: { value: id } },
+                                    [_vm._v(_vm._s(game))]
+                                  )
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "fill-current h-4 w-4",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      viewBox: "0 0 20 20"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.form.errors.has("game_id")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("game_id")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-team-id" }
+                            },
+                            [_vm._v("Команда")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "relative" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.team_id,
+                                    expression: "form.team_id"
+                                  }
+                                ],
+                                staticClass:
+                                  "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                attrs: { name: "team_id", id: "grid-team-id" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "team_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Выберите команду...")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.selectData.teams, function(
+                                  team,
+                                  id
+                                ) {
+                                  return _c(
+                                    "option",
+                                    { key: id, domProps: { value: id } },
+                                    [_vm._v(_vm._s(team))]
+                                  )
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "fill-current h-4 w-4",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      viewBox: "0 0 20 20"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.form.errors.has("team_id")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("team_id")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-wrap mb-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-okg" }
+                            },
+                            [_vm._v("ОКГ")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.okg,
+                                expression: "form.okg"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              min: "0",
+                              name: "okg",
+                              placeholder: "0",
+                              id: "grid-okg"
+                            },
+                            domProps: { value: _vm.form.okg },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "okg", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("okg")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("okg")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-white-index" }
+                            },
+                            [_vm._v("Индекс Белого")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.white_index,
+                                expression: "form.white_index"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              min: "0",
+                              name: "white_index",
+                              placeholder: "0",
+                              id: "grid-white-index"
+                            },
+                            domProps: { value: _vm.form.white_index },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "white_index",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("white_index")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("white_index")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-efficiency" }
+                            },
+                            [_vm._v("Эффективность (%)")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.efficiency,
+                                expression: "form.efficiency"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              name: "efficiency",
+                              placeholder: "0",
+                              id: "grid-efficiency"
+                            },
+                            domProps: { value: _vm.form.efficiency },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "efficiency",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("efficiency")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("efficiency")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-points" }
+                            },
+                            [_vm._v("Общий балл")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.points,
+                                expression: "form.points"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              min: "0",
+                              name: "points",
+                              placeholder: "0",
+                              id: "grid-points"
+                            },
+                            domProps: { value: _vm.form.points },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "points",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("points")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("points")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("results-list-form", {
+        attrs: { results: _vm.resultsList },
+        on: { resultDeleted: _vm.deleteResult }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "border-b" }, [
+      _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
+        _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
+          _vm._v("Ввести результаты")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-3" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Ввести")]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "w-full px-4 mb-4" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "bg-white border-t border-b sm:rounded sm:border shadow min-h-full"
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-8 pt-6 pb-8 mb-4 flex flex-col my-2" }, [
+          _c(
+            "table",
+            { staticClass: "w-full text-md bg-white shadow-md rounded mb-4" },
+            [
+              _c(
+                "tbody",
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._l(_vm.results, function(result) {
+                    return _c(
+                      "tr",
+                      {
+                        key: result.id,
+                        staticClass: "border-b hover:bg-orange-100 bg-gray-100"
+                      },
+                      [
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(result.game.display_name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(result.team.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(_vm.displayAverage(result.okg)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(_vm.displayAverage(result.white_index)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(
+                            _vm._s(_vm.displayPercentage(result.efficiency)) +
+                              "%"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(_vm.displayAverage(result.points)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteResult(result.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "border-b" }, [
+      _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
+        _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
+          _vm._v("Результаты")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-3" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticClass: "border-b" }, [
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Игра")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Команда")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("ОКГ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("И. Б.")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Эффект. (%)")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Общий балл")]),
       _vm._v(" "),
       _c("th")
     ])
@@ -17532,6 +18577,7 @@ Vue.component('statistics-videos', __webpack_require__(/*! ./components/Statisti
 Vue.component('data-card', __webpack_require__(/*! ./components/DataCard */ "./resources/js/components/DataCard.vue")["default"]);
 Vue.component('game-form', __webpack_require__(/*! ./components/GameForm */ "./resources/js/components/GameForm.vue")["default"]);
 Vue.component('team-form', __webpack_require__(/*! ./components/TeamForm */ "./resources/js/components/TeamForm.vue")["default"]);
+Vue.component('result-form', __webpack_require__(/*! ./components/ResultForm */ "./resources/js/components/ResultForm.vue")["default"]);
 Vue.component('flash', __webpack_require__(/*! ./components/Flash */ "./resources/js/components/Flash.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17931,6 +18977,144 @@ component.options.__file = "resources/js/components/NavHeader.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NavHeader.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavHeader.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavHeader_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultForm.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/ResultForm.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultForm.vue?vue&type=template&id=197e76ac& */ "./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac&");
+/* harmony import */ var _ResultForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultForm.vue?vue&type=script&lang=js& */ "./resources/js/components/ResultForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ResultForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ResultForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/ResultForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultForm.vue?vue&type=template&id=197e76ac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultForm_vue_vue_type_template_id_197e76ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultsListForm.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ResultsListForm.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultsListForm.vue?vue&type=template&id=19300606& */ "./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606&");
+/* harmony import */ var _ResultsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultsListForm.vue?vue&type=script&lang=js& */ "./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ResultsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ResultsListForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultsListForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultsListForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultsListForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ResultsListForm.vue?vue&type=template&id=19300606& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultsListForm.vue?vue&type=template&id=19300606&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultsListForm_vue_vue_type_template_id_19300606___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -18375,6 +19559,10 @@ function () {
   _createClass(Errors, [{
     key: "has",
     value: function has(field) {
+      if (!this.errors) {
+        return false;
+      }
+
       return this.errors.hasOwnProperty(field);
     }
   }, {
