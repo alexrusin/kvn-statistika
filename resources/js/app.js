@@ -35,6 +35,7 @@ Vue.component('team-form', require('./components/TeamForm').default);
 Vue.component('result-form', require('./components/ResultForm').default);
 Vue.component('video-form', require('./components/VideoForm').default);
 Vue.component('flash', require('./components/Flash').default);
+Vue.component('tooltip', require('./components/Tooltip').default);
 
 
 /**
