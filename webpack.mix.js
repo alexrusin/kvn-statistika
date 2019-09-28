@@ -18,3 +18,7 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
         require('postcss-nested')
     ]);
+
+if (mix.inProduction()) {
+    mix.version(['public/js', 'public/css']);
+}
