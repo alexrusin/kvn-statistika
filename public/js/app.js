@@ -2713,10 +2713,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      tooltips: ['showOkgTooltip', 'showWhiteTooltip', 'showEfficiencyTooltip'],
       showOkgTooltip: false,
       showWhiteTooltip: false,
       showEfficiencyTooltip: false
     };
+  },
+  methods: {
+    toggleTooltip: function toggleTooltip(tooltip) {
+      var _this = this;
+
+      if (this[tooltip] === true) {
+        this[tooltip] = false;
+      } else {
+        this.tooltips.forEach(function (tip) {
+          return _this[tip] = false;
+        });
+        this[tooltip] = true;
+      }
+    }
   }
 });
 
@@ -6186,7 +6201,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        _vm.showOkgTooltip = !_vm.showOkgTooltip
+                        return _vm.toggleTooltip("showOkgTooltip")
                       }
                     }
                   },
@@ -6233,7 +6248,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        _vm.showEfficiencyTooltip = !_vm.showEfficiencyTooltip
+                        return _vm.toggleTooltip("showEfficiencyTooltip")
                       }
                     }
                   },
@@ -6281,7 +6296,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        _vm.showWhiteTooltip = !_vm.showWhiteTooltip
+                        return _vm.toggleTooltip("showWhiteTooltip")
                       }
                     }
                   },
