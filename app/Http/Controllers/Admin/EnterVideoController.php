@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TeamRequest;
-use App\Models\Team;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\VideoRequest;
+use App\Models\Video;
 
-class EnterTeamController extends Controller
+class EnterVideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class EnterTeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::take(200)
+        $videos = Video::take(200)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.enter-team', compact('teams'));
+        return view('admin.enter-video', compact('videos'));
     }
 
     /**
@@ -39,12 +39,11 @@ class EnterTeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamRequest $request)
+    public function store(VideoRequest $request)
     {
-     
-        $team = Team::create($request->all());
+        $video = Video::create($request->only('title', 'youtube_id'));
         
-        return response(['message' => 'Команда сохранена', 'alertType' => 'success', 'team' => $team]);
+        return response(['message' => 'Видео сохранено', 'alertType' => 'success', 'video' => $video]);
     }
 
     /**
@@ -87,16 +86,10 @@ class EnterTeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy(Video $video)
     {
-       $count = $team->teamGames()->count();
+        $video->delete();
 
-       if ($count) {
-         return response(['message' => 'У этой команды есть результаты. Удалите вначале результаты', 'alertType' => 'danger'], 400);
-       }
-
-       $team->delete();
-
-       return response(['message' => 'Команда удалена', 'alertType' => 'success']);
+        return response(['message' => 'Видео удалено', 'alertType' => 'success']);
     }
 }

@@ -45,7 +45,11 @@ Route::namespace('Admin')
 
                 Route::get('results', 'EnterResultController@index')->name('results');
                 Route::post('results', 'EnterResultController@store')->name('results.store');
-                Route::delete('results/{result}', 'EnterresultController@destroy')->name('results.destroy');
+                Route::delete('results/{result}', 'EnterResultController@destroy')->name('results.destroy');
+
+                Route::get('videos', 'EnterVideoController@index')->name('videos');
+                Route::post('videos', 'EnterVideoController@store')->name('videos.store');
+                Route::delete('videos/{video}', 'EnterVideoController@destroy')->name('videos.destroy');
             });
         
 });
