@@ -2824,6 +2824,10 @@ __webpack_require__.r(__webpack_exports__);
       return this.selectedTeams.includes(team);
     },
     add: function add(team) {
+      if (this.isComparing) {
+        return;
+      }
+
       if (this.selectedTeams.length < 3) {
         this.selectedTeams.push(team);
       }
@@ -6550,46 +6554,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.selectedTeams.length > 0 || _vm.isComparing
-      ? _c("div", { staticClass: "bg-teal-200 border-b" }, [
-          _c("div", { staticClass: "container mx-auto" }, [
-            _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
-              _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
-                _vm._v("Выберите команды")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mt-3" }, [
-                !_vm.isComparing
-                  ? _c(
-                      "button",
-                      {
-                        staticClass:
-                          "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
-                        class:
-                          _vm.selectedTeams.length <= 1
-                            ? "opacity-50 cursor-not-allowed"
-                            : "",
-                        attrs: { type: "button" },
-                        on: { click: _vm.compareTeams }
-                      },
-                      [_vm._v("Сравнить")]
-                    )
-                  : _c(
-                      "button",
-                      {
-                        staticClass:
-                          "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
-                        attrs: { type: "button" },
-                        on: { click: _vm.cancelCompare }
-                      },
-                      [_vm._v("Очистить")]
-                    )
-              ])
-            ])
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
     _c(
       "div",
       { staticClass: "flex flex-wrap -mx-1 lg:-mx-4" },
@@ -6601,7 +6565,47 @@ var render = function() {
         })
       }),
       1
-    )
+    ),
+    _vm._v(" "),
+    _vm.selectedTeams.length > 0 || _vm.isComparing
+      ? _c("div", { staticClass: "alert-flash p-4 bg-teal-200 border-b" }, [
+          _c("div", { staticClass: "flex" }, [
+            !_vm.isComparing
+              ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
+                  _vm._v("Выберите команды")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", [
+              !_vm.isComparing
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+                      class:
+                        _vm.selectedTeams.length <= 1
+                          ? "opacity-50 cursor-not-allowed"
+                          : "",
+                      attrs: { type: "button" },
+                      on: { click: _vm.compareTeams }
+                    },
+                    [_vm._v("Сравнить")]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass:
+                        "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+                      attrs: { type: "button" },
+                      on: { click: _vm.cancelCompare }
+                    },
+                    [_vm._v("Очистить")]
+                  )
+            ])
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
