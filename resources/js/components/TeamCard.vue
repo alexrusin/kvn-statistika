@@ -1,8 +1,11 @@
 <template>
  <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
     <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-        <div class="pb-2/3">
-            <img class="h-full w-full object-cover" :src="team.image_url" :alt="team.name">
+        <div class="pb-2/3 relative cursor-pointer" @click="teamClicked">
+            <img class="h-full w-full object-cover" :class="selected ? 'opacity-50' : 'opacity-100'" :src="team.image_url" :alt="team.name">
+            <svg v-if="selected" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="w-6 absolute position-check fill-current text-gray-800">
+                <path d="M8.294 16.998c-.435 0-.847-.203-1.111-.553L3.61 11.724a1.392 1.392 0 0 1 .27-1.951 1.392 1.392 0 0 1 1.953.27l2.351 3.104 5.911-9.492a1.396 1.396 0 0 1 1.921-.445c.653.406.854 1.266.446 1.92L9.478 16.34a1.39 1.39 0 0 1-1.12.656c-.022.002-.042.002-.064.002z"/>
+            </svg>
         </div>
         <div class="p-6">
             <div class="flex items-baseline">
@@ -51,7 +54,7 @@
 
 <script>
 export default {
-    props: ['team'],
+    props: ['team', 'selected'],
     computed: {
         efficiency() {
             return (this.team.team_games_average.avg_efficiency * 100).toFixed(1).replace('.', ',');
@@ -87,7 +90,22 @@ export default {
                 this.tooltips.forEach((tip) => this[tip] = false);
                 this[tooltip] = true;
             }
+        },
+
+        teamClicked() {
+            if (this.selected) {
+                this.$emit('deselected', this.team);
+            } else {
+                this.$emit('selected', this.team);
+            }
         }
     }
 }
 </script>
+
+<style type="text/css">
+.position-check {
+  top: 3%;
+  left: 2%;
+}
+</style>
