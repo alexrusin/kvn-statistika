@@ -2836,23 +2836,26 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     window.events.$on('searchTeam', function (teamSearch) {
-      _this.theTeams = _this.teams.filter(function (team) {
-        return team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase());
-      });
+      if (!_this.isComparing) {
+        _this.theTeams = _this.teams.filter(function (team) {
+          return team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase());
+        });
+      }
     });
   },
   methods: {
     compareTeams: function compareTeams() {
       if (this.selectedTeams.length > 1) {
-        window.events.$emit('compareMode', true);
         this.isComparing = true;
         this.theTeams = this.selectedTeams;
         this.selectedTeams = [];
+        window.events.$emit('compareMode', true);
       }
     },
     cancelCompare: function cancelCompare() {
       this.theTeams = this.teams;
       this.isComparing = false;
+      this.selectedTeams = [];
       window.events.$emit('compareMode', false);
     },
     teamSelected: function teamSelected(team) {

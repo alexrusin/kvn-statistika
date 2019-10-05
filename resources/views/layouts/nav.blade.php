@@ -106,7 +106,7 @@
         </div>
         <div class="relative w-full bg-white shadow-xl" id="search-content">
             <div v-if="showSearch" class="container mx-auto p-4 text-black">
-                <input id="searchfield" type="search" placeholder="Search..." autofocus="autofocus" v-model="searchText"
+                <input id="searchfield" type="search" placeholder="Поиск..." autofocus="autofocus" v-model="searchText"
                     class="w-full text-gray-800 transition focus:outline-none focus:border-transparent appearance-none leading-normal text-lg">
             </div>
         </div>

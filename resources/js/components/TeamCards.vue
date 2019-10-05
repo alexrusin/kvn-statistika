@@ -51,23 +51,27 @@ export default {
 
   created() {
     window.events.$on('searchTeam', teamSearch => {
-      this.theTeams = this.teams.filter(team => team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase()));
+      if (!this.isComparing) {
+        this.theTeams = this.teams.filter(team => team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase()));
+      }
+      
     });
   },
 
   methods: {
     compareTeams() {
       if (this.selectedTeams.length > 1) {
-        window.events.$emit('compareMode', true);
         this.isComparing = true;
         this.theTeams = this.selectedTeams;
         this.selectedTeams = [];
+        window.events.$emit('compareMode', true);
       }
     },
 
     cancelCompare() {
       this.theTeams = this.teams;
       this.isComparing = false;
+      this.selectedTeams = [];
       window.events.$emit('compareMode', false);
     },
 
