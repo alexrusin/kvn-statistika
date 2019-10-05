@@ -36,7 +36,8 @@
                             <div v-cloak class="absolute bg-blue-dark items-center pt-4 w-full"
                                 :class="showSubMenu ? 'visible' : 'invisible'">
                                 <a href="{{ route('dashboard') }}"
-                                    class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Панель управл.</a>
+                                    class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Панель
+                                    управл.</a>
                                 @if(auth()->user()->is_admin)
                                 <a href="{{ route('admin.enter-data.index') }}"
                                     class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Ввод
@@ -63,30 +64,50 @@
         </div>
         <div class="md:block bg-blue-dark block bg-white border-b" :class="showMenu ? '' : 'hidden'">
             <div class="container mx-auto px-4">
-                <div class="flex">
-                    <div class="flex -mb-px mr-8">
-                        <a href="{{ route('statistics.teams') }}"
-                            class="no-underline {{ request()->routeIs('statistics.teams') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
-                            <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M15.989 19.129c0-2.246-2.187-3.389-4.317-4.307-2.123-.914-2.801-1.684-2.801-3.334 0-.989.648-.667.932-2.481.12-.752.692-.012.802-1.729 0-.684-.313-.854-.313-.854s.159-1.013.221-1.793c.064-.817-.398-2.56-2.301-3.095-.332-.341-.557-.882.467-1.424-2.24-.104-2.761 1.068-3.954 1.93-1.015.756-1.289 1.953-1.24 2.59.065.78.223 1.793.223 1.793s-.314.17-.314.854c.11 1.718.684.977.803 1.729.284 1.814.933 1.492.933 2.481 0 1.65-.212 2.21-2.336 3.124C.663 15.53 0 17 .011 19.129.014 19.766 0 20 0 20h16s-.011-.234-.011-.871zm2.539-5.764c-1.135-.457-1.605-1.002-1.605-2.066 0-.641.418-.432.602-1.603.077-.484.447-.008.518-1.115 0-.441-.202-.551-.202-.551s.103-.656.143-1.159c.05-.627-.364-2.247-2.268-2.247-1.903 0-2.318 1.62-2.269 2.247.042.502.144 1.159.144 1.159s-.202.109-.202.551c.071 1.107.441.631.518 1.115.184 1.172.602.963.602 1.603 0 1.064-.438 1.562-1.809 2.152-.069.029-.12.068-.183.102 1.64.712 4.226 1.941 4.838 4.447H20v-2.318c0-1-.273-1.834-1.472-2.317z" />
-                            </svg>
-                            Команды
-                        </a>
+                <div class="flex justify-between">
+                    <div class="flex">
+                        <div class="flex -mb-px mr-8">
+                            <a href="{{ route('statistics.teams') }}"
+                                class="no-underline {{ request()->routeIs('statistics.teams') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
+                                <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M15.989 19.129c0-2.246-2.187-3.389-4.317-4.307-2.123-.914-2.801-1.684-2.801-3.334 0-.989.648-.667.932-2.481.12-.752.692-.012.802-1.729 0-.684-.313-.854-.313-.854s.159-1.013.221-1.793c.064-.817-.398-2.56-2.301-3.095-.332-.341-.557-.882.467-1.424-2.24-.104-2.761 1.068-3.954 1.93-1.015.756-1.289 1.953-1.24 2.59.065.78.223 1.793.223 1.793s-.314.17-.314.854c.11 1.718.684.977.803 1.729.284 1.814.933 1.492.933 2.481 0 1.65-.212 2.21-2.336 3.124C.663 15.53 0 17 .011 19.129.014 19.766 0 20 0 20h16s-.011-.234-.011-.871zm2.539-5.764c-1.135-.457-1.605-1.002-1.605-2.066 0-.641.418-.432.602-1.603.077-.484.447-.008.518-1.115 0-.441-.202-.551-.202-.551s.103-.656.143-1.159c.05-.627-.364-2.247-2.268-2.247-1.903 0-2.318 1.62-2.269 2.247.042.502.144 1.159.144 1.159s-.202.109-.202.551c.071 1.107.441.631.518 1.115.184 1.172.602.963.602 1.603 0 1.064-.438 1.562-1.809 2.152-.069.029-.12.068-.183.102 1.64.712 4.226 1.941 4.838 4.447H20v-2.318c0-1-.273-1.834-1.472-2.317z" />
+                                </svg>
+                                <span class="hidden md:inline">Команды</span>
+                            </a>
+                        </div>
+                        <div class="flex -mb-px mr-8">
+                            <a href="{{ route('statistics.videos') }}"
+                                class="no-underline {{ request()->routeIs('statistics.videos') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
+                                <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M20 5V3.799A.798.798 0 0 0 19.201 3H.801A.8.8 0 0 0 0 3.799V5h2v2H0v2h2v2H0v2h2v2H0v1.199A.8.8 0 0 0 .801 17h18.4a.8.8 0 0 0 .799-.801V15h-2v-2h2v-2h-2V9h2V7h-2V5h2zM8 13V7l5 3-5 3z" />
+                                </svg>
+                                <span class="hidden md:inline">Видео</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="flex -mb-px mr-8">
-                        <a href="{{ route('statistics.videos') }}"
-                            class="no-underline {{ request()->routeIs('statistics.videos') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
-                            <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20">
+
+                    <div class="pl-4 flex items-center">
+                        <div id="search-toggle" @click="showSearch=!showSearch" v-show="!isComparing"
+                            class="search-icon cursor-pointer pl-6 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}">
+                            <svg class="fill-current pointer-events-none text-grey-darkest w-4 h-4 inline"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path
-                                    d="M20 5V3.799A.798.798 0 0 0 19.201 3H.801A.8.8 0 0 0 0 3.799V5h2v2H0v2h2v2H0v2h2v2H0v1.199A.8.8 0 0 0 .801 17h18.4a.8.8 0 0 0 .799-.801V15h-2v-2h2v-2h-2V9h2V7h-2V5h2zM8 13V7l5 3-5 3z" />
+                                    d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
+                                </path>
                             </svg>
-                            Видео
-                        </a>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="relative w-full bg-white shadow-xl" id="search-content">
+            <div v-if="showSearch" class="container mx-auto p-4 text-black">
+                <input id="searchfield" type="search" placeholder="Search..." autofocus="autofocus" v-model="searchText"
+                    class="w-full text-gray-800 transition focus:outline-none focus:border-transparent appearance-none leading-normal text-lg">
             </div>
         </div>
     </div>

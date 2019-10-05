@@ -49,9 +49,16 @@ export default {
     };
   },
 
+  created() {
+    window.events.$on('searchTeam', teamSearch => {
+      this.theTeams = this.teams.filter(team => team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase()));
+    });
+  },
+
   methods: {
     compareTeams() {
       if (this.selectedTeams.length > 1) {
+        window.events.$emit('compareMode', true);
         this.isComparing = true;
         this.theTeams = this.selectedTeams;
         this.selectedTeams = [];
@@ -61,6 +68,7 @@ export default {
     cancelCompare() {
       this.theTeams = this.teams;
       this.isComparing = false;
+      window.events.$emit('compareMode', false);
     },
 
     teamSelected(team) {

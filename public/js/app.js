@@ -2224,8 +2224,29 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       showMenu: false,
-      showSubMenu: false
+      showSubMenu: false,
+      showSearch: false,
+      searchText: '',
+      isComparing: false
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    window.events.$on('compareMode', function (booleanValue) {
+      if (booleanValue) {
+        _this.showSearch = false;
+        _this.isComparing = true;
+        _this.searchText = '';
+      } else {
+        _this.isComparing = false;
+      }
+    });
+  },
+  watch: {
+    searchText: function searchText(newValue, oldValue) {
+      window.events.$emit('searchTeam', newValue);
+    }
   }
 });
 
@@ -2698,6 +2719,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['team', 'selected'],
   computed: {
@@ -2808,9 +2832,19 @@ __webpack_require__.r(__webpack_exports__);
       isComparing: false
     };
   },
+  created: function created() {
+    var _this = this;
+
+    window.events.$on('searchTeam', function (teamSearch) {
+      _this.theTeams = _this.teams.filter(function (team) {
+        return team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase());
+      });
+    });
+  },
   methods: {
     compareTeams: function compareTeams() {
       if (this.selectedTeams.length > 1) {
+        window.events.$emit('compareMode', true);
         this.isComparing = true;
         this.theTeams = this.selectedTeams;
         this.selectedTeams = [];
@@ -2819,6 +2853,7 @@ __webpack_require__.r(__webpack_exports__);
     cancelCompare: function cancelCompare() {
       this.theTeams = this.teams;
       this.isComparing = false;
+      window.events.$emit('compareMode', false);
     },
     teamSelected: function teamSelected(team) {
       return this.selectedTeams.includes(team);
@@ -6302,6 +6337,29 @@ var render = function() {
                           d:
                             "M8.294 16.998c-.435 0-.847-.203-1.111-.553L3.61 11.724a1.392 1.392 0 0 1 .27-1.951 1.392 1.392 0 0 1 1.953.27l2.351 3.104 5.911-9.492a1.396 1.396 0 0 1 1.921-.445c.653.406.854 1.266.446 1.92L9.478 16.34a1.39 1.39 0 0 1-1.12.656c-.022.002-.042.002-.064.002z"
                         }
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.selected
+                ? _c(
+                    "svg",
+                    {
+                      staticClass: "w-8 absolute position-check",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20"
+                      }
+                    },
+                    [
+                      _c("rect", {
+                        staticStyle: {
+                          fill: "rgba(255,255,255,.75)",
+                          "stroke-width": "1",
+                          stroke: "rgb(21,22,25)"
+                        },
+                        attrs: { width: "10", height: "10" }
                       })
                     ]
                   )
