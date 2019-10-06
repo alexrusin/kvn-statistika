@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-cloak class="absolute bg-blue-dark items-center pt-4 w-full"
+                            <div v-cloak class="absolute bg-blue-dark items-center pt-4 w-full z-10"
                                 :class="showSubMenu ? 'visible' : 'invisible'">
                                 <a href="{{ route('dashboard') }}"
                                     class="px-3 py-2 block text-white hover:text-gray-800 hover:bg-blue-500">Панель
