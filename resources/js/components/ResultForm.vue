@@ -186,6 +186,49 @@
                 ></p>
               </div>
             </div>
+             <div class="flex flex-wrap mb-2">
+              <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                <label
+                  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  for="grid-time"
+                >Время в игре (сек.)</label>
+                <input
+                  v-model="form.time"
+                  type="number"
+                  step="1"
+                  name="time"
+                  placeholder="0"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-time"
+                />
+                <p
+                  class="text-red-500 text-xs italic"
+                  v-if="form.errors.has('time')"
+                  v-text="form.errors.get('time')"
+                ></p>
+              </div>
+              <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+                <label
+                  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  for="grid-peoples_points"
+                >Народный балл (по <a href="https://www.youtube.com/playlist?list=PL5HiD4fCJJsD5P8uOKm3XxHsve5ner5Sm" target="_blank" class="text-blue-500">Veksadas</a>)</label>
+                <input
+                  v-model="form.peoples_points"
+                  type="number"
+                  step=".1"
+                  min="0"
+                  name="peoples_points"
+                  placeholder="0"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-peoples_points"
+                />
+                <p
+                  class="text-red-500 text-xs italic"
+                  v-if="form.errors.has('peoples_points')"
+                  v-text="form.errors.get('peoples_points')"
+                ></p>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -210,7 +253,9 @@ export default {
         okg: "",
         white_index: "",
         efficiency: "",
-        points: ""
+        points: "",
+        time: "",
+        peoples_points: ""
       })
     };
   },

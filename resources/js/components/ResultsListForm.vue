@@ -16,7 +16,9 @@
               <th class="text-left p-3 px-5">ОКГ</th>
               <th class="text-left p-3 px-5">И. Б.</th>
               <th class="text-left p-3 px-5">Эффект. (%)</th>
-              <th class="text-left p-3 px-5">Общий балл</th>
+              <th class="text-left p-3 px-5">Время</th>
+              <th class="text-left p-3 px-5">Суд. балл</th>
+              <th class="text-left p-3 px-5">Народный балл</th>
               <th></th>
             </tr>
             <tr
@@ -29,7 +31,9 @@
               <td class="p-3 px-5">{{ displayAverage(result.okg) }}</td>
               <td class="p-3 px-5">{{ displayAverage(result.white_index) }}</td>
               <td class="p-3 px-5">{{ displayPercentage(result.efficiency)}}%</td>
+              <td class="p-3 px-5">{{ result.time ? result.time : 'N/A'}}</td>
               <td class="p-3 px-5">{{ displayAverage(result.points) }}</td>
+              <td class="p-3 px-5">{{ displayAverage(result.peoples_points) }}</td>
               <td class="p-3 px-5 flex justify-end">
                 <button
                   type="button"

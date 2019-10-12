@@ -2459,6 +2459,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2475,7 +2518,9 @@ __webpack_require__.r(__webpack_exports__);
         okg: "",
         white_index: "",
         efficiency: "",
-        points: ""
+        points: "",
+        time: "",
+        peoples_points: ""
       })
     };
   },
@@ -2517,6 +2562,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/functions */ "./resources/js/utils/functions.js");
+//
+//
+//
+//
 //
 //
 //
@@ -2722,6 +2771,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['team', 'selected'],
   computed: {
@@ -2736,14 +2792,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     points: function points() {
       return (this.team.team_games_average.avg_points * 1).toFixed(1).replace('.', ',');
+    },
+    peoplesPoints: function peoplesPoints() {
+      return (this.team.team_games_average.avg_peoples_points * 1).toFixed(1).replace('.', ',');
     }
   },
   data: function data() {
     return {
-      tooltips: ['showOkgTooltip', 'showWhiteTooltip', 'showEfficiencyTooltip'],
+      tooltips: ['showOkgTooltip', 'showWhiteTooltip', 'showEfficiencyTooltip', 'showPeoplesPointsTooltip'],
       showOkgTooltip: false,
       showWhiteTooltip: false,
-      showEfficiencyTooltip: false
+      showEfficiencyTooltip: false,
+      showPeoplesPointsTooltip: false
     };
   },
   methods: {
@@ -6012,6 +6072,117 @@ var render = function() {
                             : _vm._e()
                         ]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-wrap mb-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                              attrs: { for: "grid-time" }
+                            },
+                            [_vm._v("Время в игре (сек.)")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.time,
+                                expression: "form.time"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: "1",
+                              name: "time",
+                              placeholder: "0",
+                              id: "grid-time"
+                            },
+                            domProps: { value: _vm.form.time },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "time", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("time")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("time")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "w-full md:w-1/4 px-3 mb-6 md:mb-0" },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.peoples_points,
+                                expression: "form.peoples_points"
+                              }
+                            ],
+                            staticClass:
+                              "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            attrs: {
+                              type: "number",
+                              step: ".1",
+                              min: "0",
+                              name: "peoples_points",
+                              placeholder: "0",
+                              id: "grid-peoples_points"
+                            },
+                            domProps: { value: _vm.form.peoples_points },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "peoples_points",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.form.errors.has("peoples_points")
+                            ? _c("p", {
+                                staticClass: "text-red-500 text-xs italic",
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.form.errors.get("peoples_points")
+                                  )
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      )
                     ])
                   ]
                 )
@@ -6053,6 +6224,35 @@ var staticRenderFns = [
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass:
+          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+        attrs: { for: "grid-peoples_points" }
+      },
+      [
+        _vm._v("Народный балл (по "),
+        _c(
+          "a",
+          {
+            staticClass: "text-blue-500",
+            attrs: {
+              href:
+                "https://www.youtube.com/playlist?list=PL5HiD4fCJJsD5P8uOKm3XxHsve5ner5Sm",
+              target: "_blank"
+            }
+          },
+          [_vm._v("Veksadas")]
+        ),
+        _vm._v(")")
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -6128,7 +6328,17 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(_vm._s(result.time ? result.time : "N/A"))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
                           _vm._v(_vm._s(_vm.displayAverage(result.points)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "p-3 px-5" }, [
+                          _vm._v(
+                            _vm._s(_vm.displayAverage(result.peoples_points))
+                          )
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
@@ -6190,7 +6400,13 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Эффект. (%)")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Общий балл")]),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Время")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [_vm._v("Суд. балл")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left p-3 px-5" }, [
+        _vm._v("Народный балл")
+      ]),
       _vm._v(" "),
       _c("th")
     ])
@@ -6535,6 +6751,68 @@ var render = function() {
                   [
                     _vm._v(
                       "Равномерность распределения шуток среди участников одной команды"
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-1 relative" },
+              [
+                _vm._v(
+                  "\n               Народный бал: " +
+                    _vm._s(this.peoplesPoints) +
+                    "\n                "
+                ),
+                _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "w-4 inline cursor-pointer fill-current text-teal-700 ml-1",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.toggleTooltip("showPeoplesPointsTooltip")
+                      }
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M10 .4A9.6 9.6 0 0 0 .4 10a9.6 9.6 0 1 0 19.2-.001C19.6 4.698 15.301.4 10 .4zm-.151 15.199h-.051c-.782-.023-1.334-.6-1.311-1.371.022-.758.587-1.309 1.343-1.309l.046.002c.804.023 1.35.594 1.327 1.387-.023.76-.578 1.291-1.354 1.291zm3.291-6.531c-.184.26-.588.586-1.098.983l-.562.387c-.308.24-.494.467-.563.688-.056.174-.082.221-.087.576v.09H8.685l.006-.182c.027-.744.045-1.184.354-1.547.485-.568 1.555-1.258 1.6-1.287a1.65 1.65 0 0 0 .379-.387c.225-.311.324-.555.324-.793 0-.334-.098-.643-.293-.916-.188-.266-.545-.398-1.061-.398-.512 0-.863.162-1.072.496-.216.341-.325.7-.325 1.067v.092H6.386l.004-.096c.057-1.353.541-2.328 1.435-2.897.563-.361 1.264-.544 2.081-.544 1.068 0 1.972.26 2.682.772.721.519 1.086 1.297 1.086 2.311-.001.567-.18 1.1-.534 1.585z"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "tooltip",
+                  {
+                    attrs: {
+                      transition: "fade",
+                      show: _vm.showPeoplesPointsTooltip
+                    }
+                  },
+                  [
+                    _vm._v("По данным Народного Судейства "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-blue-500",
+                        attrs: {
+                          href:
+                            "https://www.youtube.com/channel/UCtCoIu-usWXeHe1uaohUkPA",
+                          target: "_blank"
+                        }
+                      },
+                      [_vm._v("VeksadaS")]
                     )
                   ]
                 )

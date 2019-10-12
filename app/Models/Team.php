@@ -17,7 +17,7 @@ class Team extends Model
 
     public function teamGamesAverage() {
         return $this->hasOne(TeamGame::class)
-            ->selectRaw('team_id, avg(okg) as avg_okg, avg(efficiency) as avg_efficiency, avg(white_index) as avg_white_index, avg(points) as avg_points')
+            ->selectRaw('team_id, avg(okg) as avg_okg, avg(efficiency) as avg_efficiency, avg(white_index) as avg_white_index, avg(points) as avg_points, avg(peoples_points) as avg_peoples_points, avg(time) as avg_time')
             ->groupBy('team_id')
             ->withDefault();
     }
