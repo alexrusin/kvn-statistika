@@ -2778,6 +2778,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['team', 'selected'],
   computed: {
@@ -6750,7 +6751,7 @@ var render = function() {
                   { attrs: { transition: "fade", show: _vm.showWhiteTooltip } },
                   [
                     _vm._v(
-                      "Равномерность распределения шуток среди участников одной команды"
+                      "Равномерность распределения шуток среди участников одной команды. 6 - линия стендапа"
                     )
                   ]
                 )
@@ -6763,10 +6764,14 @@ var render = function() {
               { staticClass: "mt-1 relative" },
               [
                 _vm._v(
-                  "\n               Народный бал: " +
+                  "\n               Народная оценка: " +
                     _vm._s(this.peoplesPoints) +
                     "\n                "
                 ),
+                _c("span", { staticClass: "text-gray-600 text-sm" }, [
+                  _vm._v(" / игру ")
+                ]),
+                _vm._v(" "),
                 _c(
                   "svg",
                   {
