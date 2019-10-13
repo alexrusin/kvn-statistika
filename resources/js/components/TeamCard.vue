@@ -54,7 +54,7 @@
             </div>
             <div class="mt-2 flex items-center">
                 Рейтинг: &nbsp;
-                <svg v-for="i in 5" :key="i" :class="i <= team.rating ? 'text-teal-500' : 'text-gray-400'" class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg v-for="i in 5" :key="i" :class="i <= rating ? 'text-teal-500' : 'text-gray-400'" class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M10 1.3l2.388 6.722H18.8l-5.232 3.948 1.871 6.928L10 14.744l-5.438 4.154 1.87-6.928-5.233-3.948h6.412L10 1.3z"/>
                 </svg>
             </div>
@@ -85,6 +85,14 @@ export default {
 
         peoplesPoints() {
             return (this.team.team_games_average.avg_peoples_points * 1).toFixed(1).replace('.', ',');
+        },
+
+        rating() {
+            if (!this.team.team_games_average.avg_time) return this.team.rating;
+            let rating = Math.round(this.team.team_games_average.avg_okg * 60 / this.team.team_games_average.avg_time * 8);
+            if (rating > 5) return 5;
+            return rating;
+
         }
     },
 

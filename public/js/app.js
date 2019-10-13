@@ -2796,6 +2796,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     peoplesPoints: function peoplesPoints() {
       return (this.team.team_games_average.avg_peoples_points * 1).toFixed(1).replace('.', ',');
+    },
+    rating: function rating() {
+      if (!this.team.team_games_average.avg_time) return this.team.rating;
+      var rating = Math.round(this.team.team_games_average.avg_okg * 60 / this.team.team_games_average.avg_time * 8);
+      if (rating > 5) return 5;
+      return rating;
     }
   },
   data: function data() {
@@ -6848,9 +6854,7 @@ var render = function() {
                       key: i,
                       staticClass: "h-4 w-4 fill-current",
                       class:
-                        i <= _vm.team.rating
-                          ? "text-teal-500"
-                          : "text-gray-400",
+                        i <= _vm.rating ? "text-teal-500" : "text-gray-400",
                       attrs: {
                         xmlns: "http://www.w3.org/2000/svg",
                         viewBox: "0 0 20 20"
