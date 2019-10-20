@@ -9,7 +9,7 @@ class TeamsController
     public function index()
     {
         $teams = Team::with('teamGamesAverage')
-            ->take(100)
+            ->take(200)
             ->get();
         return view('statistics.teams', compact('teams'));
     }

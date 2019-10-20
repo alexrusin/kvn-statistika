@@ -15,6 +15,7 @@
     "eslint": "^6.4.0",
     "eslint-plugin-vue": "^5.2.3",
     "laravel-mix": "^4.0.7",
+    "laravel-mix-purgecss": "^4.2.0",
     "resolve-url-loader": "^2.3.1",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.6.10"
