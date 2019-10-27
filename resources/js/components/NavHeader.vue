@@ -6,7 +6,7 @@ export default {
             showSubMenu: false,
             showSearch: false,
             searchText: '',
-            isComparing: false
+            isComparing: false,
         };
     },
 
@@ -25,6 +25,12 @@ export default {
     watch: {
         searchText(newValue, oldValue) {
             window.events.$emit('searchTeam', newValue);
+        }
+    },
+
+    methods: {
+        sort() {
+            window.events.$emit('sortData');
         }
     }
 }

@@ -82,7 +82,8 @@
                                 class="no-underline {{ request()->routeIs('statistics.games') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
-                                    <path d="M11.18 14.356c0-1.451 1.1-2.254 2.894-3.442C16.268 9.458 19 7.649 19 3.354a.703.703 0 0 0-.709-.699h-3.43C14.377 1.759 12.932.8 10 .8c-2.934 0-4.377.959-4.862 1.855H1.707A.703.703 0 0 0 1 3.354c0 4.295 2.73 6.104 4.926 7.559 1.794 1.188 2.894 1.991 2.894 3.442v1.311c-1.884.209-3.269.906-3.269 1.736 0 .994 1.992 1.799 4.449 1.799s4.449-.805 4.449-1.799c0-.83-1.385-1.527-3.269-1.736v-1.31zM13.957 9.3c.566-1.199 1.016-2.826 1.088-5.246h2.51c-.24 2.701-1.862 4.064-3.598 5.246zM10 2.026c2.732-.002 3.799 1.115 3.798 1.529 0 .418-1.066 1.533-3.798 1.535-2.732-.001-3.799-1.116-3.799-1.534C6.2 3.142 7.268 2.024 10 2.026zM2.445 4.054h2.509c.073 2.42.521 4.047 1.089 5.246-1.736-1.182-3.359-2.545-3.598-5.246z"/>
+                                    <path
+                                        d="M11.18 14.356c0-1.451 1.1-2.254 2.894-3.442C16.268 9.458 19 7.649 19 3.354a.703.703 0 0 0-.709-.699h-3.43C14.377 1.759 12.932.8 10 .8c-2.934 0-4.377.959-4.862 1.855H1.707A.703.703 0 0 0 1 3.354c0 4.295 2.73 6.104 4.926 7.559 1.794 1.188 2.894 1.991 2.894 3.442v1.311c-1.884.209-3.269.906-3.269 1.736 0 .994 1.992 1.799 4.449 1.799s4.449-.805 4.449-1.799c0-.83-1.385-1.527-3.269-1.736v-1.31zM13.957 9.3c.566-1.199 1.016-2.826 1.088-5.246h2.51c-.24 2.701-1.862 4.064-3.598 5.246zM10 2.026c2.732-.002 3.799 1.115 3.798 1.529 0 .418-1.066 1.533-3.798 1.535-2.732-.001-3.799-1.116-3.799-1.534C6.2 3.142 7.268 2.024 10 2.026zM2.445 4.054h2.509c.073 2.42.521 4.047 1.089 5.246-1.736-1.182-3.359-2.545-3.598-5.246z" />
                                 </svg>
                                 <span class="hidden md:inline">Игры</span>
                             </a>
@@ -110,13 +111,20 @@
                                 </path>
                             </svg>
                         </div>
+                        <div @click="sort" class="cursor-pointer pl-2 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                class="fill-current pointer-events-none text-grey-darkest w-4 h-4">
+                                <path d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="relative w-full bg-white shadow-xl" id="search-content">
+        <div class="relative w-full bg-white shadow-xl" id="search-content" v-cloak>
             <div v-if="showSearch" class="container mx-auto p-4 text-black">
-                <input id="searchfield" type="search" placeholder="Поиск..." autofocus="autofocus" v-model="searchText"
+                <input id="searchfield" type="search" placeholder="Поиск..." :autofocus="showSearch"
+                    v-model="searchText"
                     class="w-full text-gray-800 transition focus:outline-none focus:border-transparent appearance-none leading-normal text-lg">
             </div>
         </div>
