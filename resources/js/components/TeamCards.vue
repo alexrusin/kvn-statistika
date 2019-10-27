@@ -59,13 +59,14 @@ export default {
 
     window.events.$on('sortData', () => {
       this.teams = this.teams.sort((a, b) => {
-        if (this.sortType === 'desc') {
-            return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
-        } else {
-            return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
-        }
+          if (this.sortType === 'desc') {
+              return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
+          } else {
+              return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
+          }
+      });
+    this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
     });
-    })
   },
 
   methods: {
