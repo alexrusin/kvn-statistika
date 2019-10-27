@@ -83,7 +83,6 @@ export default {
       this.theTeams = this.teams;
       this.isComparing = false;
       this.selectedTeams = [];
-      this.sortType = 'desc';
       window.events.$emit('compareMode', false);
     },
 
