@@ -14,7 +14,7 @@
         
     </head>
     <body class="flex items-center justify-center text-gray-800" style="background: #edf2f7;">
-        <div id="app" class="font-sans bg-grey-lighter flex flex-col min-h-screen w-full">
+        <div id="app" class="font-sans bg-grey-lighter flex flex-col min-h-screen w-full relative">
             @include('layouts.nav')
             <div class="flex-grow container mx-auto px-4 pt-6 pb-8">
                @yield('content')
