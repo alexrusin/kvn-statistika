@@ -51,6 +51,8 @@ class Game extends Model
 
         $name .= $this->season . ' г.';
 
+        $name = str_replace('Третья 1/2', 'Кубок мэра Москвы', $name);
+
         return $name;
     }
 }
