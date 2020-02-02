@@ -3073,12 +3073,13 @@ __webpack_require__.r(__webpack_exports__);
       theTeams: this.teams,
       selectedTeams: [],
       isComparing: false,
-      sortType: 'asc'
+      sortType: 'desc'
     };
   },
   created: function created() {
     var _this = this;
 
+    this.sortTeams();
     window.events.$on('searchTeam', function (teamSearch) {
       if (!_this.isComparing) {
         _this.theTeams = _this.teams.filter(function (team) {
@@ -3086,18 +3087,21 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     });
-    window.events.$on('sortData', function () {
-      _this.theTeams = _this.theTeams.sort(function (a, b) {
-        if (_this.sortType === 'desc') {
+    window.events.$on('sortData', this.sortTeams);
+  },
+  methods: {
+    sortTeams: function sortTeams() {
+      var _this2 = this;
+
+      this.theTeams = this.theTeams.sort(function (a, b) {
+        if (_this2.sortType === 'desc') {
           return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         } else {
           return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         }
       });
-      _this.sortType = _this.sortType == 'desc' ? 'asc' : 'desc';
-    });
-  },
-  methods: {
+      this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
+    },
     compareTeams: function compareTeams() {
       if (this.selectedTeams.length > 1) {
         this.isComparing = true;

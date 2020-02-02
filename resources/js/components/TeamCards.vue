@@ -46,19 +46,24 @@ export default {
       theTeams: this.teams,
       selectedTeams: [],
       isComparing: false,
-      sortType: 'asc'
+      sortType: 'desc'
     };
   },
 
   created() {
+    this.sortTeams();
+
     window.events.$on('searchTeam', teamSearch => {
       if (!this.isComparing) {
         this.theTeams = this.teams.filter(team => team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase()));
       }
     });
 
-    window.events.$on('sortData', () => {
-     
+    window.events.$on('sortData', this.sortTeams);
+  },
+
+  methods: {
+    sortTeams() {
       this.theTeams = this.theTeams.sort((a, b) => {
           if (this.sortType === 'desc') {
               return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
@@ -67,10 +72,8 @@ export default {
           }
       });
       this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
-    });
-  },
+    },
 
-  methods: {
     compareTeams() {
       if (this.selectedTeams.length > 1) {
         this.isComparing = true;
