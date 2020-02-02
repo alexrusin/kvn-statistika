@@ -3073,7 +3073,7 @@ __webpack_require__.r(__webpack_exports__);
       theTeams: this.teams,
       selectedTeams: [],
       isComparing: false,
-      sortType: 'desc'
+      sortType: 'asc'
     };
   },
   created: function created() {
@@ -3087,7 +3087,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     window.events.$on('sortData', function () {
-      _this.teams = _this.teams.sort(function (a, b) {
+      _this.theTeams = _this.theTeams.sort(function (a, b) {
         if (_this.sortType === 'desc') {
           return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         } else {
@@ -3693,7 +3693,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".position-check {\n  top: 3%;\n  left: 2%;\n}\r\n", ""]);
+exports.push([module.i, ".position-check {\n  top: 3%;\n  left: 2%;\n}\n.card-image {\n  height: 14em;\n}\r\n", ""]);
 
 // exports
 
@@ -7128,7 +7128,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "pb-2/3 relative cursor-pointer",
+              staticClass: "pb-2/3 relative cursor-pointer card-image",
               on: { click: _vm.teamClicked }
             },
             [

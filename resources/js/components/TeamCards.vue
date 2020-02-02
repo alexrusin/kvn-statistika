@@ -46,7 +46,7 @@ export default {
       theTeams: this.teams,
       selectedTeams: [],
       isComparing: false,
-      sortType: 'desc'
+      sortType: 'asc'
     };
   },
 
@@ -58,14 +58,15 @@ export default {
     });
 
     window.events.$on('sortData', () => {
-      this.teams = this.teams.sort((a, b) => {
+     
+      this.theTeams = this.theTeams.sort((a, b) => {
           if (this.sortType === 'desc') {
               return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
           } else {
               return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
           }
       });
-    this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
+      this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
     });
   },
 
