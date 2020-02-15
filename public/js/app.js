@@ -2303,7 +2303,8 @@ __webpack_require__.r(__webpack_exports__);
       showSubMenu: false,
       showSearch: false,
       searchText: '',
-      isComparing: false
+      isComparing: false,
+      showSortSubMenu: false
     };
   },
   created: function created() {
@@ -2325,8 +2326,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    sort: function sort() {
-      window.events.$emit('sortData');
+    sortAsc: function sortAsc() {
+      window.events.$emit('sortData', 'asc');
+    },
+    sortDesc: function sortDesc() {
+      window.events.$emit('sortData', 'desc');
     }
   }
 });
@@ -2763,6 +2767,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2790,8 +2795,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayPercentage"],
-      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"]
+      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"],
+      modalName: 'teams-game-' + this.game.id
     };
+  },
+  methods: {
+    show: function show() {
+      this.$modal.show(this.modalName);
+    },
+    hide: function hide() {
+      this.$modal.hide(this.modalName);
+    }
   }
 });
 
@@ -3072,14 +3086,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       theTeams: this.teams,
       selectedTeams: [],
-      isComparing: false,
-      sortType: 'desc'
+      isComparing: false
     };
   },
   created: function created() {
     var _this = this;
 
-    this.sortTeams();
+    this.sortTeams('desc');
     window.events.$on('searchTeam', function (teamSearch) {
       if (!_this.isComparing) {
         _this.theTeams = _this.teams.filter(function (team) {
@@ -3090,17 +3103,14 @@ __webpack_require__.r(__webpack_exports__);
     window.events.$on('sortData', this.sortTeams);
   },
   methods: {
-    sortTeams: function sortTeams() {
-      var _this2 = this;
-
+    sortTeams: function sortTeams(sortType) {
       this.theTeams = this.theTeams.sort(function (a, b) {
-        if (_this2.sortType === 'desc') {
+        if (sortType === 'desc') {
           return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         } else {
           return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         }
       });
-      this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
     },
     compareTeams: function compareTeams() {
       if (this.selectedTeams.length > 1) {
@@ -3641,8 +3651,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name']
+  props: ['name'],
+  created: function created() {
+    window.events.$on('openModal', this.openModal);
+  },
+  data: function data() {
+    return {
+      overlayClass: 'overlay'
+    };
+  },
+  methods: {
+    openModal: function openModal(name) {
+      console.log('hit open modal');
+
+      if (name == this.name) {
+        this.overlayClass = 'overlay overlay-visible';
+      }
+    },
+    closeModal: function closeModal(name) {
+      this.overlayClass = 'overlay';
+    }
+  }
 });
 
 /***/ }),
@@ -3735,7 +3769,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "footer[data-v-278bb77e]:empty {\n  display: none;\n}\n.overlay[data-v-278bb77e] {\n  visibility: hidden;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background: rgba(0, 0, 0, .4);\n  transition: opacity .3s;\n  opacity: 0;\n  height: 100%;\n}\n.overlay[data-v-278bb77e]:target {\n  visibility: visible;\n  opacity: 1;\n}\n.modal[data-v-278bb77e] {\n  position: relative;\n  width: 1000px;\n  max-width: 80%;\n  background: white;\n  border-radius: 4px;\n  padding: 2.5em;\n  box-shadow: 0 5px 11px rgba(36, 37, 38, 0.08);\n}\n.modal .close[data-v-278bb77e] {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  color: grey;\n  text-decoration: none;\n}\n.overlay .cancel[data-v-278bb77e] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "footer[data-v-278bb77e]:empty {\n  display: none;\n}\n.overlay[data-v-278bb77e] {\n  visibility: hidden;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background: rgba(0, 0, 0, .4);\n  transition: opacity .3s;\n  opacity: 0;\n  height: 100%;\n}\n.overlay[data-v-278bb77e]:target {\n  visibility: visible;\n  opacity: 1;\n}\n.overlay-visible[data-v-278bb77e] {\n  visibility: visible;\n  opacity: 1;\n}\n.modal[data-v-278bb77e] {\n  position: fixed;\n  margin-top: 5em;\n  left: 50%;\n  margin-left: -30em;\n  width: 60em;\n  background: white;\n  border-radius: 4px;\n  padding: 2.5em;\n  box-shadow: 0 5px 11px rgba(36, 37, 38, 0.08);\n}\n@media only screen and (max-width: 1024px) {\n.modal[data-v-278bb77e] {\n    margin-left: -25em;\n    width: 50em;\n}\n}\n@media only screen and (max-width: 768px) {\n.modal[data-v-278bb77e] {\n    margin-left: -20em;\n    width: 40em;\n}\n}\n@media only screen and (max-width: 640px) {\n.modal[data-v-278bb77e] {\n    margin-left: -11em;\n    width: 22em;\n}\n}\n.modal .close[data-v-278bb77e] {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  color: grey;\n  text-decoration: none;\n}\n.overlay .cancel[data-v-278bb77e] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -6923,59 +6957,59 @@ var render = function() {
     "div",
     { staticClass: "w-full lg:w-1/3 px-4 mt-4" },
     [
-      _c("a", { attrs: { href: "#teams-game-" + _vm.game.id } }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-white border-t border-b sm:rounded sm:border shadow flex flex-col justify-center items-center text-center p-6"
-          },
-          [
+      _c(
+        "div",
+        {
+          staticClass:
+            "bg-white border-t border-b sm:rounded sm:border shadow flex flex-col justify-center items-center text-center p-6 cursor-pointer",
+          on: { click: _vm.show }
+        },
+        [
+          _c("div", { staticClass: "w-full truncate" }, [
             _c(
-              "div",
-              { staticClass: "text-md font-bold flex flex-col text-gray-800" },
-              [
-                _c("span", { staticClass: "uppercase" }, [
-                  _vm._v(_vm._s(_vm.game.display_name))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "w-32 h-32 flex items-center justify-center",
-              domProps: { innerHTML: _vm._s(_vm.forecast) }
-            }),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-gray-700 mb-2" }, [
-              _vm._v("Марфин / Эффективность")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "text-3xl font-bold text-gray-900 mb-6" },
+              "p",
+              {
+                staticClass:
+                  "text-md font-bold flex flex-col text-gray-800 uppercase"
+              },
               [
                 _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.displayAverage(_vm.game.marfin)) +
-                    "\n        "
-                ),
-                _c("span", { staticClass: "font-normal text-gray-700 mx-1" }, [
-                  _vm._v("/")
-                ]),
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.displayPercentage(_vm.game.efficiency)) +
-                    "%\n      "
+                  "\n          " + _vm._s(_vm.game.display_name) + "\n        "
                 )
               ]
             )
-          ]
-        )
-      ]),
+          ]),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "w-32 h-32 flex items-center justify-center",
+            domProps: { innerHTML: _vm._s(_vm.forecast) }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-gray-700 mb-2" }, [
+            _vm._v("Марфин / Эффективность")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-3xl font-bold text-gray-900 mb-6" }, [
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.displayAverage(_vm.game.marfin)) +
+                "\n        "
+            ),
+            _c("span", { staticClass: "font-normal text-gray-700 mx-1" }, [
+              _vm._v("/")
+            ]),
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.displayPercentage(_vm.game.efficiency)) +
+                "%\n      "
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "modal",
-        { attrs: { name: "teams-game-" + _vm.game.id } },
+        { attrs: { name: _vm.modalName } },
         [_c("game-teams", { attrs: { game: _vm.game } })],
         1
       )
@@ -8421,37 +8455,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "overlay", attrs: { id: _vm.name } }, [
-    _c("a", { staticClass: "cancel", attrs: { href: "#" } }),
+  return _c("div", { class: _vm.overlayClass, attrs: { id: _vm.name } }, [
+    _c("div", { staticClass: "cancel", on: { click: _vm.closeModal } }),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "modal mt-20 mx-auto" },
+      { staticClass: "modal" },
       [
         _vm._t("default"),
         _vm._v(" "),
         _c("footer", { staticClass: "flex mt-8" }, [_vm._t("footer")], 2),
         _vm._v(" "),
-        _c("a", { staticClass: "close", attrs: { href: "#" } }, [
-          _c(
-            "svg",
-            {
-              staticClass: "w-5 h-5 fill-current text-gray-800",
-              attrs: {
-                xmlns: "http://www.w3.org/2000/svg",
-                viewBox: "0 0 20 20"
-              }
-            },
-            [
-              _c("path", {
+        _c(
+          "div",
+          {
+            staticClass: "close cursor-pointer",
+            attrs: { href: "#" },
+            on: { click: _vm.closeModal }
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "w-5 h-5 fill-current text-gray-800",
                 attrs: {
-                  d:
-                    "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 20 20"
                 }
-              })
-            ]
-          )
-        ])
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+                  }
+                })
+              ]
+            )
+          ]
+        )
       ],
       2
     )
@@ -22156,10 +22198,10 @@ var Plugin = {
     Vue.component('modal', _Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
     Vue.prototype.$modal = {
       show: function show(name) {
-        location.hash = name;
+        window.events.$emit('openModal', name);
       },
       hide: function hide(name) {
-        location.hash = '#';
+        window.events.$emit('closeModal', name);
       }
     };
   }

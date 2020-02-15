@@ -1,11 +1,13 @@
 <template>
   <div class="w-full lg:w-1/3 px-4 mt-4">
-    <a :href="'#teams-game-' + game.id">
       <div
-        class="bg-white border-t border-b sm:rounded sm:border shadow flex flex-col justify-center items-center text-center p-6"
+      @click="show"
+        class="bg-white border-t border-b sm:rounded sm:border shadow flex flex-col justify-center items-center text-center p-6 cursor-pointer"
       >
-        <div class="text-md font-bold flex flex-col text-gray-800">
-          <span class="uppercase">{{ game.display_name }}</span>
+      <div class="w-full truncate">
+          <p class="text-md font-bold flex flex-col text-gray-800 uppercase">
+            {{ game.display_name }}
+          </p>
         </div>
         <div class="w-32 h-32 flex items-center justify-center" v-html="forecast"></div>
         <p class="text-gray-700 mb-2">Марфин / Эффективность</p>
@@ -15,8 +17,7 @@
           {{ displayPercentage(game.efficiency) }}%
         </div>
       </div>
-    </a>
-    <modal :name="'teams-game-' + game.id">
+    <modal :name="modalName">
       <game-teams :game="game"></game-teams>
     </modal>
   </div>
@@ -49,8 +50,17 @@ export default {
   data() {
     return {
       displayPercentage,
-      displayAverage
+      displayAverage,
+      modalName: 'teams-game-' + this.game.id
     };
+  },
+  methods: {
+  show () {
+    this.$modal.show(this.modalName);
+  },
+  hide () {
+    this.$modal.hide(this.modalName);
   }
+}
 };
 </script>

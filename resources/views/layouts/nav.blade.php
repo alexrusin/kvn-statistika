@@ -103,7 +103,7 @@
 
                     <div class="pl-4 flex items-center">
                         <div id="search-toggle" @click="showSearch=!showSearch" v-show="!isComparing"
-                            class="search-icon cursor-pointer pl-6 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}">
+                            class="search-icon cursor-pointer pl-6 mr-2 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}">
                             <svg class="fill-current pointer-events-none text-grey-darkest w-4 h-4 inline"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path
@@ -111,12 +111,29 @@
                                 </path>
                             </svg>
                         </div>
-                        <div @click="sort" class="cursor-pointer pl-2 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}" v-show="!isComparing">
+                        <div 
+                        @click="showSortSubMenu = !showSortSubMenu"
+                        class="relative group cursor-pointer pl-2 {{ request()->routeIs('statistics.teams') ? '' : 'hidden' }}" 
+                        v-show="!isComparing">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                 class="fill-current pointer-events-none text-grey-darkest w-4 h-4">
                                 <path d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/>
                             </svg>
-                        </div>
+                            <div v-cloak class="absolute bg-white right-0 pt-4 z-10"
+                                style="width:8em;"
+                                :class="showSortSubMenu ? 'visible' : 'invisible'">
+                                <div 
+                                    @click="sortDesc"
+                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900">
+                                    Высокий ОКГ
+                                </div>
+                                <div 
+                                    @click="sortAsc"
+                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900">
+                                    Низкий ОКГ
+                                </div>
+                            </div>
+                        </div>           
                     </div>
                 </div>
             </div>

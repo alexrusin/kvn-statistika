@@ -45,13 +45,12 @@ export default {
     return {
       theTeams: this.teams,
       selectedTeams: [],
-      isComparing: false,
-      sortType: 'desc'
+      isComparing: false
     };
   },
 
   created() {
-    this.sortTeams();
+    this.sortTeams('desc');
 
     window.events.$on('searchTeam', teamSearch => {
       if (!this.isComparing) {
@@ -63,15 +62,14 @@ export default {
   },
 
   methods: {
-    sortTeams() {
+    sortTeams(sortType) {
       this.theTeams = this.theTeams.sort((a, b) => {
-          if (this.sortType === 'desc') {
+          if (sortType === 'desc') {
               return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
           } else {
               return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
           }
       });
-      this.sortType = this.sortType == 'desc' ? 'asc' : 'desc';
     },
 
     compareTeams() {

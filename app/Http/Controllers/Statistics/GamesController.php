@@ -12,6 +12,12 @@ class GamesController
             ->orderBy('efficiency', 'desc')
             ->take(200)
             ->get();
+        $games = $games->groupBy([
+            'season',
+            function ($item) {
+                return $item['division'];
+            },
+        ]);
         return view('statistics.games', compact('games'));
     }
 }

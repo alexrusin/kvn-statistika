@@ -7,6 +7,7 @@ export default {
             showSearch: false,
             searchText: '',
             isComparing: false,
+            showSortSubMenu: false,
         };
     },
 
@@ -29,8 +30,11 @@ export default {
     },
 
     methods: {
-        sort() {
-            window.events.$emit('sortData');
+        sortAsc() {
+            window.events.$emit('sortData', 'asc');
+        },
+        sortDesc() {
+            window.events.$emit('sortData', 'desc');
         }
     }
 }

@@ -6,11 +6,11 @@ let Plugin = {
 
         Vue.prototype.$modal = {
             show(name) {
-                location.hash = name;
+                window.events.$emit('openModal', name);
             },
 
             hide(name) {
-                location.hash = '#';
+                window.events.$emit('closeModal', name);
             }
         }
     }
