@@ -16,50 +16,67 @@
               <th class="text-left p-3 px-5">Рейтинг</th>
               <th></th>
             </tr>
-            <tr
-              v-for="team in teams"
-              :key="team.id"
+            <team-list-item
+              v-for="item in items"
+              :key="item.id"
+              :item="item"
               class="border-b hover:bg-orange-100 bg-gray-100"
+              @teamDeleted="deleteTeam"
             >
-              <td class="p-3 px-5">{{ team.name }}</td>
-              <td class="p-3 px-5 truncate">{{ team.city }}</td>
-              <td class="p-3 px-5">{{ team.rating}}</td>
-              <td class="p-3 px-5 flex justify-end">
-                <button
-                  type="button"
-                  @click="deleteTeam(team.id)"
-                  class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                >Delete</button>
-              </td>
-            </tr>
+            </team-list-item>
           </tbody>
         </table>
       </div>
+    </div>
+    <div class="mt-2">
+    <paginator :data-set="dataSet" @changed="fetch"></paginator>
     </div>
   </div>
 </template>
 
 <script>
+import Paginator from './Paginator';
+import TeamListItem from './TeamListItem';
 export default {
-  props: ["teams"],
+
+  components: { Paginator, TeamListItem },
+
+  created() {
+    this.fetch();
+  },
+
+  data() {
+          return {
+            dataSet: false,
+            items: []
+           }
+        },
 
   methods: {
-      deleteTeam(id) {
-          axios.delete(`/admin/enter-data/teams/${id}`)
-          .then(({data}) => {
-              if (data.alertType == 'success') {
-                  this.$emit('teamDeleted', id);
-                  flash(data.message);
-              }
-          })
-          .catch(error => {
-              if (error.response.data.message) {
-                  flash(error.response.data.message, error.response.data.alertType);
-              } else {
-                  flash('Невозможно удалить команду', 'danger');
-              }
-          })
-      }
+    fetch(page) {
+        axios.get(this.url(page)).then(this.refresh);
+    },
+
+    url(page) {
+        if (!page) {
+
+            let query = location.search.match(/page=(\d+)/);
+
+            page = query ? query[1] : 1;
+        }
+
+        return `${location.pathname}?page=${page}`;
+    },
+
+    refresh({data}) {
+        this.dataSet = data;
+        this.items = data.data;
+        window.scrollTo(0, 0);
+    },
+
+    deleteTeam(id) {
+      this.items = this.items.filter(team => team.id != id);
+    }
   }
 };
 </script>

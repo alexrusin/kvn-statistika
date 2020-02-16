@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full px-4 mb-4">
+    <div class="w-full px-4 my-4">
       <form
         method="POST"
         action="/admin/enter-data/teams"
@@ -105,7 +105,7 @@
         </div>
       </form>
     </div>
-    <teams-list-form :teams="teamsList" @teamDeleted="deleteTeam"></teams-list-form>
+    <teams-list-form ref="teamList"></teams-list-form>
   </div>
 </template>
 
@@ -114,11 +114,8 @@ import Form from "../utils/Form";
 import TeamsListForm from "./TeamsListForm";
 export default {
   components: { TeamsListForm },
-  props: ["teams"],
-
   data() {
     return {
-      teamsList: this.teams,
       form: new Form({
         name: "",
         city: "",
@@ -134,14 +131,11 @@ export default {
         .submit("post", "/admin/enter-data/teams")
         .then(data => {
           if(data.team) {
-            this.teamsList.unshift(data.team);
+            this.$refs.teamList.items.unshift(data.team);
           }
           flash(data.message, data.alertType);
         })
         .catch(errors => flash(errors.message, "danger"));
-    },
-    deleteTeam(id) {
-      this.teamsList = this.teamsList.filter(team => team.id != id);
     }
   }
   

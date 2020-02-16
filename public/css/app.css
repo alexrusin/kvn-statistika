@@ -11432,6 +11432,23 @@ video {
   z-index: auto;
 }
 
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.6;
+  color: #3097d1;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;

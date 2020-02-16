@@ -14,8 +14,8 @@
               >
                 <th class="p-3 text-left">Команда</th>
                 <th class="p-3 text-left">ОКГ</th>
-                <th class="p-3 text-left truncate">Эффективность</th>
-                <th class="p-3 text-left truncate">Народный балл</th>
+                <th class="p-3 text-left truncate hidden sm:table-cell">Эффективность</th>
+                <th class="p-3 text-left truncate hidden sm:table-cell">Народный балл</th>
                 <th class="p-3 text-left truncate">Балл жюри</th>
               </tr>
             </thead>
@@ -25,10 +25,10 @@
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ team.team.name }} </td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ displayAverage(team.okg) }} </td>
                 <td
-                  class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+                  class="border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
                 >{{ displayPercentage(team.efficiency) }}%</td>
                  <td
-                  class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+                  class="border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
                 >{{ displayAverage(team.peoples_points) }}</td>
                  <td
                   class="border-grey-light border hover:bg-gray-100 p-3 truncate"

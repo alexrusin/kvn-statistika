@@ -2337,6 +2337,67 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Paginator.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Paginator.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['dataSet'],
+  data: function data() {
+    return {
+      page: 1,
+      prevUrl: false,
+      nextUrl: false
+    };
+  },
+  watch: {
+    dataSet: function dataSet() {
+      this.page = this.dataSet.current_page;
+      this.prevUrl = this.dataSet.prev_page_url;
+      this.nextUrl = this.dataSet.next_page_url;
+    },
+    page: function page() {
+      this.broadcast().updateUrl();
+    }
+  },
+  computed: {
+    shouldPaginate: function shouldPaginate() {
+      return !!this.prevUrl || !!this.nextUrl;
+    }
+  },
+  methods: {
+    broadcast: function broadcast() {
+      return this.$emit('changed', this.page);
+    },
+    updateUrl: function updateUrl() {
+      history.pushState(null, null, '?page=' + this.page);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultForm.vue?vue&type=script&lang=js& ***!
@@ -3276,10 +3337,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     TeamsListForm: _TeamsListForm__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["teams"],
   data: function data() {
     return {
-      teamsList: this.teams,
       form: new _utils_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
         name: "",
         city: "",
@@ -3294,17 +3353,12 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.submit("post", "/admin/enter-data/teams").then(function (data) {
         if (data.team) {
-          _this.teamsList.unshift(data.team);
+          _this.$refs.teamList.items.unshift(data.team);
         }
 
         flash(data.message, data.alertType);
       })["catch"](function (errors) {
         return flash(errors.message, "danger");
-      });
-    },
-    deleteTeam: function deleteTeam(id) {
-      this.teamsList = this.teamsList.filter(function (team) {
-        return team.id != id;
       });
     }
   }
@@ -3312,10 +3366,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamListItem.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamListItem.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3336,34 +3390,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["teams"],
+  props: ['item'],
   methods: {
     deleteTeam: function deleteTeam(id) {
       var _this = this;
@@ -3382,6 +3410,97 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           flash('Невозможно удалить команду', 'danger');
         }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamsListForm.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Paginator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Paginator */ "./resources/js/components/Paginator.vue");
+/* harmony import */ var _TeamListItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamListItem */ "./resources/js/components/TeamListItem.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Paginator: _Paginator__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TeamListItem: _TeamListItem__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  created: function created() {
+    this.fetch();
+  },
+  data: function data() {
+    return {
+      dataSet: false,
+      items: []
+    };
+  },
+  methods: {
+    fetch: function fetch(page) {
+      axios.get(this.url(page)).then(this.refresh);
+    },
+    url: function url(page) {
+      if (!page) {
+        var query = location.search.match(/page=(\d+)/);
+        page = query ? query[1] : 1;
+      }
+
+      return "".concat(location.pathname, "?page=").concat(page);
+    },
+    refresh: function refresh(_ref) {
+      var data = _ref.data;
+      this.dataSet = data;
+      this.items = data.data;
+      window.scrollTo(0, 0);
+    },
+    deleteTeam: function deleteTeam(id) {
+      this.items = this.items.filter(function (team) {
+        return team.id != id;
       });
     }
   }
@@ -5168,7 +5287,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+      _c("div", { staticClass: "w-full px-4 my-4" }, [
         _c(
           "form",
           {
@@ -5852,13 +5971,23 @@ var render = function() {
                           _vm._v("ОКГ")
                         ]),
                         _vm._v(" "),
-                        _c("th", { staticClass: "p-3 text-left truncate" }, [
-                          _vm._v("Эффективность")
-                        ]),
+                        _c(
+                          "th",
+                          {
+                            staticClass:
+                              "p-3 text-left truncate hidden sm:table-cell"
+                          },
+                          [_vm._v("Эффективность")]
+                        ),
                         _vm._v(" "),
-                        _c("th", { staticClass: "p-3 text-left truncate" }, [
-                          _vm._v("Народный балл")
-                        ]),
+                        _c(
+                          "th",
+                          {
+                            staticClass:
+                              "p-3 text-left truncate hidden sm:table-cell"
+                          },
+                          [_vm._v("Народный балл")]
+                        ),
                         _vm._v(" "),
                         _c("th", { staticClass: "p-3 text-left truncate" }, [
                           _vm._v("Балл жюри")
@@ -5903,7 +6032,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "border-grey-light border hover:bg-gray-100 p-3 truncate"
+                              "border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
                           },
                           [
                             _vm._v(
@@ -5917,7 +6046,7 @@ var render = function() {
                           "td",
                           {
                             staticClass:
-                              "border-grey-light border hover:bg-gray-100 p-3 truncate"
+                              "border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
                           },
                           [
                             _vm._v(
@@ -6079,6 +6208,98 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Paginator.vue?vue&type=template&id=59656db6&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Paginator.vue?vue&type=template&id=59656db6& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.shouldPaginate
+    ? _c("ul", { staticClass: "pagination" }, [
+        _c(
+          "li",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.prevUrl,
+                expression: "prevUrl"
+              }
+            ]
+          },
+          [
+            _c(
+              "a",
+              {
+                attrs: { href: "#", "aria-label": "Previous", rel: "prev" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.page--
+                  }
+                }
+              },
+              [
+                _c("span", { attrs: { "aria-hidden": "true" } }, [
+                  _vm._v("« Предыдущая")
+                ])
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.nextUrl,
+                expression: "nextUrl"
+              }
+            ]
+          },
+          [
+            _c(
+              "a",
+              {
+                attrs: { href: "#", "aria-label": "Next", rel: "next" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.page++
+                  }
+                }
+              },
+              [
+                _c("span", { attrs: { "aria-hidden": "true" } }, [
+                  _vm._v("Следующая »")
+                ])
+              ]
+            )
+          ]
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ResultForm.vue?vue&type=template&id=197e76ac& ***!
@@ -6097,7 +6318,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+      _c("div", { staticClass: "w-full px-4 my-4" }, [
         _c(
           "form",
           {
@@ -7611,7 +7832,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+      _c("div", { staticClass: "w-full px-4 my-4" }, [
         _c(
           "form",
           {
@@ -7881,10 +8102,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("teams-list-form", {
-        attrs: { teams: _vm.teamsList },
-        on: { teamDeleted: _vm.deleteTeam }
-      })
+      _c("teams-list-form", { ref: "teamList" })
     ],
     1
   )
@@ -7915,6 +8133,55 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tr", [
+    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.name))]),
+    _vm._v(" "),
+    _c("td", { staticClass: "p-3 px-5 truncate" }, [
+      _vm._v(_vm._s(_vm.item.city))
+    ]),
+    _vm._v(" "),
+    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.rating))]),
+    _vm._v(" "),
+    _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.deleteTeam(_vm.item.id)
+            }
+          }
+        },
+        [_vm._v("Delete")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -7956,44 +8223,13 @@ var render = function() {
                 [
                   _vm._m(1),
                   _vm._v(" "),
-                  _vm._l(_vm.teams, function(team) {
-                    return _c(
-                      "tr",
-                      {
-                        key: team.id,
-                        staticClass: "border-b hover:bg-orange-100 bg-gray-100"
-                      },
-                      [
-                        _c("td", { staticClass: "p-3 px-5" }, [
-                          _vm._v(_vm._s(team.name))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "p-3 px-5 truncate" }, [
-                          _vm._v(_vm._s(team.city))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "p-3 px-5" }, [
-                          _vm._v(_vm._s(team.rating))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteTeam(team.id)
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          )
-                        ])
-                      ]
-                    )
+                  _vm._l(_vm.items, function(item) {
+                    return _c("team-list-item", {
+                      key: item.id,
+                      staticClass: "border-b hover:bg-orange-100 bg-gray-100",
+                      attrs: { item: item },
+                      on: { teamDeleted: _vm.deleteTeam }
+                    })
                   })
                 ],
                 2
@@ -8002,6 +8238,18 @@ var render = function() {
           )
         ])
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "mt-2" },
+      [
+        _c("paginator", {
+          attrs: { "data-set": _vm.dataSet },
+          on: { changed: _vm.fetch }
+        })
+      ],
+      1
     )
   ])
 }
@@ -8135,7 +8383,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "w-full px-4 mb-4" }, [
+      _c("div", { staticClass: "w-full px-4 my-4" }, [
         _c(
           "form",
           {
@@ -21161,6 +21409,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Paginator.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Paginator.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Paginator.vue?vue&type=template&id=59656db6& */ "./resources/js/components/Paginator.vue?vue&type=template&id=59656db6&");
+/* harmony import */ var _Paginator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Paginator.vue?vue&type=script&lang=js& */ "./resources/js/components/Paginator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Paginator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Paginator.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Paginator.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Paginator.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Paginator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Paginator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Paginator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Paginator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Paginator.vue?vue&type=template&id=59656db6&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Paginator.vue?vue&type=template&id=59656db6& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Paginator.vue?vue&type=template&id=59656db6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Paginator.vue?vue&type=template&id=59656db6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Paginator_vue_vue_type_template_id_59656db6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ResultForm.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/ResultForm.vue ***!
@@ -21800,6 +22117,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/TeamListItem.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/TeamListItem.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamListItem.vue?vue&type=template&id=7046918e& */ "./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e&");
+/* harmony import */ var _TeamListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamListItem.vue?vue&type=script&lang=js& */ "./resources/js/components/TeamListItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TeamListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TeamListItem.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamListItem.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/TeamListItem.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamListItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamListItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamListItem.vue?vue&type=template&id=7046918e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamListItem.vue?vue&type=template&id=7046918e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamListItem_vue_vue_type_template_id_7046918e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/TeamsListForm.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/TeamsListForm.vue ***!
@@ -22356,7 +22742,6 @@ function () {
     key: "onSuccess",
     value: function onSuccess(data) {
       //this.add(data);
-      console.log(data);
       this.reset();
     }
   }, {

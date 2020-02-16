@@ -14,13 +14,16 @@ class EnterTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teams = Team::take(200)
+        if ($request->wantsJson()) {
+            return Team::take(500)
             ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('admin.enter-team', compact('teams'));
+            ->paginate(20);
+        } else {
+            return view('admin.enter-team');1
+        }
+       
     }
 
     /**

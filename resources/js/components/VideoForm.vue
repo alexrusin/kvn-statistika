@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full px-4 mb-4">
+    <div class="w-full px-4 my-4">
       <form
         method="POST"
         action="/admin/enter-data/videos"

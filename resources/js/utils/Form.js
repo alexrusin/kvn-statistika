@@ -61,7 +61,6 @@ class Form {
 
     onSuccess(data) {
         //this.add(data);
-        console.log(data);
         this.reset();
     }
 
