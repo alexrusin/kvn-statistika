@@ -233,20 +233,19 @@
         </div>
       </form>
     </div>
-    <results-list-form :results="resultsList" @resultDeleted="deleteResult"></results-list-form>
+    <results-list-form ref="resultsList"></results-list-form>
   </div>
 </template>
 
 <script>
-import Form from "../utils/Form";
+import Form from "../../utils/Form";
 import ResultsListForm from "./ResultsListForm";
 export default {
   components: { ResultsListForm },
-  props: ["results", "selectData"],
+  props: ["selectData"],
 
   data() {
     return {
-      resultsList: this.results,
       form: new Form({
         game_id: "",
         team_id: "",
@@ -269,14 +268,11 @@ export default {
         .submit("post", "/admin/enter-data/results")
         .then(data => {
           if (data.result) {
-            this.resultsList.unshift(data.result);
+            this.$refs.resultsList.items.unshift(data.result);
           }
           flash(data.message, data.alertType);
         })
         .catch(errors => flash(errors.message, "danger"));
-    },
-    deleteResult(id) {
-      this.resultsList = this.resultsList.filter(result => result.id != id);
     }
   }
 };

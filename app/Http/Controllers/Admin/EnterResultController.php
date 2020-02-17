@@ -17,24 +17,25 @@ class EnterResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::take(200)
-            ->get()
-            ->pluck('display_name', 'id');
+        if ($request->wantsJson()) {
+            return TeamGame::with('team', 'game')
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
+        } else {
+            $games = Game::take(500)
+                ->get()
+                ->pluck('display_name', 'id');
         
-        $teams = Team::take(200)
-            ->pluck('name', 'id');
+            $teams = Team::take(500)
+                ->pluck('name', 'id');
 
-        $selectData['games'] = $games;
-        $selectData['teams'] = $teams;
+            $selectData['games'] = $games;
+            $selectData['teams'] = $teams;
 
-        $results = TeamGame::with('team', 'game')
-            ->take(200)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('admin.enter-result', compact('results', 'selectData'));
+            return view('admin.enter-result', compact('selectData'));
+        }
     }
 
     /**

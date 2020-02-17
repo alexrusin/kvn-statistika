@@ -63,20 +63,18 @@
         </div>
       </form>
     </div>
-    <videos-list-form :videos="videosList" @videoDeleted="deleteVideo"></videos-list-form>
+    <videos-list-form ref="videosList"></videos-list-form>
   </div>
 </template>
 
 <script>
-import Form from "../utils/Form";
+import Form from "../../utils/Form";
 import VideosListForm from "./VideosListForm";
 export default {
   components: { VideosListForm },
-  props: ["videos"],
 
   data() {
     return {
-      videosList: this.videos,
       form: new Form({
         title: "",
         youtube_id: ""
@@ -90,14 +88,11 @@ export default {
         .submit("post", "/admin/enter-data/videos")
         .then(data => {
           if(data.video) {
-            this.videosList.unshift(data.video);
+            this.$refs.videosList.items.unshift(data.video);
           }
           flash(data.message, data.alertType);
         })
         .catch(errors => flash(errors.message, "danger"));
-    },
-    deleteVideo(id) {
-      this.videosList = this.videosList.filter(video => video.id != id);
     }
   }
   

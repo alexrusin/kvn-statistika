@@ -15,25 +15,29 @@ class EnterGameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $selectData['seasons'] = [
-            '2020' => '2020',
-            '2019' => '2019',
-            '2018' => '2018'
-        ];
+        
 
-        $selectData['divisions'] = Game::DIVISIONS;
-        $selectData['rounds'] = Game::TOURNAMENT_ROUNDS;
-        $selectData['stages'] = Game::ROUND_STAGES;
-
-        $games = Game::take(100)
-            ->orderBy('season', 'desc')
+        if ($request->wantsJson()) {
+            return Game::orderBy('season', 'desc')
             ->orderBy('tournament_round', 'desc')
             ->orderBy('round_stage', 'desc')
-            ->get();
+            ->paginate(20);
+        } else {
+            $selectData['seasons'] = [
+                '2020' => '2020',
+                '2019' => '2019',
+                '2018' => '2018'
+            ];
+    
+            $selectData['divisions'] = Game::DIVISIONS;
+            $selectData['rounds'] = Game::TOURNAMENT_ROUNDS;
+            $selectData['stages'] = Game::ROUND_STAGES;
 
-        return view('admin.enter-game', compact('selectData', 'games'));
+            return view('admin.enter-game', compact('selectData'));
+        }
+        
     }
 
     /**

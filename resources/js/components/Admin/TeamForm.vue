@@ -105,12 +105,12 @@
         </div>
       </form>
     </div>
-    <teams-list-form ref="teamList"></teams-list-form>
+    <teams-list-form ref="teamsList"></teams-list-form>
   </div>
 </template>
 
 <script>
-import Form from "../utils/Form";
+import Form from "../../utils/Form";
 import TeamsListForm from "./TeamsListForm";
 export default {
   components: { TeamsListForm },
@@ -131,7 +131,7 @@ export default {
         .submit("post", "/admin/enter-data/teams")
         .then(data => {
           if(data.team) {
-            this.$refs.teamList.items.unshift(data.team);
+            this.$refs.teamsList.items.unshift(data.team);
           }
           flash(data.message, data.alertType);
         })

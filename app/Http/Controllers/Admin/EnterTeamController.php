@@ -17,11 +17,10 @@ class EnterTeamController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            return Team::take(500)
-            ->orderBy('created_at', 'desc')
+            return Team::orderBy('created_at', 'desc')
             ->paginate(20);
         } else {
-            return view('admin.enter-team');1
+            return view('admin.enter-team');
         }
        
     }

@@ -14,13 +14,14 @@ class EnterVideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $videos = Video::take(200)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('admin.enter-video', compact('videos'));
+        if ($request->wantsJson()) {
+            return Video::orderBy('created_at', 'desc')
+            ->paginate(20);
+        } else {
+            return view('admin.enter-video');
+        }
     }
 
     /**

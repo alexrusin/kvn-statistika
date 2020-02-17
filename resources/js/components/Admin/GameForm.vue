@@ -213,20 +213,19 @@
         </div>
       </form>
     </div>
-    <games-list-form :games="gamesList" @gameDeleted="deleteGame"></games-list-form>
+    <games-list-form ref="gamesList"></games-list-form>
   </div>
 </template>
 
 <script>
-import Form from "../utils/Form";
+import Form from "../../utils/Form";
 import GamesListForm from "./GamesListForm";
 export default {
   components: { GamesListForm },
-  props: ["selectData", "games"],
+  props: ["selectData"],
 
   data() {
     return {
-      gamesList: this.games,
       form: new Form({
         season: "",
         division: "",
@@ -247,7 +246,7 @@ export default {
         .submit("post", "/admin/enter-data/games")
         .then(data => {
           if(data.game) {
-            this.gamesList.unshift(data.game);
+            this.$refs.gamesList.games.unshift(data.game);
           }
           flash(data.message, data.alertType);
         })

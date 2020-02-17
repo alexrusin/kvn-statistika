@@ -42,7 +42,6 @@ Route::namespace('Admin')
                 Route::delete('games/{game}', 'EnterGameController@destroy')->name('games.destroy');
 
                 Route::get('teams', 'EnterTeamController@index')->name('teams');
-                // Route::get('teams/paginated', 'EnterTeamController@indexPaginated');
                 Route::post('teams', 'EnterTeamController@store')->name('teams.store');
                 Route::delete('teams/{team}', 'EnterTeamController@destroy')->name('teams.destroy');
 

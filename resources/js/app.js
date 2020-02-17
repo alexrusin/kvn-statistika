@@ -34,10 +34,10 @@ Vue.component('team-cards', require('./components/TeamCards.vue').default);
 Vue.component('statistics-videos', require('./components/StatisticsVideos').default);
 Vue.component('statistics-games', require('./components/StatisticsGames').default);
 Vue.component('data-card', require('./components/DataCard').default);
-Vue.component('game-form', require('./components/GameForm').default);
-Vue.component('team-form', require('./components/TeamForm').default);
-Vue.component('result-form', require('./components/ResultForm').default);
-Vue.component('video-form', require('./components/VideoForm').default);
+Vue.component('game-form', require('./components/Admin/GameForm').default);
+Vue.component('team-form', require('./components/Admin/TeamForm').default);
+Vue.component('result-form', require('./components/Admin/ResultForm').default);
+Vue.component('video-form', require('./components/Admin/VideoForm').default);
 Vue.component('flash', require('./components/Flash').default);
 Vue.component('tooltip', require('./components/Tooltip').default);
 
