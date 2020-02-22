@@ -2778,22 +2778,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
   data: function data() {
     return {
-      isEditingName: false
+      isEditing: {
+        name: false,
+        city: false,
+        image_url: false,
+        rating: false
+      },
+      team: this.item
     };
   },
   methods: {
-    deleteTeam: function deleteTeam(id) {
+    editing: function editing(property) {
       var _this = this;
 
-      axios["delete"]("/admin/enter-data/teams/".concat(id)).then(function (_ref) {
+      this.isEditing[property] = true;
+      this.$nextTick(function () {
+        _this.$refs[property].focus();
+      });
+    },
+    update: function update(property) {
+      this.isEditing[property] = false;
+      axios.put("/admin/enter-data/teams/".concat(this.team.id), this.team).then(function (_ref) {
         var data = _ref.data;
 
         if (data.alertType == 'success') {
-          _this.$emit('teamDeleted', id);
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно обновить данные', 'danger');
+        }
+      });
+    },
+    deleteTeam: function deleteTeam(id) {
+      var _this2 = this;
+
+      axios["delete"]("/admin/enter-data/teams/".concat(id)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.alertType == 'success') {
+          _this2.$emit('teamDeleted', id);
 
           flash(data.message);
         }
@@ -7334,27 +7392,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _vm.isEditingName
+  return _c("tr", { staticClass: "cursor-pointer" }, [
+    _vm.isEditing.name
       ? _c("input", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.item.name,
-              expression: "item.name"
+              value: _vm.team.name,
+              expression: "team.name"
             }
           ],
+          ref: "name",
           staticClass:
-            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
           attrs: { type: "text" },
-          domProps: { value: _vm.item.name },
+          domProps: { value: _vm.team.name },
           on: {
+            blur: function($event) {
+              return _vm.update("name")
+            },
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.item, "name", $event.target.value)
+              _vm.$set(_vm.team, "name", $event.target.value)
             }
           }
         })
@@ -7364,33 +7426,143 @@ var render = function() {
             staticClass: "p-3 px-5",
             on: {
               click: function($event) {
-                _vm.isEditingName = true
+                return _vm.editing("name")
               }
             }
           },
-          [_vm._v(_vm._s(_vm.item.name))]
+          [_vm._v(_vm._s(_vm.team.name))]
         ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5 truncate" }, [
-      _vm._v(_vm._s(_vm.item.city))
-    ]),
+    _vm.isEditing.city
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.team.city,
+              expression: "team.city"
+            }
+          ],
+          ref: "city",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "text" },
+          domProps: { value: _vm.team.city },
+          on: {
+            blur: function($event) {
+              return _vm.update("city")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.team, "city", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5 truncate",
+            on: {
+              click: function($event) {
+                return _vm.editing("city")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.team.city))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5 truncate" }, [
-      _vm._v(_vm._s(_vm.item.image_url))
-    ]),
+    _vm.isEditing.image_url
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.team.image_url,
+              expression: "team.image_url"
+            }
+          ],
+          ref: "image_url",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "text" },
+          domProps: { value: _vm.team.image_url },
+          on: {
+            blur: function($event) {
+              return _vm.update("image_url")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.team, "image_url", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5 truncate",
+            on: {
+              click: function($event) {
+                return _vm.editing("image_url")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.team.image_url))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.rating))]),
+    _vm.isEditing.rating
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.team.rating,
+              expression: "team.rating"
+            }
+          ],
+          ref: "rating",
+          staticClass:
+            "appearance-none block w-32 text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "text" },
+          domProps: { value: _vm.team.rating },
+          on: {
+            blur: function($event) {
+              return _vm.update("rating")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.team, "rating", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5 truncate",
+            on: {
+              click: function($event) {
+                return _vm.editing("rating")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.team.rating))]
+        ),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
       _c(
         "button",
         {
           staticClass:
-            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none",
           attrs: { type: "button" },
           on: {
             click: function($event) {
-              return _vm.deleteTeam(_vm.item.id)
+              return _vm.deleteTeam(_vm.team.id)
             }
           }
         },

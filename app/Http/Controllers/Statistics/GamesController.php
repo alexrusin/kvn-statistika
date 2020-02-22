@@ -8,7 +8,8 @@ class GamesController
 {
     public function index()
     {
-        $games = Game::orderBy('marfin', 'desc')
+        $games = Game::orderBy('season', 'desc')
+            ->orderBy('marfin', 'desc')
             ->orderBy('efficiency', 'desc')
             ->take(200)
             ->get();

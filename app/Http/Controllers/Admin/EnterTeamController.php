@@ -80,7 +80,12 @@ class EnterTeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only(['name', 'description', 'city', 'image_url', 'rating']);
+        Team::whereId($id)
+            ->update($data);
+        
+        return response(['message' => 'Команда обновлена', 'alertType' => 'success']);
+
     }
 
     /**

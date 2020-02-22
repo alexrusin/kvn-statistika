@@ -43,8 +43,9 @@ Route::namespace('Admin')
 
                 Route::get('teams', 'EnterTeamController@index')->name('teams');
                 Route::post('teams', 'EnterTeamController@store')->name('teams.store');
+                Route::put('teams/{team}', 'EnterTeamController@update')->name('teams.update');
                 Route::delete('teams/{team}', 'EnterTeamController@destroy')->name('teams.destroy');
-
+                
                 Route::get('results', 'EnterResultController@index')->name('results');
                 Route::post('results', 'EnterResultController@store')->name('results.store');
                 Route::delete('results/{result}', 'EnterResultController@destroy')->name('results.destroy');
