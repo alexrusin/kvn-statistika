@@ -1,6 +1,11 @@
 <template>
     <tr>
-        <td class="p-3 px-5">{{ item.name }}</td>
+        <input v-if="isEditingName"
+            v-model="item.name"
+            type="text"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        />
+        <td v-else @click="isEditingName=true" class="p-3 px-5">{{ item.name }}</td>
         <td class="p-3 px-5 truncate">{{ item.city }}</td>
         <td class="p-3 px-5 truncate">{{ item.image_url }}</td>
         <td class="p-3 px-5">{{ item.rating}}</td>
@@ -17,6 +22,11 @@
 <script>
 export default {
     props: ['item'],
+    data() {
+        return {
+            isEditingName: false
+        };
+    },
     methods: {
        deleteTeam(id) {
           axios.delete(`/admin/enter-data/teams/${id}`)

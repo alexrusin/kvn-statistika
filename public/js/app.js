@@ -2773,8 +2773,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
+  data: function data() {
+    return {
+      isEditingName: false
+    };
+  },
   methods: {
     deleteTeam: function deleteTeam(id) {
       var _this = this;
@@ -7325,7 +7335,41 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.name))]),
+    _vm.isEditingName
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.item.name,
+              expression: "item.name"
+            }
+          ],
+          staticClass:
+            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+          attrs: { type: "text" },
+          domProps: { value: _vm.item.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.item, "name", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                _vm.isEditingName = true
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.item.name))]
+        ),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5 truncate" }, [
       _vm._v(_vm._s(_vm.item.city))
