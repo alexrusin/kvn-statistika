@@ -124,12 +124,14 @@
                                 :class="showSortSubMenu ? 'visible' : 'invisible'">
                                 <div 
                                     @click="sortDesc"
-                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900">
+                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900"
+                                    :class="sortDirection == 'desc' ? 'font-semibold' : ''">
                                     Высокий ОКГ
                                 </div>
                                 <div 
                                     @click="sortAsc"
-                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900">
+                                    class="px-3 py-2 block text-gray-600 hover:text-gray-900"
+                                    :class="sortDirection == 'asc' ? 'font-semibold' : ''">
                                     Низкий ОКГ
                                 </div>
                             </div>

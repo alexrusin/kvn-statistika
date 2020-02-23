@@ -8,6 +8,7 @@ export default {
             searchText: '',
             isComparing: false,
             showSortSubMenu: false,
+            sortDirection: 'desc'
         };
     },
 
@@ -32,9 +33,11 @@ export default {
     methods: {
         sortAsc() {
             window.events.$emit('sortData', 'asc');
+            this.sortDirection = 'asc';
         },
         sortDesc() {
             window.events.$emit('sortData', 'desc');
+            this.sortDirection = 'desc';
         }
     }
 }

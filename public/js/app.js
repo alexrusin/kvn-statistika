@@ -3631,7 +3631,8 @@ __webpack_require__.r(__webpack_exports__);
       showSearch: false,
       searchText: '',
       isComparing: false,
-      showSortSubMenu: false
+      showSortSubMenu: false,
+      sortDirection: 'desc'
     };
   },
   created: function created() {
@@ -3655,9 +3656,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     sortAsc: function sortAsc() {
       window.events.$emit('sortData', 'asc');
+      this.sortDirection = 'asc';
     },
     sortDesc: function sortDesc() {
       window.events.$emit('sortData', 'desc');
+      this.sortDirection = 'desc';
     }
   }
 });
