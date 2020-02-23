@@ -3096,17 +3096,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
+  data: function data() {
+    return {
+      isEditing: {
+        title: false,
+        youtube_id: false
+      },
+      video: this.item
+    };
+  },
   methods: {
-    deleteVideo: function deleteVideo(id) {
+    editing: function editing(property) {
       var _this = this;
 
-      axios["delete"]("/admin/enter-data/videos/".concat(id)).then(function (_ref) {
+      this.isEditing[property] = true;
+      this.$nextTick(function () {
+        _this.$refs[property].focus();
+      });
+    },
+    update: function update(property) {
+      this.isEditing[property] = false;
+      axios.put("/admin/enter-data/videos/".concat(this.video.id), this.video).then(function (_ref) {
         var data = _ref.data;
 
         if (data.alertType == 'success') {
-          _this.$emit('videoDeleted', id);
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно обновить данные', 'danger');
+        }
+      });
+    },
+    deleteVideo: function deleteVideo(id) {
+      var _this2 = this;
+
+      axios["delete"]("/admin/enter-data/videos/".concat(id)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.alertType == 'success') {
+          _this2.$emit('videoDeleted', id);
 
           flash(data.message);
         }
@@ -7905,19 +7954,93 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.title))]),
+  return _c("tr", { staticClass: "cursor-pointer" }, [
+    _vm.isEditing.title
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.video.title,
+              expression: "video.title"
+            }
+          ],
+          ref: "title",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "text" },
+          domProps: { value: _vm.video.title },
+          on: {
+            blur: function($event) {
+              return _vm.update("title")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.video, "title", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("title")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.video.title))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5 truncate" }, [
-      _vm._v(_vm._s(_vm.item.youtube_id))
-    ]),
+    _vm.isEditing.youtube_id
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.video.youtube_id,
+              expression: "video.youtube_id"
+            }
+          ],
+          ref: "youtube_id",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "text" },
+          domProps: { value: _vm.video.youtube_id },
+          on: {
+            blur: function($event) {
+              return _vm.update("youtube_id")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.video, "youtube_id", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("youtube_id")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.video.youtube_id))]
+        ),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
       _c(
         "button",
         {
           staticClass:
-            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none",
           attrs: { type: "button" },
           on: {
             click: function($event) {

@@ -78,7 +78,11 @@ class EnterVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only(['title', 'youtube_id']);
+        Video::whereId($id)
+            ->update($data);
+        
+        return response(['message' => 'Команда обновлена', 'alertType' => 'success']);
     }
 
     /**
