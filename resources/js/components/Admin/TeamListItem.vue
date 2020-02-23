@@ -66,9 +66,7 @@ export default {
             this.isEditing[property] = true;
             this.$nextTick(() => {
                 this.$refs[property].focus();
-            })
-            
-
+            });
         },
         update(property) {
             this.isEditing[property] = false;

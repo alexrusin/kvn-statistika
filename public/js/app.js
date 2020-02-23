@@ -2012,24 +2012,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['game'],
+  props: ['item'],
   data: function data() {
     return {
       displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayPercentage"],
-      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"]
+      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"],
+      isEditing: {
+        marfin: false,
+        efficiency: false
+      },
+      game: this.item
     };
   },
   methods: {
-    deleteGame: function deleteGame(id) {
+    editing: function editing(property) {
       var _this = this;
 
-      axios["delete"]("/admin/enter-data/games/".concat(id)).then(function (_ref) {
+      this.isEditing[property] = true;
+      this.$nextTick(function () {
+        _this.$refs[property].focus();
+      });
+    },
+    update: function update(property) {
+      this.isEditing[property] = false;
+      axios.put("/admin/enter-data/games/".concat(this.game.id), this.game).then(function (_ref) {
         var data = _ref.data;
 
         if (data.alertType == 'success') {
-          _this.$emit('gameDeleted', id);
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно обновить данные', 'danger');
+        }
+      });
+    },
+    deleteGame: function deleteGame(id) {
+      var _this2 = this;
+
+      axios["delete"]("/admin/enter-data/games/".concat(id)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.alertType == 'success') {
+          _this2.$emit('gameDeleted', id);
 
           flash(data.message);
         }
@@ -2461,24 +2508,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['item'],
   data: function data() {
     return {
       displayPercentage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayPercentage"],
-      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"]
+      displayAverage: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["displayAverage"],
+      isEditing: {
+        okg: false,
+        white_index: false,
+        efficiency: false,
+        time: false,
+        points: false,
+        peoples_points: false
+      },
+      result: this.item
     };
   },
   methods: {
-    deleteResult: function deleteResult(id) {
+    editing: function editing(property) {
       var _this = this;
 
-      axios["delete"]("/admin/enter-data/results/".concat(id)).then(function (_ref) {
+      this.isEditing[property] = true;
+      this.$nextTick(function () {
+        _this.$refs[property].focus();
+      });
+    },
+    update: function update(property) {
+      this.isEditing[property] = false;
+      axios.put("/admin/enter-data/results/".concat(this.result.id), this.result).then(function (_ref) {
         var data = _ref.data;
 
         if (data.alertType == 'success') {
-          _this.$emit('resultDeleted', id);
+          flash(data.message);
+        }
+      })["catch"](function (error) {
+        if (error.response.data.message) {
+          flash(error.response.data.message, error.response.data.alertType);
+        } else {
+          flash('Невозможно обновить данные', 'danger');
+        }
+      });
+    },
+    deleteResult: function deleteResult(id) {
+      var _this2 = this;
+
+      axios["delete"]("/admin/enter-data/results/".concat(id)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.alertType == 'success') {
+          _this2.$emit('resultDeleted', id);
 
           flash(data.message);
         }
@@ -6076,24 +6214,96 @@ var render = function() {
       _vm._v(_vm._s(_vm.game.display_name))
     ]),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayAverage(_vm.game.marfin)))
-    ]),
+    _vm.isEditing.marfin
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.game.marfin,
+              expression: "game.marfin"
+            }
+          ],
+          ref: "marfin",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1" },
+          domProps: { value: _vm.game.marfin },
+          on: {
+            blur: function($event) {
+              return _vm.update("marfin")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.game, "marfin", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5 cursor-pointer",
+            on: {
+              click: function($event) {
+                return _vm.editing("marfin")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayAverage(_vm.game.marfin)))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayPercentage(_vm.game.efficiency)) + "%")
-    ]),
+    _vm.isEditing.efficiency
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.game.efficiency,
+              expression: "game.efficiency"
+            }
+          ],
+          ref: "efficiency",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1" },
+          domProps: { value: _vm.game.efficiency },
+          on: {
+            blur: function($event) {
+              return _vm.update("efficiency")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.game, "efficiency", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5 cursor-pointer",
+            on: {
+              click: function($event) {
+                return _vm.editing("efficiency")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayPercentage(_vm.game.efficiency)) + "%")]
+        ),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
       _c(
         "button",
         {
           staticClass:
-            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none",
           attrs: { type: "button" },
           on: {
             click: function($event) {
-              return _vm.deleteGame(_vm.game.id)
+              return _vm.deleteGame(_vm.item.id)
             }
           }
         },
@@ -6151,7 +6361,7 @@ var render = function() {
                     return _c("game-list-item", {
                       key: game.id,
                       staticClass: "border-b hover:bg-orange-100 bg-gray-100",
-                      attrs: { game: game },
+                      attrs: { item: game },
                       on: { gameDeleted: _vm.deleteGame }
                     })
                   })
@@ -6931,41 +7141,259 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("tr", [
     _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.item.game.display_name))
-    ]),
-    _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [_vm._v(_vm._s(_vm.item.team.name))]),
-    _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayAverage(_vm.item.okg)))
+      _vm._v(_vm._s(_vm.result.game.display_name))
     ]),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayAverage(_vm.item.white_index)))
+      _vm._v(_vm._s(_vm.result.team.name))
     ]),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayPercentage(_vm.item.efficiency)) + "%")
-    ]),
+    _vm.isEditing.okg
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.okg,
+              expression: "result.okg"
+            }
+          ],
+          ref: "okg",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1", min: "0" },
+          domProps: { value: _vm.result.okg },
+          on: {
+            blur: function($event) {
+              return _vm.update("okg")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "okg", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("okg")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayAverage(_vm.result.okg)))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.item.time ? _vm.item.time : "N/A"))
-    ]),
+    _vm.isEditing.white_index
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.white_index,
+              expression: "result.white_index"
+            }
+          ],
+          ref: "white_index",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1", min: "0" },
+          domProps: { value: _vm.result.white_index },
+          on: {
+            blur: function($event) {
+              return _vm.update("white_index")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "white_index", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("white_index")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayAverage(_vm.result.white_index)))]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayAverage(_vm.item.points)))
-    ]),
+    _vm.isEditing.efficiency
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.efficiency,
+              expression: "result.efficiency"
+            }
+          ],
+          ref: "efficiency",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1" },
+          domProps: { value: _vm.result.efficiency },
+          on: {
+            blur: function($event) {
+              return _vm.update("efficiency")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "efficiency", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("efficiency")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayPercentage(_vm.result.efficiency)) + "%")]
+        ),
     _vm._v(" "),
-    _c("td", { staticClass: "p-3 px-5" }, [
-      _vm._v(_vm._s(_vm.displayAverage(_vm.item.peoples_points)))
-    ]),
+    _vm.isEditing.time
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.time,
+              expression: "result.time"
+            }
+          ],
+          ref: "time",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: "1" },
+          domProps: { value: _vm.result.time },
+          on: {
+            blur: function($event) {
+              return _vm.update("time")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "time", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("time")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.result.time ? _vm.result.time : "N/A"))]
+        ),
+    _vm._v(" "),
+    _vm.isEditing.points
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.points,
+              expression: "result.points"
+            }
+          ],
+          ref: "points",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1", min: "0" },
+          domProps: { value: _vm.result.points },
+          on: {
+            blur: function($event) {
+              return _vm.update("points")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "points", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("points")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayAverage(_vm.result.points)))]
+        ),
+    _vm._v(" "),
+    _vm.isEditing.peoples_points
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result.peoples_points,
+              expression: "result.peoples_points"
+            }
+          ],
+          ref: "peoples_points",
+          staticClass:
+            "appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2",
+          attrs: { type: "number", step: ".1", min: "0" },
+          domProps: { value: _vm.result.peoples_points },
+          on: {
+            blur: function($event) {
+              return _vm.update("peoples_points")
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.result, "peoples_points", $event.target.value)
+            }
+          }
+        })
+      : _c(
+          "td",
+          {
+            staticClass: "p-3 px-5",
+            on: {
+              click: function($event) {
+                return _vm.editing("peoples_points")
+              }
+            }
+          },
+          [_vm._v(_vm._s(_vm.displayAverage(_vm.result.peoples_points)))]
+        ),
     _vm._v(" "),
     _c("td", { staticClass: "p-3 px-5 flex justify-end" }, [
       _c(
         "button",
         {
           staticClass:
-            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline",
+            "text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none",
           attrs: { type: "button" },
           on: {
             click: function($event) {

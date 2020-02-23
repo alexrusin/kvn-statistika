@@ -39,6 +39,7 @@ Route::namespace('Admin')
                 
                 Route::get('games', 'EnterGameController@index')->name('games');
                 Route::post('games', 'EnterGameController@store')->name('games.store');
+                Route::put('games/{id}', 'EnterGameController@update')->name('games.update');
                 Route::delete('games/{game}', 'EnterGameController@destroy')->name('games.destroy');
 
                 Route::get('teams', 'EnterTeamController@index')->name('teams');
@@ -48,6 +49,7 @@ Route::namespace('Admin')
                 
                 Route::get('results', 'EnterResultController@index')->name('results');
                 Route::post('results', 'EnterResultController@store')->name('results.store');
+                Route::put('results/{id}', 'EnterResultController@update')->name('results.update');
                 Route::delete('results/{result}', 'EnterResultController@destroy')->name('results.destroy');
 
                 Route::get('videos', 'EnterVideoController@index')->name('videos');

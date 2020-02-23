@@ -99,7 +99,11 @@ class EnterGameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only(['marfin', 'efficiency']);
+        Game::whereId($id)
+            ->update($data);
+        
+        return response(['message' => 'Игра обновлена', 'alertType' => 'success']);
     }
 
     /**

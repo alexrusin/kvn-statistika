@@ -19,7 +19,7 @@
             <game-list-item
               v-for="game in games"
               :key="game.id"
-              :game="game"
+              :item="game"
               class="border-b hover:bg-orange-100 bg-gray-100"
               @gameDeleted="deleteGame"
             >

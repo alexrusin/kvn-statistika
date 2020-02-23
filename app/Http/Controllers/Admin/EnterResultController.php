@@ -100,7 +100,11 @@ class EnterResultController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->only(['okg', 'white_index', 'efficiency', 'time', 'points', 'peoples_points']);
+        TeamGame::whereId($id)
+            ->update($data);
+        
+        return response(['message' => 'Результат обновлен', 'alertType' => 'success']);
     }
 
     /**
