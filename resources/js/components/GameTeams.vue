@@ -1,6 +1,6 @@
 <template>
     <div>
-     <div class="text-md font-bold text-gray-800">
+     <div class="text-md font-bold text-gray-800 text-sm sm:text-lg">
         <span class="uppercase truncate">{{ game.display_name }}</span>
       </div>
       <div v-if="teams.length > 0" class="flex items-center justify-center">
@@ -12,26 +12,26 @@
               <tr v-for="index in teams.length" :key="index"
                 class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
               >
-                <th class="p-3 text-left">Команда</th>
-                <th class="p-3 text-left">ОКГ</th>
-                <th class="p-3 text-left truncate hidden sm:table-cell">Эффективность</th>
-                <th class="p-3 text-left truncate hidden sm:table-cell">Народный балл</th>
-                <th class="p-3 text-left truncate">Балл жюри</th>
+                <th class="p-1 sm:p-3 text-left text-sm sm:text-lg">Команда</th>
+                <th class="p-1 sm:p-3 text-left text-sm sm:text-lg">ОКГ</th>
+                <th class="p-1 sm:p-3 text-left truncate hidden sm:table-cell text-sm sm:text-lg">Эффективность</th>
+                <th class="p-1 sm:p-3 text-left truncate hidden sm:table-cell text-sm sm:text-lg">Народный балл</th>
+                <th class="p-1 sm:p-3 text-left truncate text-sm sm:text-lg">Балл жюри</th>
               </tr>
             </thead>
             <tbody class="flex-1 sm:flex-none">
               <tr v-for="team in teams" :key="team.id"
               class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
-                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ team.team.name }} </td>
-                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ displayAverage(team.okg) }} </td>
+                <td class="border-grey-light border hover:bg-gray-100 p-1 sm:p-3 truncate text-sm sm:text-lg">{{ team.team.name }} </td>
+                <td class="border-grey-light border hover:bg-gray-100 p-1 sm:p-3 truncate text-sm sm:text-lg">{{ displayAverage(team.okg) }} </td>
                 <td
-                  class="border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
+                  class="border-grey-light border hover:bg-gray-100 p-1 sm:p-3 truncate hidden sm:table-cell text-sm sm:text-lg"
                 >{{ displayPercentage(team.efficiency) }}%</td>
                  <td
-                  class="border-grey-light border hover:bg-gray-100 p-3 truncate hidden sm:table-cell"
+                  class="border-grey-light border hover:bg-gray-100 p-1 sm:p-3 truncate hidden sm:table-cell text-sm sm:text-lg"
                 >{{ displayAverage(team.peoples_points) }}</td>
                  <td
-                  class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+                  class="border-grey-light border hover:bg-gray-100 p-1 sm:p-3 truncate text-sm sm:text-lg"
                 >{{ displayAverage(team.points) }}</td>
               </tr>
             </tbody>

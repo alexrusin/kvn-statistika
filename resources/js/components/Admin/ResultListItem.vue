@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr class="cursor-pointer">
         <td class="p-3 px-5">{{ result.game.display_name }}</td>
         <td class="p-3 px-5">{{ result.team.name }}</td>
         <input v-if="isEditing.okg"

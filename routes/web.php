@@ -27,6 +27,13 @@ Route::namespace('Statistics')
         Route::get('videos', 'VideosController@index')->name('videos');
 });
 
+Route::namespace('Blog')
+    ->prefix('blog')
+    ->name('blog.')
+    ->group(function() {
+        Route::get('/{tag?}', 'BlogController@index')->name('index');
+});
+
 Route::namespace('Admin')
     ->middleware(['auth', 'verified', 'admin'])
     ->prefix('admin')

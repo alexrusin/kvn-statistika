@@ -96,7 +96,18 @@
                                     <path
                                         d="M20 5V3.799A.798.798 0 0 0 19.201 3H.801A.8.8 0 0 0 0 3.799V5h2v2H0v2h2v2H0v2h2v2H0v1.199A.8.8 0 0 0 .801 17h18.4a.8.8 0 0 0 .799-.801V15h-2v-2h2v-2h-2V9h2V7h-2V5h2zM8 13V7l5 3-5 3z" />
                                 </svg>
-                                <span class="hidden md:inline">Видео</span>
+                                <span class="hidden md:inline">Смотреть</span>
+                            </a>
+                        </div>
+                        <div class="flex -mb-px mr-8">
+                            <a href="{{ route('blog.index', ['tag' => 'useless-kvn']) }}"
+                                class="no-underline {{ request()->routeIs('blog.index') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
+                                <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" 
+                                    viewBox="0 0 20 20">
+                                    <path 
+                                    d="M17 5.95v10.351c0 .522-.452.771-1 1.16-.44.313-1-.075-1-.587V6.76c0-.211-.074-.412-.314-.535-.24-.123-7.738-4.065-7.738-4.065-.121-.045-.649-.378-1.353-.016-.669.344-1.033.718-1.126.894l8.18 4.482c.217.114.351.29.351.516v10.802a.67.67 0 0 1-.369.585.746.746 0 0 1-.333.077.736.736 0 0 1-.386-.104c-.215-.131-7.774-4.766-8.273-5.067-.24-.144-.521-.439-.527-.658L3 3.385c0-.198-.023-.547.289-1.032C3.986 1.269 6.418.036 7.649.675l8.999 4.555c.217.112.352.336.352.72z"/>
+                                </svg>
+                                <span class="hidden md:inline">Читать</span>
                             </a>
                         </div>
                     </div>
