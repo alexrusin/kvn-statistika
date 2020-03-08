@@ -43434,7 +43434,7 @@ var render = function() {
       _c("div", { staticClass: "border-b" }, [
         _vm.isIndex
           ? _c("div", { staticClass: "px-6 -mb-px" }, [
-              _c("a", { attrs: { href: "/blog/" + _vm.entry.slug } }, [
+              _c("a", { attrs: { href: "/blog/posts/" + _vm.entry.slug } }, [
                 _c("h2", {
                   staticClass: "text-xl font-semibold my-3 text-blue-600",
                   domProps: {

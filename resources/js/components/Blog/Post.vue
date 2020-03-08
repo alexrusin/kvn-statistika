@@ -2,7 +2,7 @@
     <div class="bg-white border-t border-b sm:rounded sm:border shadow min-h-full" :title="entry.title">
         <div class="border-b">
             <div class="px-6 -mb-px" v-if="isIndex">
-                <a :href="'/blog/' + entry.slug">
+                <a :href="'/blog/posts/' + entry.slug">
                     <h2 class="text-xl font-semibold my-3 text-blue-600" v-html="truncate(entry.title, 68)"></h2>
                 </a>
             </div>

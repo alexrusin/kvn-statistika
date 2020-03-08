@@ -10,6 +10,6 @@ class Tag extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class, 'wink_posts_tags', 'tag_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'wink_posts_tags');
     }
 }

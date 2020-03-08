@@ -11,6 +11,10 @@
 |
 */
 
+
+Route::get('/test-image', 'WelcomeController@index');
+Route::resource('images', 'WelcomeController', ['only' => ['store', 'destroy']]);
+
 Route::get('/', function () {
     return redirect()->route('statistics.teams');
 });
@@ -32,7 +36,7 @@ Route::namespace('Blog')
     ->name('blog.')
     ->group(function() {
         Route::get('/tags/{tag}', 'TagController@show')->name('tag.show');
-        Route::get('/{post}', 'BlogController@show')->name('show');
+        Route::get('/posts/{post}', 'PostController@show')->name('show');
 });
 
 Route::namespace('Admin')
