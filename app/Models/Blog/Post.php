@@ -9,8 +9,31 @@ class Post extends Model
     const USELESS_KVN = 'bespoleznaya-kvn-statistika';
 
     protected $table = 'wink_posts';
+    
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     protected $casts = [
-        'meta' => 'array'
+        'meta' => 'array',
+        'published' => 'boolean'
     ];
 
     protected $dates = [
@@ -19,7 +42,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'wink_posts_tags');
+        return $this->belongsToMany(Tag::class, 'wink_posts_tags', 'post_id', 'tag_id');
     }
 
     public function getAttributionAttribute()

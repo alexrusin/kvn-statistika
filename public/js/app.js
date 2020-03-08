@@ -3443,6 +3443,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['entry', 'isIndex'],
@@ -43451,16 +43456,32 @@ var render = function() {
             ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "px-8 pt-6 pb-8" }, [
-        _vm.isIndex
-          ? _c("p", {
-              domProps: {
-                innerHTML: _vm._s(
-                  _vm.truncate(_vm.entry.body.replace(/(<([^>]+)>)/gi, ""), 300)
-                )
-              }
-            })
-          : _c("p", { domProps: { innerHTML: _vm._s(_vm.entry.body) } })
+      _c("div", { staticClass: "px-8 pt-6 pb-8 flex" }, [
+        _c("div", { staticClass: "mr-4" }, [
+          _vm.entry.featured_image
+            ? _c("div", {
+                staticClass: "w-16 h-16 rounded-full bg-cover",
+                style: {
+                  backgroundImage: "url(" + _vm.entry.featured_image + ")"
+                }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _vm.isIndex
+            ? _c("p", {
+                domProps: {
+                  innerHTML: _vm._s(
+                    _vm.truncate(
+                      _vm.entry.body.replace(/(<([^>]+)>)/gi, ""),
+                      300
+                    )
+                  )
+                }
+              })
+            : _c("p", { domProps: { innerHTML: _vm._s(_vm.entry.body) } })
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "border-t" }, [

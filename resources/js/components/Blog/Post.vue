@@ -10,9 +10,14 @@
                 <h2 class="text-xl font-semibold my-3" v-html="entry.title"></h2>
             </div>
         </div>
-        <div class="px-8 pt-6 pb-8">
-            <p v-if="isIndex" v-html="truncate(entry.body.replace(/(<([^>]+)>)/ig,''), 300)"></p>
-            <p v-else v-html="entry.body"></p>
+        <div class="px-8 pt-6 pb-8 flex">
+            <div class="mr-4">
+                <div class="w-16 h-16 rounded-full bg-cover" v-if="entry.featured_image" :style="{ backgroundImage: 'url(' + entry.featured_image + ')' }"></div>
+            </div>
+            <div>
+                <p v-if="isIndex" v-html="truncate(entry.body.replace(/(<([^>]+)>)/ig,''), 300)"></p>
+                <p v-else v-html="entry.body"></p>
+            </div>
         </div>
         <div class="border-t">
             <div class="px-6 my-3">
