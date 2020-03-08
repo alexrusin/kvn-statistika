@@ -31,7 +31,8 @@ Route::namespace('Blog')
     ->prefix('blog')
     ->name('blog.')
     ->group(function() {
-        Route::get('/{tag?}', 'BlogController@index')->name('index');
+        Route::get('/tags/{tag}', 'TagController@show')->name('tag.show');
+        Route::get('/{post}', 'BlogController@show')->name('show');
 });
 
 Route::namespace('Admin')

@@ -13,7 +13,7 @@
                     <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium">
                         КВН Статистика
                     </div>
-                    <div class="w-1/4 md:w-auto md:flex text-right items-center">
+                    <div class="md:w-auto md:flex text-right items-center ml-6">
                         @if (Route::has('login'))
                         @auth
                         <div class="relative group" @click="showSubMenu = !showSubMenu">
@@ -66,7 +66,7 @@
             <div class="container mx-auto px-4">
                 <div class="flex justify-between">
                     <div class="flex">
-                        <div class="flex -mb-px mr-8">
+                        <div class="flex -mb-px mr-4">
                             <a href="{{ route('statistics.teams') }}"
                                 class="no-underline {{ request()->routeIs('statistics.teams') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@
                                 <span class="hidden md:inline">Команды</span>
                             </a>
                         </div>
-                        <div class="flex -mb-px mr-8">
+                        <div class="flex -mb-px mr-4">
                             <a href="{{ route('statistics.games') }}"
                                 class="no-underline {{ request()->routeIs('statistics.games') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@
                                 <span class="hidden md:inline">Игры</span>
                             </a>
                         </div>
-                        <div class="flex -mb-px mr-8">
+                        <div class="flex -mb-px mr-4">
                             <a href="{{ route('statistics.videos') }}"
                                 class="no-underline {{ request()->routeIs('statistics.videos') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +99,8 @@
                                 <span class="hidden md:inline">Смотреть</span>
                             </a>
                         </div>
-                        <div class="flex -mb-px mr-8">
-                            <a href="{{ route('blog.index', ['tag' => 'useless-kvn']) }}"
+                        <div class="flex -mb-px mr-4">
+                            <a href="{{ route('blog.tag.show', ['tag' => 'bespoleznaya-kvn-statistika']) }}"
                                 class="no-underline {{ request()->routeIs('blog.index') ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" 
                                     viewBox="0 0 20 20">

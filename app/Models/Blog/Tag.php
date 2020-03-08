@@ -12,13 +12,4 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class, 'wink_posts_tags', 'tag_id', 'post_id');
     }
-
-    public function getAliasAttribute()
-    {
-        if ($this->slug == 'useless-kvn') {
-            return 'Бесполезная КВН Статистика';
-        } else {
-            return $this->name;
-        }
-    }
 }

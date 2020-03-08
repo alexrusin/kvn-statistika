@@ -18,6 +18,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="description" content="Статистические данные о КВН">
+	<meta name="keywords" content="квн, квн статистика, бесполезная статистика квн, квн обзор, квн обзор ютюб, квн блог">
+
+    @yield('blog_meta_tags')
+
     <title>КВН Статистика</title>
 
     <!-- CSRF Token -->

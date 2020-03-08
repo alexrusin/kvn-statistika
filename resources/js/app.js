@@ -40,7 +40,6 @@ Vue.component('result-form', require('./components/Admin/ResultForm').default);
 Vue.component('video-form', require('./components/Admin/VideoForm').default);
 
 Vue.component('posts', require('./components/Blog/Posts').default);
-Vue.component('post', require('./components/Blog/Post').default);
 
 Vue.component('flash', require('./components/Flash').default);
 Vue.component('tooltip', require('./components/Tooltip').default);

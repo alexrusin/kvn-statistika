@@ -3443,8 +3443,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['entry', 'isIndex'],
@@ -43436,7 +43434,7 @@ var render = function() {
       _c("div", { staticClass: "border-b" }, [
         _vm.isIndex
           ? _c("div", { staticClass: "px-6 -mb-px" }, [
-              _c("a", { attrs: { href: _vm.entry.slug } }, [
+              _c("a", { attrs: { href: "/blog/" + _vm.entry.slug } }, [
                 _c("h2", {
                   staticClass: "text-xl font-semibold my-3 text-blue-600",
                   domProps: {
@@ -43468,6 +43466,8 @@ var render = function() {
       _c("div", { staticClass: "border-t" }, [
         _c("div", { staticClass: "px-6 my-3" }, [
           _c("div", { staticClass: "flex justify-between" }, [
+            _c("div"),
+            _vm._v(" "),
             _c("div", [
               _c("small", { staticClass: "text-light" }, [
                 _vm.entry.published &&
@@ -43480,40 +43480,14 @@ var render = function() {
                     ])
                   : _vm._e()
               ])
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
+            ])
           ])
         ])
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("small", { staticClass: "text-light" }, [
-        _c("span", [
-          _vm._v("По материалам "),
-          _c(
-            "a",
-            {
-              staticClass: "font-bold text-blue-600",
-              attrs: {
-                href: "https://telegram.me/useless_kvn",
-                target: "_blank"
-              }
-            },
-            [_vm._v(" @useless_kvn")]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -56986,7 +56960,6 @@ Vue.component('team-form', __webpack_require__(/*! ./components/Admin/TeamForm *
 Vue.component('result-form', __webpack_require__(/*! ./components/Admin/ResultForm */ "./resources/js/components/Admin/ResultForm.vue")["default"]);
 Vue.component('video-form', __webpack_require__(/*! ./components/Admin/VideoForm */ "./resources/js/components/Admin/VideoForm.vue")["default"]);
 Vue.component('posts', __webpack_require__(/*! ./components/Blog/Posts */ "./resources/js/components/Blog/Posts.vue")["default"]);
-Vue.component('post', __webpack_require__(/*! ./components/Blog/Post */ "./resources/js/components/Blog/Post.vue")["default"]);
 Vue.component('flash', __webpack_require__(/*! ./components/Flash */ "./resources/js/components/Flash.vue")["default"]);
 Vue.component('tooltip', __webpack_require__(/*! ./components/Tooltip */ "./resources/js/components/Tooltip.vue")["default"]);
 /**
