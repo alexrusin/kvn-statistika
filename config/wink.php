@@ -55,4 +55,6 @@ return [
     |
     */
     'middleware_group' => env('WINK_MIDDLEWARE_GROUP', 'web'),
+
+    'posts_per_page' => env('WINK_POSTS_PER_PAGE', 10),
 ];

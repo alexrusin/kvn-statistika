@@ -23,7 +23,7 @@
                     <div>
                         <small class="text-light">
                             @if($post->published)
-                                <span>Опубликовано {{$post->publish_date->diffForHumans()}}</span>
+                                <span>Опубликовано {{$post->publish_date_human_readable}}</span>
                             @endif
                         </small>
                     </div>

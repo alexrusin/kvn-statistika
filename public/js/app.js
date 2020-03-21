@@ -3446,11 +3446,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['entry', 'isIndex'],
+  props: ['entry'],
   data: function data() {
     return {
       dateInTheFuture: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["dateInTheFuture"],
@@ -3471,8 +3469,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/functions */ "./resources/js/utils/functions.js");
-/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Post */ "./resources/js/components/Blog/Post.vue");
+/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ "./resources/js/components/Blog/Post.vue");
+/* harmony import */ var _Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Paginator */ "./resources/js/components/Paginator.vue");
+//
+//
+//
 //
 //
 //
@@ -3483,21 +3484,37 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Post: _Post__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Post: _Post__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Paginator: _Paginator__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['postsPaginator'],
   created: function created() {
-    this.entries = this.postsPaginator.data;
+    this.fetch();
   },
   data: function data() {
     return {
-      entries: '',
-      timeAgo: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["timeAgo"],
-      dateInTheFuture: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["dateInTheFuture"],
-      truncate: _utils_functions__WEBPACK_IMPORTED_MODULE_0__["truncate"]
+      entries: [],
+      dataSet: false
     };
   },
-  methods: {}
+  methods: {
+    fetch: function fetch(page) {
+      axios.get(this.url(page)).then(this.refresh);
+    },
+    url: function url(page) {
+      if (!page) {
+        var query = location.search.match(/page=(\d+)/);
+        page = query ? query[1] : 1;
+      }
+
+      return "".concat(location.pathname, "?page=").concat(page);
+    },
+    refresh: function refresh(_ref) {
+      var data = _ref.data;
+      this.dataSet = data;
+      this.entries = data.data;
+      window.scrollTo(0, 0);
+    }
+  }
 });
 
 /***/ }),
@@ -43437,50 +43454,38 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "border-b" }, [
-        _vm.isIndex
-          ? _c("div", { staticClass: "px-6 -mb-px" }, [
-              _c("a", { attrs: { href: "/blog/posts/" + _vm.entry.slug } }, [
-                _c("h2", {
-                  staticClass: "text-xl font-semibold my-3 text-blue-600",
-                  domProps: {
-                    innerHTML: _vm._s(_vm.truncate(_vm.entry.title, 68))
-                  }
-                })
-              ])
-            ])
-          : _c("div", { staticClass: "px-6 -mb-px" }, [
-              _c("h2", {
-                staticClass: "text-xl font-semibold my-3",
-                domProps: { innerHTML: _vm._s(_vm.entry.title) }
-              })
-            ])
+        _c("div", { staticClass: "px-6 -mb-px" }, [
+          _c("a", { attrs: { href: "/blog/posts/" + _vm.entry.slug } }, [
+            _c("h2", {
+              staticClass: "text-xl font-semibold my-3 text-blue-600",
+              domProps: { innerHTML: _vm._s(_vm.truncate(_vm.entry.title, 68)) }
+            })
+          ])
+        ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "px-8 pt-6 pb-8 flex" }, [
-        _c("div", { staticClass: "mr-4" }, [
-          _vm.entry.featured_image
-            ? _c("div", {
-                staticClass: "w-16 h-16 rounded-full bg-cover",
-                style: {
-                  backgroundImage: "url(" + _vm.entry.featured_image + ")"
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", [
-          _vm.isIndex
-            ? _c("p", {
-                domProps: {
-                  innerHTML: _vm._s(
-                    _vm.truncate(
-                      _vm.entry.body.replace(/(<([^>]+)>)/gi, ""),
-                      300
-                    )
-                  )
-                }
-              })
-            : _c("p", { domProps: { innerHTML: _vm._s(_vm.entry.body) } })
+      _c("a", { attrs: { href: "/blog/posts/" + _vm.entry.slug } }, [
+        _c("div", { staticClass: "px-8 pt-6 pb-8 flex sm:items-center" }, [
+          _c("div", { staticClass: "mr-4" }, [
+            _vm.entry.featured_image
+              ? _c("div", {
+                  staticClass: "w-16 h-16 rounded-full bg-cover",
+                  style: {
+                    backgroundImage: "url(" + _vm.entry.featured_image + ")"
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("p", {
+              domProps: {
+                innerHTML: _vm._s(
+                  _vm.truncate(_vm.entry.body.replace(/(<([^>]+)>)/gi, ""), 200)
+                )
+              }
+            })
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -43496,7 +43501,7 @@ var render = function() {
                   ? _c("span", [
                       _vm._v(
                         "Опубликовано " +
-                          _vm._s(_vm.timeAgo(_vm.entry.publish_date))
+                          _vm._s(_vm.entry.publish_date_human_readable)
                       )
                     ])
                   : _vm._e()
@@ -43532,14 +43537,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.entries, function(blog) {
-      return _c("post", {
-        key: blog.slug,
-        staticClass: "w-full my-4",
-        attrs: { entry: blog, "is-index": true }
-      })
-    }),
-    1
+    [
+      _vm._l(_vm.entries, function(blog) {
+        return _c("post", {
+          key: blog.slug,
+          staticClass: "w-full my-4",
+          attrs: { entry: blog }
+        })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "mt-2" },
+        [
+          _c("paginator", {
+            attrs: { "data-set": _vm.dataSet },
+            on: { changed: _vm.fetch }
+          })
+        ],
+        1
+      )
+    ],
+    2
   )
 }
 var staticRenderFns = []

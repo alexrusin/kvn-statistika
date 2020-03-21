@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Blog;
 
-use App\Models\Blog\Post;
 use App\Models\Blog\Tag;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class TagController
 {
-    public function show($slug) 
+    public function show($slug, Request $request) 
     {
         $postTag = Tag::whereSlug($slug)->first();
 
-        $postsPaginator = $postTag->posts()
+        if($request->wantsJson()) {
+            return $postTag->posts()
             ->wherePublished(true)
             ->orderBy('publish_date', 'desc')
-            ->paginate(20);
-        
-        return view('blog.tag', compact('postTag', 'postsPaginator'));
+            ->paginate(config('wink.posts_per_page'));
+        } else {
+            return view('blog.tag', compact('postTag'));
+        }        
     }
 }

@@ -40,6 +40,10 @@ class Post extends Model
         'publish_date',
     ];
 
+    protected $appends = [
+        'publish_date_human_readable'
+    ];
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'wink_posts_tags', 'post_id', 'tag_id');
@@ -56,6 +60,13 @@ class Post extends Model
                 'sourceUrl' => 'https://telegram.me/useless_kvn',
                 'sourceName' => '@useless_kvn'
             ];
+        }
+    }
+
+    public function getPublishDateHumanReadableAttribute()
+    {
+        if ($this->publish_date) {
+            return $this->publish_date->diffForHumans();
         }
     }
 }

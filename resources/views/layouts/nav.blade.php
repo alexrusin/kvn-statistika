@@ -100,7 +100,7 @@
                             </a>
                         </div>
                         <div class="flex -mb-px mr-4">
-                            <a href="{{ route('blog.tag.show', ['tag' => 'bespoleznaya-kvn-statistika']) }}"
+                            <a href="{{ route('blog.index') }}"
                                 class="no-underline {{ strpos(request()->url(), 'blog') !== false ? 'text-blue-500 md:hover:border-blue-500' : 'text-gray-500 opacity-100 md:hover:border-gray-500' }} flex items-center py-4 border-b border-transparent hover:opacity-100">
                                 <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" 
                                     viewBox="0 0 20 20">
