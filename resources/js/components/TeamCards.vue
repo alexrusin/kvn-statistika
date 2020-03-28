@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 my-2">
       <team-card
         v-for="team in theTeams"
         :team="team"

@@ -1,5 +1,5 @@
 <template>
- <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+ <div class="my-2 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
     <div class="bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="pb-2/3 relative cursor-pointer card-image" @click="teamClicked">
             <img class="h-full w-full object-cover" :class="selected ? 'opacity-50' : 'opacity-100'" :src="team.image_url" :alt="team.name">

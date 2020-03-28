@@ -44,3 +44,14 @@
     <meta name="twitter:title" content="{{$post->meta['twitter_title'] ?: 'КВН Статистика'}}">
     <meta name="twitter:description" content="{{$post->meta['twitter_description'] ?: 'КВН Статистика'}}">
 @endsection
+
+@push('styles')
+
+<style>
+a {
+    color: blue;
+    text-decoration: underline;
+}
+</style>
+
+@endpush

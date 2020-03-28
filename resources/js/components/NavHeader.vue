@@ -2,7 +2,7 @@
 export default {
     data() {
         return {
-            showMenu: false,
+            history: window.history,
             showSubMenu: false,
             showSearch: false,
             searchText: '',

@@ -3745,7 +3745,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      showMenu: false,
+      history: window.history,
       showSubMenu: false,
       showSearch: false,
       searchText: '',
@@ -44223,7 +44223,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" },
+    { staticClass: "my-2 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" },
     [
       _c(
         "div",
@@ -44600,7 +44600,7 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex flex-wrap -mx-1 lg:-mx-4" },
+      { staticClass: "flex flex-wrap -mx-1 lg:-mx-4 my-2" },
       _vm._l(_vm.theTeams, function(team) {
         return _c("team-card", {
           key: team.id,
