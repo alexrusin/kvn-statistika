@@ -22,7 +22,8 @@ class Game extends Model
         1 => 'Первая',
         2 => 'Вторая',
         3 => 'Третья',
-        4 => 'Четвертая'
+        4 => 'Четвертая',
+        5 => 'Пятая'
     ];
 
     protected $appends = ['display_name'];
