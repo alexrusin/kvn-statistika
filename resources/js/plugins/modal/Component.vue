@@ -27,6 +27,7 @@ export default {
     props: ['name'],
     created() {
          window.events.$on('openModal', this.openModal);
+         window.events.$on('closeModal', this.closeModal);
     },
 
     data() {
@@ -37,7 +38,6 @@ export default {
 
     methods: {
         openModal(name) {
-            console.log ('hit open modal');
             if (name == this.name) {
                 this.overlayClass = 'overlay overlay-visible';
             }

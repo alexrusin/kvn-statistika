@@ -64,14 +64,28 @@
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   for="grid-image-url"
                 >Фото (1280 x 720)</label>
-                <input
-                  v-model="form.image_url"
-                  type="text"
-                  name="image_url"
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-image-url"
-                  placeholder="https://i.ytimg.com/vi/tTxheXipdas/maxresdefault.jpg"
-                />
+                <div class="flex items-center">
+                  <div class="flex-grow mr-4">
+                    <input
+                      :disabled="true"
+                      v-model="form.image_url"
+                      type="text"
+                      name="image_url"
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-not-allowed"
+                      id="grid-image-url"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      @click="show"
+                      type="button"
+                      class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+                    >Загрузить</button>
+                  </div>
+                </div>
+                <modal :name="modalName">
+                  <image-picker @image-link="insertImageLink"></image-picker>
+                </modal>
                 <p
                   class="text-red-500 text-xs italic"
                   v-if="form.errors.has('image_url')"
@@ -112,10 +126,12 @@
 <script>
 import Form from "../../utils/Form";
 import TeamsListForm from "./TeamsListForm";
+import ImagePicker from "./ImagePicker"
 export default {
-  components: { TeamsListForm },
+  components: { TeamsListForm, ImagePicker },
   data() {
     return {
+      modalName: 'image-upload',
       form: new Form({
         name: "",
         city: "",
@@ -126,6 +142,18 @@ export default {
   },
 
   methods: {
+    show () {
+      this.$modal.show(this.modalName);
+    },
+    hide () {
+      this.$modal.hide(this.modalName);
+    },
+    
+    insertImageLink(link) {
+      this.form.image_url = link;
+      this.hide();
+    },
+
     onSubmit() {
       this.form
         .submit("post", "/admin/enter-data/teams")
