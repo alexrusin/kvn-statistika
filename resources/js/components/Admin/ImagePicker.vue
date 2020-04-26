@@ -23,6 +23,7 @@
 <script>
 import ImageUpload from './ImageUpload'
 export default {
+    props: ['oldImageUrl'],
     components: { ImageUpload },
     data() {
         return {
@@ -37,11 +38,20 @@ export default {
 			},
 
 			persist() {
-                this.$emit('image-link', 'https://hello.com')
-				// let data = new FormData();
-				// data.append('teamImage', this.file);
-				// axios.post('/api/users/${this.user.name}/team', data)
-				// 	.then(response => flash(response.data));
+				let data = new FormData();
+				data.append('image', this.file);
+                data.append('oldImageLink', this.oldImageUrl);
+				axios.post('/api/images', data)
+					.then(response => {
+                        this.$emit('image-link', response.data)
+                    })
+                    .catch(error => {
+                        if (error.response.data.message) {
+                            flash(error.response.data.message, "danger");
+                        } else {
+                            flash('Error processing request', "danger");
+                        }
+                    });
 			}
 		}
     

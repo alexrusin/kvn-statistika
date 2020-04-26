@@ -84,7 +84,7 @@
                   </div>
                 </div>
                 <modal :name="modalName">
-                  <image-picker @image-link="insertImageLink"></image-picker>
+                  <image-picker :old-image-url="form.image_url" @image-link="insertImageLink"></image-picker>
                 </modal>
                 <p
                   class="text-red-500 text-xs italic"

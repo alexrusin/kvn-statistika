@@ -26,7 +26,10 @@
             class="appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight outline-none bg-white border-gray-500 ml-2"
             @blur="update('image_url')"
         />
-        <td v-else @click="editing('image_url')" class="p-3 px-5 truncate">{{ team.image_url }}</td>
+        <td v-else @click="editingImage" class="p-3 px-5 truncate">{{ team.image_url }}</td>
+        <modal :name="modalName">
+            <image-picker :old-image-url="team.image_url" @image-link="insertImageLink"></image-picker>
+        </modal>
 
         <input v-if="isEditing.rating"
             ref="rating"
@@ -48,10 +51,13 @@
 </template>
 
 <script>
+import ImagePicker from "./ImagePicker"
 export default {
     props: ['item'],
+    components: { ImagePicker },
     data() {
         return {
+            modalName: 'update-image-' + this.item.id,
             isEditing: {
                 name: false,
                 city: false,
@@ -62,12 +68,32 @@ export default {
         };
     },
     methods: {
+        show () {
+            this.$modal.show(this.modalName);
+        },
+        hide () {
+            this.$modal.hide(this.modalName);
+        },
+        
         editing(property) {
             this.isEditing[property] = true;
             this.$nextTick(() => {
                 this.$refs[property].focus();
             });
         },
+
+        insertImageLink(link) {
+            this.team.image_url = link;
+            console.log(this.team.id);
+            this.update('image_url');
+            this.hide();
+        },
+
+        editingImage() {
+            console.log(this.team.id);
+            this.show();
+        },
+
         update(property) {
             this.isEditing[property] = false;
             axios.put(`/admin/enter-data/teams/${this.team.id}`, this.team)

@@ -73,6 +73,19 @@ Route::namespace('Admin')
         
 });
 
+Route::namespace('Api')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->prefix('api')
+    ->name('api.')
+    ->group(function() {
+        Route::prefix('images')
+            ->name('images.')
+            ->group(function(){
+                Route::post('/', 'ImagesController@store')->name('store');
+            });
+        
+});
+
 Route::get('/dashboard', 'HomeController@index')
     ->middleware('verified')
     ->name('dashboard');
