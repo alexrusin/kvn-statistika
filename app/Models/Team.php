@@ -33,6 +33,10 @@ class Team extends Model
     public function getImageUrlAttribute()
     {
         $value = $this->getOriginal('image_url');
+        if (!$value) {
+            return;
+        }
+        
         if (substr($value, 0, 7) == "http://" || substr($value, 0, 8) == "https://") {
             return $this->getOriginal('image_url');
         } else {
