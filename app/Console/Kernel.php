@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->command('snapshot:create db_backup')->weekly();
+        $schedule->command('snapshot:create')->weekly();
     }
 
     /**
