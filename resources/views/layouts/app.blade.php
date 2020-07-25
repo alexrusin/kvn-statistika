@@ -35,6 +35,7 @@
     @endif
 
    
+    <meta name="yandex-verification" content="b135efb827d9e593" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
