@@ -18,12 +18,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Статистические данные о КВН">
-	<meta name="keywords" content="квн, квн статистика, бесполезная статистика квн, квн обзор, квн обзор ютюб, квн блог">
+    @if(isset($metaDescription))
+        <meta name="description" content="{{$metaDescription}}"> 
+    @else
+        <meta name="description" content="Статистические данные о КВН">
+    @endif
+    
+	<meta name="keywords" content="команды квн, игры квн, лиги квн, новый квн, квн статистика, бесполезная статистика квн, квн обзор, квн видео">
 
     @yield('blog_meta_tags')
 
-    <title>КВН Статистика</title>
+    @if(isset($pageTitle)) 
+        <title>{{ $pageTitle }} </title>
+    @else 
+        <title>КВН Статистика</title>
+    @endif
+
+   
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -35,9 +46,9 @@
 </head>
 
 <body class="flex items-center justify-center text-gray-800" style="background: #edf2f7;">
-    <div id="app" class="font-sans bg-grey-lighter flex flex-col min-h-screen w-full relative">
+    <div id="app" class="relative flex flex-col w-full min-h-screen font-sans bg-grey-lighter">
         @include('layouts.nav')
-        <div class="flex-grow container mx-auto px-4 pb-8">
+        <div class="container flex-grow px-4 pb-8 mx-auto">
             @yield('content')
         </div>
         @include('layouts.footer')

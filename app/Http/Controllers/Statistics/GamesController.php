@@ -8,6 +8,8 @@ class GamesController
 {
     public function index()
     {
+        $pageTitle = 'Игры КВН | КВН Статистика';
+        $metaDescription = 'Статистические результаты игр высшей и первой лиги квн';
         $games = Game::orderBy('season', 'desc')
             ->orderBy('marfin', 'desc')
             ->orderBy('efficiency', 'desc')
@@ -19,6 +21,6 @@ class GamesController
                 return $item['division'];
             },
         ]);
-        return view('statistics.games', compact('games'));
+        return view('statistics.games', compact('games', 'pageTitle', 'metaDescription'));
     }
 }
