@@ -2,6 +2,7 @@
 
 @section('content')
     <h1 class="mt-4 text-2xl font-semibold text-center text-gray-800">Результаты игр квн</h1>
+    <p class="mt-2 text-center">Лучшие игры КВН определяются оценкой Марфина и общей эффективностью.  Для того, чтобы узнать как выступили команды в каждой из игр, нажмите на соответствующую игру КВН.<p>
     @foreach ($games as $season => $leagues)
         @php
         $sortedLeagues = $leagues->all();
