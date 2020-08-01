@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-wrap -mx-1 lg:-mx-4 my-2">
+    <div class="flex flex-wrap my-2 -mx-1 lg:-mx-4">
       <team-card
         v-for="team in theTeams"
         :team="team"
@@ -12,7 +12,7 @@
     </div>
     <div
      v-if="selectedTeams.length > 0 || isComparing"
-      class="alert-flash p-4 bg-teal-200 border-b"
+      class="p-4 bg-teal-200 border-b alert-flash"
     >
       <div class="flex">
         <div class="py-2 mr-3 font-semibold" v-if="!isComparing">Выберите команды</div>
@@ -20,14 +20,14 @@
         <button
               v-if="!isComparing"
               type="button"
-              class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+              class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700"
               :class="selectedTeams.length <= 1 ? 'opacity-50 cursor-not-allowed' : ''"
               @click="compareTeams"
             >Сравнить</button>
             <button
               v-else
               type="button"
-              class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+              class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700"
               @click="cancelCompare"
             >Очистить</button>
         </div>
@@ -39,18 +39,24 @@
 <script>
 import TeamCard from "./TeamCard";
 export default {
-  props: ["teams"],
   components: { TeamCard },
   data() {
     return {
-      theTeams: this.teams,
+      theTeams: [],
+      teams: [],
       selectedTeams: [],
       isComparing: false
     };
   },
 
   created() {
-    this.sortTeams('desc');
+    window.axios.get('/statistics/teams-data')
+      .then(({data}) => {
+        this.theTeams = data;
+        this.teams = data;
+        this.sortTeams('desc');
+      });
+    
 
     window.events.$on('searchTeam', teamSearch => {
       if (!this.isComparing) {

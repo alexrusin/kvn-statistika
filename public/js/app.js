@@ -4360,13 +4360,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["teams"],
   components: {
     TeamCard: _TeamCard__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      theTeams: this.teams,
+      theTeams: [],
+      teams: [],
       selectedTeams: [],
       isComparing: false
     };
@@ -4374,7 +4374,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.sortTeams('desc');
+    window.axios.get('/statistics/teams-data').then(function (_ref) {
+      var data = _ref.data;
+      _this.theTeams = data;
+      _this.teams = data;
+
+      _this.sortTeams('desc');
+    });
     window.events.$on('searchTeam', function (teamSearch) {
       if (!_this.isComparing) {
         _this.theTeams = _this.teams.filter(function (team) {
@@ -44890,7 +44896,7 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex flex-wrap -mx-1 lg:-mx-4 my-2" },
+      { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
       _vm._l(_vm.theTeams, function(team) {
         return _c("team-card", {
           key: team.id,
@@ -44902,7 +44908,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.selectedTeams.length > 0 || _vm.isComparing
-      ? _c("div", { staticClass: "alert-flash p-4 bg-teal-200 border-b" }, [
+      ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
           _c("div", { staticClass: "flex" }, [
             !_vm.isComparing
               ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
@@ -44916,7 +44922,7 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
                       class:
                         _vm.selectedTeams.length <= 1
                           ? "opacity-50 cursor-not-allowed"
@@ -44930,7 +44936,7 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded",
+                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
                       attrs: { type: "button" },
                       on: { click: _vm.cancelCompare }
                     },
