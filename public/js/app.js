@@ -4358,6 +4358,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -4374,26 +4387,26 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    window.axios.get('/statistics/teams-data').then(function (_ref) {
+    window.axios.get("/statistics/teams-data").then(function (_ref) {
       var data = _ref.data;
       _this.theTeams = data;
       _this.teams = data;
 
-      _this.sortTeams('desc');
+      _this.sortTeams("desc");
     });
-    window.events.$on('searchTeam', function (teamSearch) {
+    window.events.$on("searchTeam", function (teamSearch) {
       if (!_this.isComparing) {
         _this.theTeams = _this.teams.filter(function (team) {
           return team.name.toLowerCase().includes(teamSearch.toLowerCase()) || team.city.toLowerCase().includes(teamSearch.toLowerCase());
         });
       }
     });
-    window.events.$on('sortData', this.sortTeams);
+    window.events.$on("sortData", this.sortTeams);
   },
   methods: {
     sortTeams: function sortTeams(sortType) {
       this.theTeams = this.theTeams.sort(function (a, b) {
-        if (sortType === 'desc') {
+        if (sortType === "desc") {
           return parseFloat(a.team_games_average.avg_okg) < parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
         } else {
           return parseFloat(a.team_games_average.avg_okg) > parseFloat(b.team_games_average.avg_okg) ? 1 : -1;
@@ -4405,14 +4418,14 @@ __webpack_require__.r(__webpack_exports__);
         this.isComparing = true;
         this.theTeams = this.selectedTeams;
         this.selectedTeams = [];
-        window.events.$emit('compareMode', true);
+        window.events.$emit("compareMode", true);
       }
     },
     cancelCompare: function cancelCompare() {
       this.theTeams = this.teams;
       this.isComparing = false;
       this.selectedTeams = [];
-      window.events.$emit('compareMode', false);
+      window.events.$emit("compareMode", false);
     },
     teamSelected: function teamSelected(team) {
       return this.selectedTeams.includes(team);
@@ -44894,18 +44907,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
-      _vm._l(_vm.theTeams, function(team) {
-        return _c("team-card", {
-          key: team.id,
-          attrs: { team: team, selected: _vm.teamSelected(team) },
-          on: { selected: _vm.add, deselected: _vm.remove }
-        })
-      }),
-      1
-    ),
+    _vm.teams.length === 0
+      ? _c(
+          "div",
+          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+          _vm._l(6, function(n) {
+            return _c(
+              "div",
+              {
+                key: n,
+                staticClass:
+                  "w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+              },
+              [_vm._m(0, true)]
+            )
+          }),
+          0
+        )
+      : _c(
+          "div",
+          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+          _vm._l(_vm.theTeams, function(team) {
+            return _c("team-card", {
+              key: team.id,
+              attrs: { team: team, selected: _vm.teamSelected(team) },
+              on: { selected: _vm.add, deselected: _vm.remove }
+            })
+          }),
+          1
+        ),
     _vm._v(" "),
     _vm.selectedTeams.length > 0 || _vm.isComparing
       ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
@@ -44948,7 +44978,58 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "overflow-hidden bg-white rounded-lg shadow-lg" },
+      [
+        _c("div", { staticClass: "h-48 bg-gray-600" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-6" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "block w-4/5 mt-4 text-transparent bg-gray-500 rounded"
+            },
+            [_vm._v("Название команды")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "block w-3/5 mt-4 text-transparent bg-gray-500 rounded"
+            },
+            [_vm._v("Эффективность")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "block w-3/5 mt-4 text-transparent bg-gray-500 rounded"
+            },
+            [_vm._v("Индекс Белого")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "block w-3/5 mt-4 text-transparent bg-gray-500 rounded"
+            },
+            [_vm._v("Народная оценка")]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
