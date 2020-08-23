@@ -2,7 +2,7 @@
   <div>
     <div v-if="teams.length === 0" class="flex flex-wrap my-2 -mx-1 lg:-mx-4">
       <div v-for="n in 6" :key="n" class="w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
-        <div class="overflow-hidden bg-white rounded-lg shadow-lg">
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg animate-pulse">
           <div class="h-48 bg-gray-600"></div>
           <div class="p-6">
             <div class="block w-4/5 mt-4 text-transparent bg-gray-500 rounded">Название команды</div>

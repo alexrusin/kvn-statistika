@@ -9,7 +9,7 @@
         ksort($sortedLeagues);
         @endphp
         @foreach ($sortedLeagues as $key => $data)
-        <h2 class="p-4 mt-4 font-bold text-center bg-white text-l"> {{ $key == 1 ? 'Высшая лига КВН' : 'Премьер лига КВН' }} {{$season}} г.</h2>
+        <h2 class="p-4 mt-4 font-bold text-center bg-gray-400 shadow text-l"> {{ $key == 1 ? 'Высшая лига КВН' : 'Премьер лига КВН' }} {{$season}} г.</h2>
         <statistics-games :games="{{json_encode($data)}}"></statistics-games>
         @endforeach
     @endforeach

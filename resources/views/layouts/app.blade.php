@@ -23,8 +23,6 @@
     @else
         <meta name="description" content="Статистические данные о КВН">
     @endif
-    
-	<meta name="keywords" content="команды квн, игры квн, лиги квн, новый квн, квн статистика, бесполезная статистика квн, квн обзор, квн видео">
 
     @yield('blog_meta_tags')
 
