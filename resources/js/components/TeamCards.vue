@@ -64,6 +64,7 @@ export default {
 
   created() {
     window.axios.get("/statistics/teams-data").then(({ data }) => {
+      data = this.insertAds(data);
       this.theTeams = data;
       this.teams = data;
       this.sortTeams("desc");
@@ -72,9 +73,13 @@ export default {
     window.events.$on("searchTeam", (teamSearch) => {
       if (!this.isComparing) {
         this.theTeams = this.teams.filter(
-          (team) =>
-            team.name.toLowerCase().includes(teamSearch.toLowerCase()) ||
+          (team) => {
+            if (!team.name || !team.city) {
+              return false;
+            }
+            return team.name.toLowerCase().includes(teamSearch.toLowerCase()) ||
             team.city.toLowerCase().includes(teamSearch.toLowerCase())
+          }
         );
       }
     });
@@ -84,6 +89,7 @@ export default {
 
   methods: {
     sortTeams(sortType) {
+      this.theTeams = this.removeAds(this.theTeams);
       this.theTeams = this.theTeams.sort((a, b) => {
         if (sortType === "desc") {
           return parseFloat(a.team_games_average.avg_okg) <
@@ -97,6 +103,7 @@ export default {
             : -1;
         }
       });
+      this.theTeams = this.insertAds(this.theTeams);
     },
 
     compareTeams() {
@@ -133,6 +140,21 @@ export default {
         (selectedTeam) => selectedTeam.id != team.id
       );
     },
+
+    insertAds(data) {
+      data.splice(3, 0, {
+        id:"kravchenko-shpenkov",
+        ad: true,
+        ad_url: "https://www.youtube.com/watch?v=ozuKyBdhdo4",
+        image_url: "/images/kvn_batl_kravchenko_shpenkov.jpg",
+        text: "В очередном выпуске шоу сошлись непримиримые соперники, люди, которые знают КВН лучше остальных: Дмитрий Шпеньков (редактор Высшей лиги) против Дмитрия Кравченко (критик КВН)."
+      });
+      return data;
+    },
+    
+    removeAds(data) {
+      return data.filter(item => !item.ad);
+    }
   },
 };
 </script>
