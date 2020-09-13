@@ -9,7 +9,7 @@
         <div class="p-6">
             <p>{{team.text}}</p>
             <div class="mt-6 text-center">
-                <a :href="team.ad_url" target="_blank" :onclick="'captureOutboundLink(' + team.ad_url + '); return false;'" class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700">Смотреть</a>
+                <a :href="team.ad_url" target="_blank" :onclick="'captureOutboundLink(' + team.ad_url + '); return false;'" class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700">{{team.callout_text}}</a>
             </div>
         </div>
     </div>
