@@ -4262,8 +4262,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['team', 'selected'],
   computed: {
@@ -4317,6 +4315,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.$emit('selected', this.team);
       }
+    },
+    openAdLink: function openAdLink(link, eventCategory) {
+      window.captureOutboundLink(link, eventCategory);
     }
   }
 });
@@ -4465,12 +4466,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     insertAds: function insertAds(data) {
-      data.splice(3, 0, {
+      data.splice(1, 0, {
+        id: "gromokoshki-subscribe",
+        ad: true,
+        ad_url: "https://www.youtube.com/channel/UC0o9wrsg8PQsqTRUb6XFUFA",
+        image_url: "/images/gromokoshki_subscribe.jpg",
+        text: "Громокошки не побоялись выссказать недовольство политикой АМИК.  За это им огромное уважение! Давайте поддержим Громокошек и подпишемся на YouTube канал Никиты Никитина",
+        callout_text: "Зайти на канал"
+      });
+      data.splice(6, 0, {
         id: "kravchenko-shpenkov",
         ad: true,
         ad_url: "https://www.youtube.com/watch?v=ozuKyBdhdo4",
         image_url: "/images/kvn_batl_kravchenko_shpenkov.jpg",
-        text: "В очередном выпуске шоу сошлись непримиримые соперники, люди, которые знают КВН лучше остальных: Дмитрий Шпеньков (редактор Высшей лиги) против Дмитрия Кравченко (критик КВН)."
+        text: "В очередном выпуске шоу сошлись непримиримые соперники, люди, которые знают КВН лучше остальных: Дмитрий Шпеньков (редактор Высшей лиги) против Дмитрия Кравченко (критик КВН).",
+        callout_text: "Смотреть"
       });
       return data;
     },
@@ -44575,24 +44585,20 @@ var render = function() {
             { staticClass: "overflow-hidden bg-white rounded-lg shadow-lg" },
             [
               _c(
-                "a",
+                "div",
                 {
-                  attrs: {
-                    href: _vm.team.ad_url,
-                    target: "_blank",
-                    onclick:
-                      "captureOutboundLink(" +
-                      _vm.team.ad_url +
-                      "); return false;"
+                  staticClass: "relative cursor-pointer pb-2/3 card-image",
+                  on: {
+                    click: function($event) {
+                      return _vm.openAdLink(_vm.team.ad_url, _vm.team.id)
+                    }
                   }
                 },
                 [
-                  _c("div", { staticClass: "relative pb-2/3 card-image" }, [
-                    _c("img", {
-                      staticClass: "object-cover w-full h-full",
-                      attrs: { src: _vm.team.image_url }
-                    })
-                  ])
+                  _c("img", {
+                    staticClass: "object-cover w-full h-full",
+                    attrs: { src: _vm.team.image_url }
+                  })
                 ]
               ),
               _vm._v(" "),
@@ -44601,20 +44607,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "mt-6 text-center" }, [
                   _c(
-                    "a",
+                    "button",
                     {
                       staticClass:
                         "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
-                      attrs: {
-                        href: _vm.team.ad_url,
-                        target: "_blank",
-                        onclick:
-                          "captureOutboundLink(" +
-                          _vm.team.ad_url +
-                          "); return false;"
+                      on: {
+                        click: function($event) {
+                          return _vm.openAdLink(_vm.team.ad_url, _vm.team.id)
+                        }
                       }
                     },
-                    [_vm._v("Смотреть")]
+                    [_vm._v(_vm._s(_vm.team.callout_text))]
                   )
                 ])
               ])

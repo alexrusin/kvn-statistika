@@ -20,12 +20,12 @@
     * as the event label. Setting the transport method to 'beacon' lets the hit be sent
     * using 'navigator.sendBeacon' in browser that support it.
     */
-    var getOutboundLink = function(url) {
+    var captureOutboundLink = function(url, eventCategory = 'outbound') {
         gtag('event', 'click', {
-            'event_category': 'outbound',
+            'event_category': eventCategory,
             'event_label': url,
             'transport_type': 'beacon',
-            'event_callback': function(){document.location = url;}
+            'event_callback': function(){window.open(url, "_blank");}
         });
     }
 

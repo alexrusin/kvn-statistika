@@ -142,7 +142,15 @@ export default {
     },
 
     insertAds(data) {
-      data.splice(3, 0, {
+      data.splice(1, 0, {
+        id:"gromokoshki-subscribe",
+        ad: true,
+        ad_url: "https://www.youtube.com/channel/UC0o9wrsg8PQsqTRUb6XFUFA",
+        image_url: "/images/gromokoshki_subscribe.jpg",
+        text: "Громокошки не побоялись выссказать недовольство политикой АМИК.  За это им огромное уважение! Давайте поддержим Громокошек и подпишемся на YouTube канал Никиты Никитина",
+        callout_text: "Зайти на канал"
+      });
+      data.splice(6, 0, {
         id:"kravchenko-shpenkov",
         ad: true,
         ad_url: "https://www.youtube.com/watch?v=ozuKyBdhdo4",
