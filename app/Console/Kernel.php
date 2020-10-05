@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->command('snapshot:create')->weekly();
+        $schedule->command('snapshot:create')->weeklyOn(1, '8:00');
+        $schedule->command('snapshot:cleanup --keep=3')->weeklyOn(1, '9:00');
     }
 
     /**
@@ -37,7 +38,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
