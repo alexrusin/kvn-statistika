@@ -143,12 +143,12 @@ export default {
 
     insertAds(data) {
       data.splice(1, 0, {
-        id:"gromokoshki-subscribe",
+        id:"bezproduction",
         ad: true,
-        ad_url: "https://www.youtube.com/channel/UC0o9wrsg8PQsqTRUb6XFUFA",
-        image_url: "/images/gromokoshki_subscribe.jpg",
-        text: "Громокошки не побоялись выссказать недовольство политикой АМИК.  За это им огромное уважение! Давайте поддержим Громокошек и подпишемся на YouTube канал Никиты Никитина",
-        callout_text: "Зайти на канал"
+        ad_url: "https://www.youtube.com/watch?v=mAheRipY5hY&t",
+        image_url: "https://i.ytimg.com/vi/mAheRipY5hY/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDHHNu_PbD69XP554lDSnkLmypxXg",
+        text: "Пьяный КВН. Мы не пропагандируем алкоголь, мы пропагандируем веселье и математические задачки в начале каждого их выпуска",
+        callout_text: "Смотреть"
       });
       data.splice(6, 0, {
         id:"kravchenko-shpenkov",
