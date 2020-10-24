@@ -4469,17 +4469,17 @@ __webpack_require__.r(__webpack_exports__);
       data.splice(1, 0, {
         id: "bezproduction",
         ad: true,
-        ad_url: "https://www.youtube.com/channel/UC0o9wrsg8PQsqTRUb6XFUFA",
+        ad_url: "https://www.youtube.com/watch?v=mAheRipY5hY&t",
         image_url: "https://i.ytimg.com/vi/mAheRipY5hY/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDHHNu_PbD69XP554lDSnkLmypxXg",
         text: "Пьяный КВН. Мы не пропагандируем алкоголь, мы пропагандируем веселье и математические задачки в начале каждого их выпуска",
         callout_text: "Смотреть"
       });
       data.splice(6, 0, {
-        id: "kravchenko-shpenkov",
+        id: "morgunovy-stognienko",
         ad: true,
-        ad_url: "https://www.youtube.com/watch?v=ozuKyBdhdo4",
-        image_url: "/images/kvn_batl_kravchenko_shpenkov.jpg",
-        text: "В очередном выпуске шоу сошлись непримиримые соперники, люди, которые знают КВН лучше остальных: Дмитрий Шпеньков (редактор Высшей лиги) против Дмитрия Кравченко (критик КВН).",
+        ad_url: "https://www.youtube.com/watch?v=gowOLeNUiX4",
+        image_url: "https://i.ytimg.com/vi/gowOLeNUiX4/hq720.jpg?sqp=-oaymwEZCOgCEMoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLD1EYTtEiDk9-tsSV-nsHdp-w2nFw",
+        text: "Участники викторины: Леонид и Екатерина Моргуновы (Парапапарам и Город Пятигорск) против Михаила и Оксаны Стогниенко (Плохая компания и Кэмбридж)",
         callout_text: "Смотреть"
       });
       return data;
