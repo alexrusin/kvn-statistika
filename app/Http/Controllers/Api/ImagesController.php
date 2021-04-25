@@ -12,7 +12,7 @@ class ImagesController
     public function store(Request $request)
     {
         $request->validate([
-            'image' => ['required', 'image']
+            'image' => ['required']
         ]);
 
         if ($request->oldImageLink) {
