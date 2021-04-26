@@ -145,17 +145,17 @@ export default {
       data.splice(1, 0, {
         id:"bezproduction",
         ad: true,
-        ad_url: "https://www.youtube.com/watch?v=mAheRipY5hY&t",
-        image_url: "https://i.ytimg.com/vi/mAheRipY5hY/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDHHNu_PbD69XP554lDSnkLmypxXg",
+        ad_url: "https://www.youtube.com/watch?v=Xh1m2Eb1TZA",
+        image_url: "https://i.ytimg.com/vi/Xh1m2Eb1TZA/hq720.jpg",
         text: "Пьяный КВН. Мы не пропагандируем алкоголь, мы пропагандируем веселье и математические задачки в начале каждого их выпуска",
         callout_text: "Смотреть"
       });
       data.splice(6, 0, {
-        id:"morgunovy-stognienko",
+        id:"svoya-igra-kvn-final",
         ad: true,
-        ad_url: "https://www.youtube.com/watch?v=gowOLeNUiX4",
-        image_url: "https://i.ytimg.com/vi/gowOLeNUiX4/hq720.jpg?sqp=-oaymwEZCOgCEMoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLD1EYTtEiDk9-tsSV-nsHdp-w2nFw",
-        text: "Участники викторины: Леонид и Екатерина Моргуновы (Парапапарам и Город Пятигорск) против Михаила и Оксаны Стогниенко (Плохая компания и Кэмбридж)",
+        ad_url: "https://www.youtube.com/watch?v=HbPCsTT1NgA",
+        image_url: "https://i.ytimg.com/vi/HbPCsTT1NgA/hq720.jpg",
+        text: "Пришло время узнать - кто же лучше разбирается в КВНе. Те, кто в него играют? Или те, кто его обозревают?",
         callout_text: "Смотреть"
       });
       return data;
