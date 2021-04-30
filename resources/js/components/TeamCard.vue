@@ -174,7 +174,10 @@
       </div>
     </div>
     <modal class="z-10" :name="modalName">
-      <div @click="redirect" class="cursor-pointer">Login user</div>
+      <div class="flex justify-center mt-4">
+        <div id="vk_auth"></div>
+      </div>
+      <!-- <div @click="redirect" class="cursor-pointer">Login user</div> -->
     </modal>
   </div>
 </template>
@@ -243,7 +246,7 @@ export default {
 
   methods: {
     redirect() {
-        window.location.href = '/statistics/games';
+        window.location.href = '/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c';
     },
     show() {
       this.$modal.show(this.modalName);

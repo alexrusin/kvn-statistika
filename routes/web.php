@@ -79,6 +79,11 @@ Route::namespace('Api')
             });
     });
 
+Route::namespace('Auth')
+    ->group(function () {
+        Route::get('/vk/login', 'VkLoginController@login');
+    });
+
 Route::get('/dashboard', 'HomeController@index')
     ->middleware('verified')
     ->name('dashboard');

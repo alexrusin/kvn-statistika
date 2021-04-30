@@ -4603,6 +4603,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team", "selected"],
   computed: {
@@ -4640,7 +4643,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     redirect: function redirect() {
-      window.location.href = '/statistics/games';
+      window.location.href = '/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c';
     },
     show: function show() {
       this.$modal.show(this.modalName);
@@ -45350,11 +45353,9 @@ var render = function() {
           ),
       _vm._v(" "),
       _c("modal", { staticClass: "z-10", attrs: { name: _vm.modalName } }, [
-        _c(
-          "div",
-          { staticClass: "cursor-pointer", on: { click: _vm.redirect } },
-          [_vm._v("Login user")]
-        )
+        _c("div", { staticClass: "flex justify-center mt-4" }, [
+          _c("div", { attrs: { id: "vk_auth" } })
+        ])
       ])
     ],
     1
