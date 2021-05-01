@@ -12,7 +12,7 @@
 
     <script type="text/javascript">
         VK.init({
-            apiId: 7842330
+            apiId: parseInt("{!!config('services.vk.app_id')!!}")
         });
     </script>
     <script type="text/javascript">

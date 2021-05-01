@@ -44,4 +44,8 @@ return [
         ],
     ],
 
+    'vk' => [
+        'app_id' => env('VK_APP_ID')
+    ]
+
 ];

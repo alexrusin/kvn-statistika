@@ -174,11 +174,53 @@
       </div>
     </div>
     <modal class="z-10" :name="modalName">
-      <div v-if="signedIn">Please leave a review</div>
+      <div v-if="signedIn">
+        <div class="flex justify-center mb-4">
+           <p class="text-lg md:text-xl font-semibold">Оцените команду {{team.name}}</p>
+        </div>
+       
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          :for="'review-' + team.id"
+          >Комментарий</label
+        >
+        <textarea
+          v-model="reviewBody"
+          type="text"
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          :id="'review-' + team.id"
+          rows="8"
+        />
+
+        <div class="flex justify-center mt-8">
+          <svg
+              v-for="i in 5"
+              :key="i"
+              :class="i <= reviewRating ? 'text-teal-500' : 'text-gray-400'"
+              class="w-8 h-8 fill-current cursor-pointer"
+              @click="reviewRating = i"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M10 1.3l2.388 6.722H18.8l-5.232 3.948 1.871 6.928L10 14.744l-5.438 4.154 1.87-6.928-5.233-3.948h6.412L10 1.3z"
+              />
+            </svg>
+        </div>
+        <div class="flex justify-center mt-10">
+          <button
+            type="button"
+            class="flex-shrink-0 px-2 py-1 text-base text-white bg-blue-500 rounded hover:bg-blue-700"
+            :class="reviewRating === 0 ? 'cursor-not-allowed' : 'cursor-pointer'"
+            :disabled="reviewRating === 0 ? true : false"
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
       <div v-else class="flex justify-center mt-4">
         <div id="vk_auth"></div>
       </div>
-      <!-- <div @click="redirect" class="cursor-pointer">Login user</div> -->
     </modal>
   </div>
 </template>
@@ -218,7 +260,9 @@ export default {
     },
 
     rating() {
-      if (!this.team.team_games_average.avg_time) return this.team.rating;
+      if (!this.team.team_games_average || !this.team.team_games_average.avg_time) {
+        return this.team.rating;
+      }
       let rating = Math.round(
         ((this.team.team_games_average.avg_okg * 60) /
           this.team.team_games_average.avg_time) *
@@ -242,12 +286,16 @@ export default {
       showEfficiencyTooltip: false,
       showPeoplesPointsTooltip: false,
       modalName: "rate-team-" + this.team.id,
+
+      reviewBody: "",
+      reviewRating: 0,
     };
   },
 
   methods: {
     redirect() {
-        window.location.href = '/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c';
+      window.location.href =
+        "/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c";
     },
     show() {
       this.$modal.show(this.modalName);
