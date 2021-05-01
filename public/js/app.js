@@ -4606,6 +4606,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team", "selected"],
   computed: {
@@ -45353,9 +45354,11 @@ var render = function() {
           ),
       _vm._v(" "),
       _c("modal", { staticClass: "z-10", attrs: { name: _vm.modalName } }, [
-        _c("div", { staticClass: "flex justify-center mt-4" }, [
-          _c("div", { attrs: { id: "vk_auth" } })
-        ])
+        _vm.signedIn
+          ? _c("div", [_vm._v("Please leave a review")])
+          : _c("div", { staticClass: "flex justify-center mt-4" }, [
+              _c("div", { attrs: { id: "vk_auth" } })
+            ])
       ])
     ],
     1
@@ -57841,6 +57844,8 @@ window.flash = function (message) {
 
 
 Vue.use(_plugins_modal_ModalPlugin__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.prototype.signedIn = JSON.parse(window.App).signedIn;
+Vue.prototype.authUser = JSON.parse(window.App).user;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

@@ -174,7 +174,8 @@
       </div>
     </div>
     <modal class="z-10" :name="modalName">
-      <div class="flex justify-center mt-4">
+      <div v-if="signedIn">Please leave a review</div>
+      <div v-else class="flex justify-center mt-4">
         <div id="vk_auth"></div>
       </div>
       <!-- <div @click="redirect" class="cursor-pointer">Login user</div> -->

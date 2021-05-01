@@ -32,6 +32,13 @@
         }
     </script>
 
+    <script>
+        window.App = `{!!json_encode([
+                'signedIn' => Auth::check(),
+                'user' => Auth::user()
+            ])!!}`;
+    </script>
+
     <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
 
     <meta charset="utf-8">
@@ -72,17 +79,8 @@
         @include('layouts.footer')
         <flash message="{{session('flash')}}"></flash>
     </div>
-    <script type="text/javascript">
-        VK.init({
-            apiId: 7842330
-        });
-    </script>
-    <script type="text/javascript">
-        VK.Widgets.Auth("vk_auth", {
-            "width": 300,
-            "authUrl": "/vk/login"
-        });
-    </script>
+
+    @stack('scripts')
     <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 
