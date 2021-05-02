@@ -4649,6 +4649,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team", "selected"],
   computed: {
@@ -4675,6 +4680,9 @@ __webpack_require__.r(__webpack_exports__);
       var rating = Math.round(this.team.team_games_average.avg_okg * 60 / this.team.team_games_average.avg_time * 8);
       if (rating > 5) return 5;
       return rating;
+    },
+    reviewBodyLength: function reviewBodyLength() {
+      return this.reviewBody.length;
     }
   },
   data: function data() {
@@ -4689,24 +4697,64 @@ __webpack_require__.r(__webpack_exports__);
       reviewRating: 0
     };
   },
+  watch: {
+    reviewBody: function reviewBody(newReviewBody, oldReviewBody) {
+      if (newReviewBody.length > 500) {
+        this.reviewBody = oldReviewBody;
+      }
+    }
+  },
   methods: {
-    redirect: function redirect() {
-      window.location.href = "/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c";
+    reviewTeam: function reviewTeam() {
+      if (!this.signedIn) {
+        this.$emit('sign-in');
+      } else {
+        this.show();
+      }
+    },
+    saveReview: function saveReview() {
+      var _this = this;
+
+      axios.post("/api/reviews/".concat(this.team.id), {
+        body: this.reviewBody,
+        rating: this.reviewRating
+      }).then(function (_ref) {
+        var data = _ref.data;
+        flash(data.message, data.alertType);
+
+        _this.hide();
+      })["catch"](function (error) {
+        flash('Произошла ошибка. Попробуйте ещё раз', "danger");
+      });
     },
     show: function show() {
+      var _this2 = this;
+
       this.$modal.show(this.modalName);
+
+      if (this.reviewRating === 0 && this.signedIn) {
+        axios.get("/api/reviews/user/".concat(this.team.id)).then(function (_ref2) {
+          var data = _ref2.data;
+          _this2.reviewBody = data.review.body;
+          _this2.reviewRating = data.review.rating;
+        })["catch"](function (error) {
+          if (error.response.status !== 404) {
+            console.log(error);
+          }
+        });
+      }
     },
     hide: function hide() {
       this.$modal.hide(this.modalName);
     },
     toggleTooltip: function toggleTooltip(tooltip) {
-      var _this = this;
+      var _this3 = this;
 
       if (this[tooltip] === true) {
         this[tooltip] = false;
       } else {
         this.tooltips.forEach(function (tip) {
-          return _this[tip] = false;
+          return _this3[tip] = false;
         });
         this[tooltip] = true;
       }
@@ -4736,6 +4784,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamCard */ "./resources/js/components/TeamCard.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4825,6 +4879,12 @@ __webpack_require__.r(__webpack_exports__);
     window.events.$on("sortData", this.sortTeams);
   },
   methods: {
+    show: function show() {
+      this.$modal.show('signInModal');
+    },
+    hide: function hide() {
+      this.$modal.hide('signInModal');
+    },
     sortTeams: function sortTeams(sortType) {
       this.theTeams = this.removeAds(this.theTeams);
       this.theTeams = this.theTeams.sort(function (a, b) {
@@ -43730,7 +43790,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "border-b" }, [
       _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
         _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
-          _vm._v("Комманды")
+          _vm._v("Команды")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-3" })
@@ -45391,7 +45451,7 @@ var render = function() {
                       staticClass:
                         "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-700",
                       attrs: { type: "button" },
-                      on: { click: _vm.show }
+                      on: { click: _vm.reviewTeam }
                     },
                     [_vm._v("\n          Оценить\n        ")]
                   )
@@ -45430,7 +45490,12 @@ var render = function() {
                 ],
                 staticClass:
                   "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                attrs: { type: "text", id: "review-" + _vm.team.id, rows: "8" },
+                attrs: {
+                  placeholder: "Если хотите, можете оставить комментарий",
+                  type: "text",
+                  id: "review-" + _vm.team.id,
+                  rows: "8"
+                },
                 domProps: { value: _vm.reviewBody },
                 on: {
                   input: function($event) {
@@ -45441,6 +45506,12 @@ var render = function() {
                   }
                 }
               }),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex justify-end" }, [
+                _vm._v(
+                  "\n        " + _vm._s(_vm.reviewBodyLength) + " / 500\n      "
+                )
+              ]),
               _vm._v(" "),
               _c(
                 "div",
@@ -45491,14 +45562,15 @@ var render = function() {
                     attrs: {
                       type: "button",
                       disabled: _vm.reviewRating === 0 ? true : false
-                    }
+                    },
+                    on: { click: _vm.saveReview }
                   },
                   [_vm._v("\n          Сохранить\n        ")]
                 )
               ])
             ])
           : _c("div", { staticClass: "flex justify-center mt-4" }, [
-              _c("div", { attrs: { id: "vk_auth" } })
+              _vm._v("\n      Please, sign in\n    ")
             ])
       ])
     ],
@@ -45527,77 +45599,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.teams.length === 0
-      ? _c(
-          "div",
-          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
-          _vm._l(6, function(n) {
-            return _c(
-              "div",
-              {
-                key: n,
-                staticClass:
-                  "w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-              },
-              [_vm._m(0, true)]
-            )
-          }),
-          0
-        )
-      : _c(
-          "div",
-          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
-          _vm._l(_vm.theTeams, function(team) {
-            return _c("team-card", {
-              key: team.id,
-              attrs: { team: team, selected: _vm.teamSelected(team) },
-              on: { selected: _vm.add, deselected: _vm.remove }
-            })
-          }),
-          1
-        ),
-    _vm._v(" "),
-    _vm.selectedTeams.length > 0 || _vm.isComparing
-      ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
-          _c("div", { staticClass: "flex" }, [
-            !_vm.isComparing
-              ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
-                  _vm._v("Выберите команды")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", [
+  return _c(
+    "div",
+    [
+      _vm.teams.length === 0
+        ? _c(
+            "div",
+            { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+            _vm._l(6, function(n) {
+              return _c(
+                "div",
+                {
+                  key: n,
+                  staticClass:
+                    "w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                },
+                [_vm._m(0, true)]
+              )
+            }),
+            0
+          )
+        : _c(
+            "div",
+            { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+            _vm._l(_vm.theTeams, function(team) {
+              return _c("team-card", {
+                key: team.id,
+                attrs: { team: team, selected: _vm.teamSelected(team) },
+                on: {
+                  selected: _vm.add,
+                  deselected: _vm.remove,
+                  "sign-in": _vm.show
+                }
+              })
+            }),
+            1
+          ),
+      _vm._v(" "),
+      _vm.selectedTeams.length > 0 || _vm.isComparing
+        ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
+            _c("div", { staticClass: "flex" }, [
               !_vm.isComparing
-                ? _c(
-                    "button",
-                    {
-                      staticClass:
-                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
-                      class:
-                        _vm.selectedTeams.length <= 1
-                          ? "opacity-50 cursor-not-allowed"
-                          : "",
-                      attrs: { type: "button" },
-                      on: { click: _vm.compareTeams }
-                    },
-                    [_vm._v("Сравнить")]
-                  )
-                : _c(
-                    "button",
-                    {
-                      staticClass:
-                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
-                      attrs: { type: "button" },
-                      on: { click: _vm.cancelCompare }
-                    },
-                    [_vm._v("Очистить")]
-                  )
+                ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
+                    _vm._v("Выберите команды")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                !_vm.isComparing
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
+                        class:
+                          _vm.selectedTeams.length <= 1
+                            ? "opacity-50 cursor-not-allowed"
+                            : "",
+                        attrs: { type: "button" },
+                        on: { click: _vm.compareTeams }
+                      },
+                      [_vm._v("Сравнить")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
+                        attrs: { type: "button" },
+                        on: { click: _vm.cancelCompare }
+                      },
+                      [_vm._v("Очистить")]
+                    )
+              ])
             ])
           ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("modal", { staticClass: "z-10", attrs: { name: "signInModal" } }, [
+        _c("div", { staticClass: "flex justify-center mt-4" }, [
+          _c("div", { attrs: { id: "vk_auth" } })
         ])
-      : _vm._e()
-  ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

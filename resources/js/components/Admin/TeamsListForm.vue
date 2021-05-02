@@ -3,7 +3,7 @@
     <div class="bg-white border-t border-b sm:rounded sm:border shadow min-h-full">
       <div class="border-b">
         <div class="flex justify-between px-6 -mb-px">
-          <h3 class="py-4 text-xl font-semibold">Комманды</h3>
+          <h3 class="py-4 text-xl font-semibold">Команды</h3>
           <div class="mt-3"></div>
         </div>
       </div>

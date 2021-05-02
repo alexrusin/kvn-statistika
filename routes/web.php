@@ -79,6 +79,18 @@ Route::namespace('Api')
             });
     });
 
+Route::namespace('Api')
+    ->middleware(['auth', 'verified'])
+    ->prefix('api')
+    ->name('reviews.')
+    ->group(function () {
+        Route::prefix('reviews')
+            ->group(function () {
+                Route::get('/user/{teamId}', 'ReviewsController@getUserTeamReview')->name('user-team');
+                Route::post('/{teamId}', 'ReviewsController@save')->name('save');
+            });
+    });
+
 Route::namespace('Auth')
     ->group(function () {
         Route::get('/vk/login', 'VkLoginController@login');

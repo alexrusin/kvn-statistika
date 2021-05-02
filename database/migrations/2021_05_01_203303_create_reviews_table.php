@@ -21,6 +21,8 @@ class CreateReviewsTable extends Migration
             $table->unsignedSmallInteger('rating');
             $table->timestamps();
 
+            $table->unique(['user_id', 'team_id']);
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');

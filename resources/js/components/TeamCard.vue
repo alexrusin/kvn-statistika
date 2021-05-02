@@ -166,7 +166,7 @@
           <button
             type="button"
             class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-700"
-            @click="show"
+            @click="reviewTeam"
           >
             Оценить
           </button>
@@ -186,11 +186,15 @@
         >
         <textarea
           v-model="reviewBody"
+          placeholder="Если хотите, можете оставить комментарий"
           type="text"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           :id="'review-' + team.id"
           rows="8"
         />
+        <div class="flex justify-end">
+          {{ reviewBodyLength }} / 500
+        </div>
 
         <div class="flex justify-center mt-8">
           <svg
@@ -213,13 +217,14 @@
             class="flex-shrink-0 px-2 py-1 text-base text-white bg-blue-500 rounded hover:bg-blue-700"
             :class="reviewRating === 0 ? 'cursor-not-allowed' : 'cursor-pointer'"
             :disabled="reviewRating === 0 ? true : false"
+            @click="saveReview"
           >
             Сохранить
           </button>
         </div>
       </div>
       <div v-else class="flex justify-center mt-4">
-        <div id="vk_auth"></div>
+        Please, sign in
       </div>
     </modal>
   </div>
@@ -271,6 +276,10 @@ export default {
       if (rating > 5) return 5;
       return rating;
     },
+
+    reviewBodyLength() {
+      return this.reviewBody.length
+    }
   },
 
   data() {
@@ -292,13 +301,49 @@ export default {
     };
   },
 
+  watch: {
+    reviewBody(newReviewBody, oldReviewBody) {
+      if (newReviewBody.length > 500) {
+        this.reviewBody = oldReviewBody;
+      }
+    }
+  },
+
   methods: {
-    redirect() {
-      window.location.href =
-        "/vk/login?uid=557024042&first_name=Alexey&last_name=Rusin&photo=https://sun6-20.userapi.com/s/v1/ig2/7EK2bOVz7oRbbdfKwlwEjPEyQu_izDuShXn2vcJAyS8GPbdZapr-eYiaHx2dm_EZwi2zeHlxxseQLpsDlFT2Jukg.jpg%3Fsize=200x0%26amp;quality=96%26amp;crop=76,254,262,262%26amp;ava=1&photo_rec=https://sun6-20.userapi.com/s/v1/ig2/rTioLXBzFGUpNhNaXAaekTIA1Qqq8sHVJc3d-OHXMajI0pnaBCOGQ09R9vqotv5eYvv9d-jfnvcnIS-LtEG7yRAK.jpg%3Fsize=50x0%26amp;quality=96%26amp;crop=91,268,210,210%26amp;ava=1&hash=a35be5f1887e338530bc71be54f22f3c";
+    reviewTeam() {
+      if (!this.signedIn) {
+        this.$emit('sign-in')
+      } else {
+        this.show()
+      }
+    },
+    saveReview() {
+      axios.post(`/api/reviews/${this.team.id}`, {
+        body: this.reviewBody,
+        rating: this.reviewRating
+      })
+      .then(({data}) => {
+        flash(data.message, data.alertType);
+        this.hide()
+      })
+      .catch(error => {
+        flash('Произошла ошибка. Попробуйте ещё раз', "danger")
+      })
     },
     show() {
       this.$modal.show(this.modalName);
+      if (this.reviewRating === 0 && this.signedIn) {
+        axios.get(`/api/reviews/user/${this.team.id}`)
+          .then(({data}) => {
+            this.reviewBody = data.review.body;
+            this.reviewRating = data.review.rating
+          })
+          .catch(error => {
+            if (error.response.status !== 404) {
+              console.log(error)
+            }
+          })
+      }
     },
     hide() {
       this.$modal.hide(this.modalName);

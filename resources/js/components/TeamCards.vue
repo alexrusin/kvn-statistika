@@ -21,6 +21,7 @@
         :selected="teamSelected(team)"
         @selected="add"
         @deselected="remove"
+        @sign-in="show"
       ></team-card>
     </div>
     <div
@@ -46,6 +47,11 @@
         </div>
       </div>
     </div>
+    <modal class="z-10" name="signInModal">
+      <div class="flex justify-center mt-4">
+        <div id="vk_auth"></div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -88,6 +94,12 @@ export default {
   },
 
   methods: {
+    show() {
+      this.$modal.show('signInModal');
+    },
+    hide() {
+      this.$modal.hide('signInModal');
+    },
     sortTeams(sortType) {
       this.theTeams = this.removeAds(this.theTeams);
       this.theTeams = this.theTeams.sort((a, b) => {
