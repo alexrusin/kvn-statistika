@@ -4498,58 +4498,272 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['team', 'selected'],
+  props: ["team", "selected"],
   computed: {
     efficiency: function efficiency() {
-      return (this.team.team_games_average.avg_efficiency * 100).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_efficiency * 100).toFixed(1).replace(".", ",");
     },
     okg: function okg() {
-      return (this.team.team_games_average.avg_okg * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_okg * 1).toFixed(1).replace(".", ",");
     },
     whiteIndex: function whiteIndex() {
-      return (this.team.team_games_average.avg_white_index * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_white_index * 1).toFixed(1).replace(".", ",");
     },
     points: function points() {
-      return (this.team.team_games_average.avg_points * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_points * 1).toFixed(1).replace(".", ",");
     },
     peoplesPoints: function peoplesPoints() {
-      return (this.team.team_games_average.avg_peoples_points * 1).toFixed(1).replace('.', ',');
+      return (this.team.team_games_average.avg_peoples_points * 1).toFixed(1).replace(".", ",");
     },
     rating: function rating() {
-      if (!this.team.team_games_average.avg_time) return this.team.rating;
+      if (!this.team.team_games_average || !this.team.team_games_average.avg_time) {
+        return this.team.rating;
+      }
+
       var rating = Math.round(this.team.team_games_average.avg_okg * 60 / this.team.team_games_average.avg_time * 8);
       if (rating > 5) return 5;
       return rating;
+    },
+    reviewBodyLength: function reviewBodyLength() {
+      return this.reviewBody.length;
     }
   },
   data: function data() {
     return {
-      tooltips: ['showOkgTooltip', 'showWhiteTooltip', 'showEfficiencyTooltip', 'showPeoplesPointsTooltip'],
+      tooltips: ["showOkgTooltip", "showWhiteTooltip", "showEfficiencyTooltip", "showPeoplesPointsTooltip"],
       showOkgTooltip: false,
       showWhiteTooltip: false,
       showEfficiencyTooltip: false,
-      showPeoplesPointsTooltip: false
+      showPeoplesPointsTooltip: false,
+      modalName: "rate-team-" + this.team.id,
+      reviewBody: "",
+      reviewRating: 0
     };
   },
+  watch: {
+    reviewBody: function reviewBody(newReviewBody, oldReviewBody) {
+      if (newReviewBody.length > 500) {
+        this.reviewBody = oldReviewBody;
+      }
+    }
+  },
   methods: {
-    toggleTooltip: function toggleTooltip(tooltip) {
+    reviewTeam: function reviewTeam() {
+      if (!this.signedIn) {
+        this.$emit('sign-in');
+      } else {
+        this.show();
+      }
+    },
+    saveReview: function saveReview() {
       var _this = this;
+
+      axios.post("/api/reviews/".concat(this.team.id), {
+        body: this.reviewBody,
+        rating: this.reviewRating
+      }).then(function (_ref) {
+        var data = _ref.data;
+        flash(data.message, data.alertType);
+
+        _this.hide();
+      })["catch"](function (error) {
+        flash('Произошла ошибка. Попробуйте ещё раз', "danger");
+      });
+    },
+    show: function show() {
+      var _this2 = this;
+
+      this.$modal.show(this.modalName);
+
+      if (this.reviewRating === 0 && this.signedIn) {
+        axios.get("/api/reviews/user/".concat(this.team.id)).then(function (_ref2) {
+          var data = _ref2.data;
+          _this2.reviewBody = data.review.body;
+          _this2.reviewRating = data.review.rating;
+        })["catch"](function (error) {
+          if (error.response.status !== 404) {
+            console.log(error);
+          }
+        });
+      }
+    },
+    hide: function hide() {
+      this.$modal.hide(this.modalName);
+    },
+    toggleTooltip: function toggleTooltip(tooltip) {
+      var _this3 = this;
 
       if (this[tooltip] === true) {
         this[tooltip] = false;
       } else {
         this.tooltips.forEach(function (tip) {
-          return _this[tip] = false;
+          return _this3[tip] = false;
         });
         this[tooltip] = true;
       }
     },
     teamClicked: function teamClicked() {
       if (this.selected) {
-        this.$emit('deselected', this.team);
+        this.$emit("deselected", this.team);
       } else {
-        this.$emit('selected', this.team);
+        this.$emit("selected", this.team);
       }
     },
     openAdLink: function openAdLink(link, eventCategory) {
@@ -4570,6 +4784,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamCard */ "./resources/js/components/TeamCard.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4659,6 +4879,12 @@ __webpack_require__.r(__webpack_exports__);
     window.events.$on("sortData", this.sortTeams);
   },
   methods: {
+    show: function show() {
+      this.$modal.show('signInModal');
+    },
+    hide: function hide() {
+      this.$modal.hide('signInModal');
+    },
     sortTeams: function sortTeams(sortType) {
       this.theTeams = this.removeAds(this.theTeams);
       this.theTeams = this.theTeams.sort(function (a, b) {
@@ -4864,10 +5090,10 @@ exports.push([module.i, "@media (min-width: 640px) {\ntable[data-v-43200d09] {\n
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4876,7 +5102,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".position-check {\n  top: 3%;\n  left: 2%;\n}\n.card-image {\n  height: 14em;\n}\r\n", ""]);
+exports.push([module.i, ".position-check[data-v-093c81f8] {\n  top: 3%;\n  left: 2%;\n}\n.card-image[data-v-093c81f8] {\n  height: 14em;\n}\r\n", ""]);
 
 // exports
 
@@ -40182,15 +40408,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -43564,7 +43790,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "border-b" }, [
       _c("div", { staticClass: "flex justify-between px-6 -mb-px" }, [
         _c("h3", { staticClass: "py-4 text-xl font-semibold" }, [
-          _vm._v("Комманды")
+          _vm._v("Команды")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-3" })
@@ -44800,10 +45026,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8& ***!
-  \***********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44857,7 +45083,13 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v(_vm._s(_vm.team.callout_text))]
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.team.callout_text) +
+                          "\n        "
+                      )
+                    ]
                   )
                 ])
               ])
@@ -44915,9 +45147,9 @@ var render = function() {
                         [
                           _c("rect", {
                             staticStyle: {
-                              fill: "rgba(255,255,255,.75)",
+                              fill: "rgba(255, 255, 255, 0.75)",
                               "stroke-width": "1",
-                              stroke: "rgb(21,22,25)"
+                              stroke: "rgb(21, 22, 25)"
                             },
                             attrs: { width: "10", height: "10" }
                           })
@@ -44937,9 +45169,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                   г. " +
-                          _vm._s(_vm.team.city) +
-                          "\n               "
+                        "\n          г. " + _vm._s(_vm.team.city) + "\n        "
                       )
                     ]
                   )
@@ -44951,18 +45181,14 @@ var render = function() {
                     staticClass:
                       "mt-1 text-lg font-semibold leading-tight truncate"
                   },
-                  [_vm._v(_vm._s(_vm.team.name))]
+                  [_vm._v("\n        " + _vm._s(_vm.team.name) + "\n      ")]
                 ),
                 _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "relative mt-1" },
                   [
-                    _vm._v(
-                      "\n               ОКГ: " +
-                        _vm._s(this.okg) +
-                        " \n               "
-                    ),
+                    _vm._v("\n        ОКГ: " + _vm._s(this.okg) + "\n        "),
                     _c("span", { staticClass: "text-sm text-gray-600" }, [
                       _vm._v(" / игру ")
                     ]),
@@ -44999,7 +45225,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "Относительный коэффициент Гуликова (ОКГ - смешных минут в выступлении) = эффективность * время"
+                          "Относительный коэффициент Гуликова (ОКГ - смешных минут в\n          выступлении) = эффективность * время"
                         )
                       ]
                     )
@@ -45012,9 +45238,9 @@ var render = function() {
                   { staticClass: "relative mt-1" },
                   [
                     _vm._v(
-                      "\n               Эффективность: " +
+                      "\n        Эффективность: " +
                         _vm._s(this.efficiency) +
-                        "%\n               "
+                        "%\n        "
                     ),
                     _c(
                       "svg",
@@ -45060,9 +45286,9 @@ var render = function() {
                   { staticClass: "relative mt-1" },
                   [
                     _vm._v(
-                      "\n               Индекс Белого: " +
+                      "\n        Индекс Белого: " +
                         _vm._s(this.whiteIndex) +
-                        "\n                "
+                        "\n        "
                     ),
                     _c(
                       "svg",
@@ -45099,7 +45325,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "Равномерность распределения шуток среди участников одной команды. 6 - линия стендапа"
+                          "Равномерность распределения шуток среди участников одной команды. 6\n          - линия стендапа"
                         )
                       ]
                     )
@@ -45112,9 +45338,9 @@ var render = function() {
                   { staticClass: "relative mt-1" },
                   [
                     _vm._v(
-                      "\n               Народная оценка: " +
+                      "\n        Народная оценка: " +
                         _vm._s(this.peoplesPoints) +
-                        "\n                "
+                        "\n        "
                     ),
                     _c("span", { staticClass: "text-sm text-gray-600" }, [
                       _vm._v(" / игру ")
@@ -45154,7 +45380,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._v("По данным Народного Судейства "),
+                        _vm._v("По данным Народного Судейства\n          "),
                         _c(
                           "a",
                           {
@@ -45175,50 +45401,180 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "mt-1" }, [
                   _vm._v(
-                    "\n               Оценка жюри: " +
+                    "\n        Оценка жюри: " +
                       _vm._s(this.points) +
-                      " \n               "
+                      "\n        "
                   ),
                   _c("span", { staticClass: "text-sm text-gray-600" }, [
                     _vm._v(" / игру ")
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "flex items-center mt-2" },
-                  [
-                    _vm._v("\n               Рейтинг:  \n               "),
-                    _vm._l(5, function(i) {
-                      return _c(
-                        "svg",
-                        {
-                          key: i,
-                          staticClass: "w-4 h-4 fill-current",
-                          class:
-                            i <= _vm.rating ? "text-teal-500" : "text-gray-400",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            viewBox: "0 0 20 20"
-                          }
-                        },
-                        [
-                          _c("path", {
+                _c("div", { staticClass: "flex justify-between mt-2" }, [
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center" },
+                    [
+                      _vm._v("\n          Рейтинг:  \n          "),
+                      _vm._l(5, function(i) {
+                        return _c(
+                          "svg",
+                          {
+                            key: i,
+                            staticClass: "w-4 h-4 fill-current",
+                            class:
+                              i <= _vm.rating
+                                ? "text-teal-500"
+                                : "text-gray-400",
                             attrs: {
-                              d:
-                                "M10 1.3l2.388 6.722H18.8l-5.232 3.948 1.871 6.928L10 14.744l-5.438 4.154 1.87-6.928-5.233-3.948h6.412L10 1.3z"
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 20 20"
                             }
-                          })
-                        ]
-                      )
-                    })
-                  ],
-                  2
-                )
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M10 1.3l2.388 6.722H18.8l-5.232 3.948 1.871 6.928L10 14.744l-5.438 4.154 1.87-6.928-5.233-3.948h6.412L10 1.3z"
+                              }
+                            })
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-700",
+                      attrs: { type: "button" },
+                      on: { click: _vm.reviewTeam }
+                    },
+                    [_vm._v("\n          Оценить\n        ")]
+                  )
+                ])
               ])
             ]
-          )
-    ]
+          ),
+      _vm._v(" "),
+      _c("modal", { staticClass: "z-10", attrs: { name: _vm.modalName } }, [
+        _vm.signedIn
+          ? _c("div", [
+              _c("div", { staticClass: "flex justify-center mb-4" }, [
+                _c("p", { staticClass: "text-lg md:text-xl font-semibold" }, [
+                  _vm._v("Оцените команду " + _vm._s(_vm.team.name))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass:
+                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                  attrs: { for: "review-" + _vm.team.id }
+                },
+                [_vm._v("Комментарий")]
+              ),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.reviewBody,
+                    expression: "reviewBody"
+                  }
+                ],
+                staticClass:
+                  "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                attrs: {
+                  placeholder: "Если хотите, можете оставить комментарий",
+                  type: "text",
+                  id: "review-" + _vm.team.id,
+                  rows: "8"
+                },
+                domProps: { value: _vm.reviewBody },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.reviewBody = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex justify-end" }, [
+                _vm._v(
+                  "\n        " + _vm._s(_vm.reviewBodyLength) + " / 500\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex justify-center mt-8" },
+                _vm._l(5, function(i) {
+                  return _c(
+                    "svg",
+                    {
+                      key: i,
+                      staticClass: "w-8 h-8 fill-current cursor-pointer",
+                      class:
+                        i <= _vm.reviewRating
+                          ? "text-teal-500"
+                          : "text-gray-400",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.reviewRating = i
+                        }
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M10 1.3l2.388 6.722H18.8l-5.232 3.948 1.871 6.928L10 14.744l-5.438 4.154 1.87-6.928-5.233-3.948h6.412L10 1.3z"
+                        }
+                      })
+                    ]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex justify-center mt-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "flex-shrink-0 px-2 py-1 text-base text-white bg-blue-500 rounded hover:bg-blue-700",
+                    class:
+                      _vm.reviewRating === 0
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer",
+                    attrs: {
+                      type: "button",
+                      disabled: _vm.reviewRating === 0 ? true : false
+                    },
+                    on: { click: _vm.saveReview }
+                  },
+                  [_vm._v("\n          Сохранить\n        ")]
+                )
+              ])
+            ])
+          : _c("div", { staticClass: "flex justify-center mt-4" }, [
+              _vm._v("\n      Please, sign in\n    ")
+            ])
+      ])
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -45243,77 +45599,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.teams.length === 0
-      ? _c(
-          "div",
-          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
-          _vm._l(6, function(n) {
-            return _c(
-              "div",
-              {
-                key: n,
-                staticClass:
-                  "w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-              },
-              [_vm._m(0, true)]
-            )
-          }),
-          0
-        )
-      : _c(
-          "div",
-          { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
-          _vm._l(_vm.theTeams, function(team) {
-            return _c("team-card", {
-              key: team.id,
-              attrs: { team: team, selected: _vm.teamSelected(team) },
-              on: { selected: _vm.add, deselected: _vm.remove }
-            })
-          }),
-          1
-        ),
-    _vm._v(" "),
-    _vm.selectedTeams.length > 0 || _vm.isComparing
-      ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
-          _c("div", { staticClass: "flex" }, [
-            !_vm.isComparing
-              ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
-                  _vm._v("Выберите команды")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", [
+  return _c(
+    "div",
+    [
+      _vm.teams.length === 0
+        ? _c(
+            "div",
+            { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+            _vm._l(6, function(n) {
+              return _c(
+                "div",
+                {
+                  key: n,
+                  staticClass:
+                    "w-full px-1 my-2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                },
+                [_vm._m(0, true)]
+              )
+            }),
+            0
+          )
+        : _c(
+            "div",
+            { staticClass: "flex flex-wrap my-2 -mx-1 lg:-mx-4" },
+            _vm._l(_vm.theTeams, function(team) {
+              return _c("team-card", {
+                key: team.id,
+                attrs: { team: team, selected: _vm.teamSelected(team) },
+                on: {
+                  selected: _vm.add,
+                  deselected: _vm.remove,
+                  "sign-in": _vm.show
+                }
+              })
+            }),
+            1
+          ),
+      _vm._v(" "),
+      _vm.selectedTeams.length > 0 || _vm.isComparing
+        ? _c("div", { staticClass: "p-4 bg-teal-200 border-b alert-flash" }, [
+            _c("div", { staticClass: "flex" }, [
               !_vm.isComparing
-                ? _c(
-                    "button",
-                    {
-                      staticClass:
-                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
-                      class:
-                        _vm.selectedTeams.length <= 1
-                          ? "opacity-50 cursor-not-allowed"
-                          : "",
-                      attrs: { type: "button" },
-                      on: { click: _vm.compareTeams }
-                    },
-                    [_vm._v("Сравнить")]
-                  )
-                : _c(
-                    "button",
-                    {
-                      staticClass:
-                        "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
-                      attrs: { type: "button" },
-                      on: { click: _vm.cancelCompare }
-                    },
-                    [_vm._v("Очистить")]
-                  )
+                ? _c("div", { staticClass: "py-2 mr-3 font-semibold" }, [
+                    _vm._v("Выберите команды")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                !_vm.isComparing
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
+                        class:
+                          _vm.selectedTeams.length <= 1
+                            ? "opacity-50 cursor-not-allowed"
+                            : "",
+                        attrs: { type: "button" },
+                        on: { click: _vm.compareTeams }
+                      },
+                      [_vm._v("Сравнить")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 border-4 border-blue-500 rounded hover:bg-blue-700 hover:border-blue-700",
+                        attrs: { type: "button" },
+                        on: { click: _vm.cancelCompare }
+                      },
+                      [_vm._v("Очистить")]
+                    )
+              ])
             ])
           ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("modal", { staticClass: "z-10", attrs: { name: "signInModal" } }, [
+        _c("div", { staticClass: "flex justify-center mt-4" }, [
+          _c("div", { attrs: { id: "vk_auth" } })
         ])
-      : _vm._e()
-  ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -57701,6 +58071,8 @@ window.flash = function (message) {
 
 
 Vue.use(_plugins_modal_ModalPlugin__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.prototype.signedIn = JSON.parse(window.App).signedIn;
+Vue.prototype.authUser = JSON.parse(window.App).user;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -59532,9 +59904,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamCard.vue?vue&type=template&id=093c81f8& */ "./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&");
+/* harmony import */ var _TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamCard.vue?vue&type=template&id=093c81f8&scoped=true& */ "./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true&");
 /* harmony import */ var _TeamCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamCard.vue?vue&type=script&lang=js& */ "./resources/js/components/TeamCard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TeamCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& */ "./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -59546,11 +59918,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _TeamCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "093c81f8",
   null
   
 )
@@ -59576,35 +59948,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=style&index=0&id=093c81f8&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_style_index_0_id_093c81f8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true& ***!
+  \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=template&id=093c81f8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamCard.vue?vue&type=template&id=093c81f8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamCard.vue?vue&type=template&id=093c81f8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamCard_vue_vue_type_template_id_093c81f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

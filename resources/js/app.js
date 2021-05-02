@@ -9,12 +9,15 @@ window.Vue = require('vue');
 
 window.events = new Vue();
 
-window.flash = function(message, level = 'success') {
-	window.events.$emit('flash', {message, level});
+window.flash = function (message, level = 'success') {
+    window.events.$emit('flash', { message, level });
 };
 
 import Modal from './plugins/modal/ModalPlugin';
 Vue.use(Modal);
+
+Vue.prototype.signedIn = JSON.parse(window.App).signedIn;
+Vue.prototype.authUser = JSON.parse(window.App).user;
 
 /**
  * The following block of code may be used to automatically register your

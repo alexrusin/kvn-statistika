@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Review;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,5 +41,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getGravatarLinkAttribute()
     {
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
