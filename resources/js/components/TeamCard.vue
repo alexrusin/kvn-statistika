@@ -335,7 +335,7 @@ export default {
       if (this.reviewRating === 0 && this.signedIn) {
         axios.get(`/api/reviews/user/${this.team.id}`)
           .then(({data}) => {
-            this.reviewBody = data.review.body;
+            this.reviewBody = data.review.body ? data.review.body : '';
             this.reviewRating = data.review.rating
           })
           .catch(error => {
