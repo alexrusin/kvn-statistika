@@ -4735,7 +4735,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.reviewRating === 0 && this.signedIn) {
         axios.get("/api/reviews/user/".concat(this.team.id)).then(function (_ref2) {
           var data = _ref2.data;
-          _this2.reviewBody = data.review.body;
+          _this2.reviewBody = data.review.body ? data.review.body : '';
           _this2.reviewRating = data.review.rating;
         })["catch"](function (error) {
           if (error.response.status !== 404) {
@@ -4929,19 +4929,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     insertAds: function insertAds(data) {
       data.splice(1, 0, {
+        id: "kosykov-obzor",
+        ad: true,
+        ad_url: "https://www.youtube.com/watch?v=HwD6inyjHjg",
+        image_url: "https://i.ytimg.com/vi/HwD6inyjHjg/hqdefault.jpg",
+        text: "С Днём рождения, Денис! Желаем, чтобы твои обзоры всегда были такими же позитивными как и этот",
+        callout_text: "Смотреть"
+      });
+      data.splice(6, 0, {
         id: "bezproduction",
         ad: true,
         ad_url: "https://www.youtube.com/watch?v=Xh1m2Eb1TZA",
         image_url: "https://i.ytimg.com/vi/Xh1m2Eb1TZA/hq720.jpg",
         text: "Пьяный КВН. Мы не пропагандируем алкоголь, мы пропагандируем веселье и математические задачки в начале каждого их выпуска",
-        callout_text: "Смотреть"
-      });
-      data.splice(6, 0, {
-        id: "svoya-igra-kvn-final",
-        ad: true,
-        ad_url: "https://www.youtube.com/watch?v=HbPCsTT1NgA",
-        image_url: "https://i.ytimg.com/vi/HbPCsTT1NgA/hq720.jpg",
-        text: "Пришло время узнать - кто же лучше разбирается в КВНе. Те, кто в него играют? Или те, кто его обозревают?",
         callout_text: "Смотреть"
       });
       return data;

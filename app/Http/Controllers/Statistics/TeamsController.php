@@ -10,7 +10,10 @@ class TeamsController
     {
         $pageTitle = 'Команды КВН | КВН Статистика';
         $metaDescription = 'КВН Статистика - это квн сайт предоставляющций рейтинг команд а также результаты игр высшей и первой лиги квн';
-        return view('statistics.teams', compact('pageTitle', 'metaDescription'));
+        $teams = Team::with('teamGamesAverage')
+            ->take(500)
+            ->get();
+        return view('statistics.teams', compact('pageTitle', 'metaDescription', 'teams'));
     }
 
     public function getTeamsData()
