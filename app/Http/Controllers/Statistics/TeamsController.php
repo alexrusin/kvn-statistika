@@ -13,6 +13,13 @@ class TeamsController
         $teams = Team::with('teamGamesAverage')
             ->take(500)
             ->get();
+        $teams = $teams->map(function ($team) {
+            return (object)[
+                'name' => $team->name,
+                'city' => $team->city
+            ];
+        });
+        $teams = json_encode($teams, JSON_UNESCAPED_UNICODE);
         return view('statistics.teams', compact('pageTitle', 'metaDescription', 'teams'));
     }
 
