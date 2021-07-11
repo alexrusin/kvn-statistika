@@ -66,7 +66,9 @@
           </div>
         </div>
         <h4 class="mt-1 text-lg font-semibold leading-tight truncate">
-          {{ team.name }}
+          <a :href="'/teams/' + team.id">
+            {{ team.name }}
+          </a>
         </h4>
         <div class="relative mt-1">
           ОКГ: {{ this.okg }}

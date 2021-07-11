@@ -4654,6 +4654,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["team", "selected"],
   computed: {
@@ -45181,7 +45183,13 @@ var render = function() {
                     staticClass:
                       "mt-1 text-lg font-semibold leading-tight truncate"
                   },
-                  [_vm._v("\n        " + _vm._s(_vm.team.name) + "\n      ")]
+                  [
+                    _c("a", { attrs: { href: "/teams/" + _vm.team.id } }, [
+                      _vm._v(
+                        "\n          " + _vm._s(_vm.team.name) + "\n        "
+                      )
+                    ])
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
