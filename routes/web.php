@@ -19,7 +19,6 @@ Route::namespace('Statistics')
     ->prefix('statistics')
     ->name('statistics.')
     ->group(function () {
-        Route::get('teams', 'TeamsController@index')->name('teams');
         Route::get('teams/{team}', 'TeamsController@show');
         Route::get('teams-data', 'TeamsController@getTeamsData')->name('teams-data');
         Route::get('games', 'GamesController@index')->name('games');

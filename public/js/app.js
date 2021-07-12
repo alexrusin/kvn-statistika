@@ -45181,14 +45181,18 @@ var render = function() {
                   "h4",
                   {
                     staticClass:
-                      "mt-1 text-lg font-semibold leading-tight truncate"
+                      "mt-1 text-lg font-semibold leading-tight truncate text-blue-600"
                   },
                   [
-                    _c("a", { attrs: { href: "/teams/" + _vm.team.id } }, [
-                      _vm._v(
-                        "\n          " + _vm._s(_vm.team.name) + "\n        "
-                      )
-                    ])
+                    _c(
+                      "a",
+                      { attrs: { href: "/statistics/teams/" + _vm.team.id } },
+                      [
+                        _vm._v(
+                          "\n          " + _vm._s(_vm.team.name) + "\n        "
+                        )
+                      ]
+                    )
                   ]
                 ),
                 _vm._v(" "),
