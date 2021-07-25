@@ -16,9 +16,6 @@
         });
     </script>
     <script type="text/javascript">
-        appData = {
-            teams: {{$teams}}
-        }
         VK.Widgets.Auth("vk_auth", {
             "width": 300,
             "authUrl": "/vk/login"
