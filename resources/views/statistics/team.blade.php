@@ -14,19 +14,36 @@
                 </div>
             </div>
         </div>
-        <div class="teamScoreSection mt-4 text-center">
-            Оценка: 4,5 / 5,0 (9 голосов)
-            <div class="flex justify-center mt-2">
-                <button type="button" class="flex-shrink-0 px-2 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-700">
-                    Оценить
-                </button>
-            </div>
+        @if ($team->description)
+        <div class="mt-4">
+            {{$team->description}}
         </div>
-
+        @endif
+        <team-score-section :id="{{$team->id}}" name="{{$team->name}}"></team-score-section>
     </div>
-    <div>
-        Many cards
+    <div class="grid grid-cols-3 gap-4 mt-4">
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
     </div>
 </div>
 
 @endsection
+
+@if (!Auth::check())
+    @push('scripts')
+
+    <script type="text/javascript">
+        VK.init({
+            apiId: parseInt("{!!config('services.vk.app_id')!!}")
+        });
+    </script>
+    <script type="text/javascript">
+        VK.Widgets.Auth("vk_auth", {
+            "width": 300,
+            "authUrl": "/vk/login"
+        });
+    </script>
+    @endpush
+@endif
