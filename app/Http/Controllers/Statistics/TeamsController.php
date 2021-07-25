@@ -24,7 +24,9 @@ class TeamsController
 
     public function show(Team $team)
     {
-        return view('statistics.team', compact('team'));
+        $pageTitle = "{$team->name} | КВН Статистика";
+        $metaDescription = "Команда КВН {$team->name}";
+        return view('statistics.team', compact('team', 'pageTitle', 'metaDescription'));
     }
 
     public function score($id)
