@@ -65,8 +65,10 @@
             г. {{ team.city }}
           </div>
         </div>
-        <h4 class="mt-1 text-lg font-semibold leading-tight truncate">
-          {{ team.name }}
+        <h4 class="mt-1 text-lg font-semibold leading-tight truncate text-blue-600">
+          <a :href="'/statistics/teams/' + team.id">
+            {{ team.name }}
+          </a>
         </h4>
         <div class="relative mt-1">
           ОКГ: {{ this.okg }}

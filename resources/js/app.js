@@ -41,6 +41,9 @@ Vue.component('game-form', require('./components/Admin/GameForm').default);
 Vue.component('team-form', require('./components/Admin/TeamForm').default);
 Vue.component('result-form', require('./components/Admin/ResultForm').default);
 Vue.component('video-form', require('./components/Admin/VideoForm').default);
+Vue.component('team-score-section', require('./components/TeamScoreSection').default);
+Vue.component('team-games-section', require('./components/TeamGamesSection').default);
+Vue.component('review-team', require('./components/ReviewTeam').default);
 
 Vue.component('posts', require('./components/Blog/Posts').default);
 
