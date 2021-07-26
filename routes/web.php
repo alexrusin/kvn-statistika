@@ -21,6 +21,7 @@ Route::namespace('Statistics')
     ->group(function () {
         Route::get('teams/{team}', 'TeamsController@show');
         Route::get('teams/{id}/score','TeamsController@score');
+        Route::get('teams/{id}/games','TeamsController@games');
         Route::get('teams-data', 'TeamsController@getTeamsData')->name('teams-data');
         Route::get('games', 'GamesController@index')->name('games');
         Route::get('game/{id}/teams', 'TeamGamesController@show')->name('game-teams');

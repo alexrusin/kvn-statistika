@@ -5134,6 +5134,43 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamGame.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamGame.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['teamGame'],
+  filters: {
+    toOneDecimalPlace: function toOneDecimalPlace(value) {
+      if (!value) {
+        return 'N/A';
+      }
+
+      return parseFloat(value).toFixed(1).replace(".", ",");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamGamesSection.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TeamGamesSection.vue?vue&type=script&lang=js& ***!
@@ -5144,6 +5181,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamGame_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamGame.vue */ "./resources/js/components/TeamGame.vue");
+/* harmony import */ var vue_spinner_src_BeatLoader_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-spinner/src/BeatLoader.vue */ "./node_modules/vue-spinner/src/BeatLoader.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5151,9 +5196,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    TeamGame: _TeamGame_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    TeamGame: _TeamGame_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    BeatLoader: vue_spinner_src_BeatLoader_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ['id'],
+  created: function created() {
+    var _this = this;
+
+    axios.get("/statistics/teams/".concat(this.id, "/games")).then(function (_ref) {
+      var data = _ref.data;
+      _this.teamGames = data;
+    })["catch"](function (error) {
+      if (error.response) {
+        _this.gamesErrorMessage = error.response.data.message;
+      } else {
+        _this.gamesErrorMessage = 'В данное время игры не доступны';
+      }
+    });
+  },
+  data: function data() {
+    return {
+      teamGames: undefined,
+      gamesErrorMessage: ''
+    };
   }
 });
 
@@ -46355,36 +46423,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "p-4 rounded-lg shadow-lg bg-white flex justify-center" },
-      [
-        _c("div", [
-          _c("h3", { staticClass: "mb-2 font-semibold" }, [
-            _vm._v("Первая 1/8 высшей лиги 2020г.")
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v("ОКГ: 10,3")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Эффективность: 55,3")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Индекс Белого: N/A")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Балл жюри: 13,7")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Время в игре: 23,5 мин.")])
+  return _c(
+    "div",
+    { staticClass: "p-4 rounded-lg shadow-lg bg-white flex justify-center" },
+    [
+      _c("div", [
+        _c("h3", { staticClass: "mb-2 font-semibold" }, [
+          _vm._v(_vm._s(_vm.teamGame.game.display_name))
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "ОКГ: " + _vm._s(_vm._f("toOneDecimalPlace")(_vm.teamGame.okg))
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Эффективность: " +
+              _vm._s(
+                _vm._f("toOneDecimalPlace")(_vm.teamGame.efficiency * 100)
+              ) +
+              "%"
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Индекс Белого: " +
+              _vm._s(_vm._f("toOneDecimalPlace")(_vm.teamGame.white_index))
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Балл жюри: " +
+              _vm._s(_vm._f("toOneDecimalPlace")(_vm.teamGame.points))
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Время в игре: " +
+              _vm._s(_vm._f("toOneDecimalPlace")(_vm.teamGame.time / 60)) +
+              " мин."
+          )
         ])
-      ]
-    )
-  }
-]
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -46406,14 +46495,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" },
-    _vm._l(7, function(index) {
-      return _c("team-game", { key: index })
-    }),
-    1
-  )
+  return !_vm.teamGames
+    ? _c("beat-loader", {
+        staticClass: "flex justify-center mt-10",
+        attrs: { loading: !_vm.teamGames, color: "#4299e1" }
+      })
+    : _c("div", [
+        _vm.gamesErrorMessage
+          ? _c("p", { staticClass: "flex justify-center mt-8" }, [
+              _vm._v(_vm._s(_vm.gamesErrorMessage))
+            ])
+          : _c(
+              "div",
+              {
+                staticClass:
+                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              },
+              _vm._l(_vm.teamGames, function(teamGame) {
+                return _c("team-game", {
+                  key: teamGame.id,
+                  attrs: { "team-game": teamGame }
+                })
+              }),
+              1
+            )
+      ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60951,15 +61057,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamGame_vue_vue_type_template_id_bf71dc4c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamGame.vue?vue&type=template&id=bf71dc4c& */ "./resources/js/components/TeamGame.vue?vue&type=template&id=bf71dc4c&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _TeamGame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeamGame.vue?vue&type=script&lang=js& */ "./resources/js/components/TeamGame.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TeamGame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TeamGame_vue_vue_type_template_id_bf71dc4c___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TeamGame_vue_vue_type_template_id_bf71dc4c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -60973,6 +61081,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/TeamGame.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TeamGame.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/TeamGame.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamGame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TeamGame.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TeamGame.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TeamGame_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

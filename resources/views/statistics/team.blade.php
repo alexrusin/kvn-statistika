@@ -25,7 +25,7 @@
             <p class="text-sm sm:text-base">{{$team->description}}</p>
         </div>
         @endif
-        <team-games-section></team-games-section>
+        <team-games-section :id="{{$team->id}}"></team-games-section>
     </div>
 </div>
 
