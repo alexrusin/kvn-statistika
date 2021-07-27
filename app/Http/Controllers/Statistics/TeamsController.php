@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Statistics;
 
 use App\Models\Team;
 use App\Models\TeamGame;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class TeamsController
@@ -17,9 +18,16 @@ class TeamsController
 
     public function getTeamsData()
     {
-        $teams = Team::with('teamGamesAverage')
+        // Cache::forget('teams-data');
+        $teams = Cache::remember('teams-data', 1440, function () {
+            return Team::with('teamGamesAverage')
             ->take(500)
-            ->get();
+            ->get()
+            ->each(function($item) {
+                $item->teamGamesAverage->setAppends([]);
+            });
+        });
+
         return response($teams, 200);
     }
 
