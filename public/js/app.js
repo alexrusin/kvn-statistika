@@ -46427,7 +46427,7 @@ var render = function() {
     "div",
     { staticClass: "p-4 rounded-lg shadow-lg bg-white flex justify-center" },
     [
-      _c("div", [
+      _c("div", { staticStyle: { "min-width": "50%" } }, [
         _c("h3", { staticClass: "mb-2 font-semibold" }, [
           _vm._v(_vm._s(_vm.teamGame.game.display_name))
         ]),

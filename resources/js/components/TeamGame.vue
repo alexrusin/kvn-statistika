@@ -1,6 +1,6 @@
 <template>
     <div class="p-4 rounded-lg shadow-lg bg-white flex justify-center">
-        <div>
+        <div style="min-width:50%;">
             <h3 class="mb-2 font-semibold">{{teamGame.game.display_name}}</h3>
             <p>ОКГ: {{teamGame.okg | toOneDecimalPlace }}</p>
             <p>Эффективность: {{teamGame.efficiency * 100 | toOneDecimalPlace}}%</p>
